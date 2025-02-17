@@ -408,7 +408,24 @@ body.offcanvas {
   background-position: center center;
   background-repeat: no-repeat;
   position: relative; }
-
+  
+  .author-img::before {
+    content: 'K';
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f2f4f6; /* Blue */
+    color: rgb(87, 21, 243);
+    text-align: center;
+    line-height: 50px;
+  
+    /* Example positioning - adjust as needed */
+    position: absolute; /* Position relative to the parent */
+    bottom: 10px; /* 10px from the bottom */
+    right: 10px; /* 10px from the right */
+  }
+  
 .colorlib-heading {
   font-size: 18px;
   margin-bottom: 4em;
@@ -504,13 +521,21 @@ body.offcanvas {
   color: #333333; }
 
 .panel-body {
+  color: #333;
   padding: 1.5em;
   margin-top: 5px;
   border: 1px solid #e6e6e6 !important; }
 
+
+
 .timeline-centered {
   position: relative;
   margin-bottom: 30px; }
+
+  .timeline-label p {
+    color: #333; /* Dark gray */
+}
+
 
 .timeline-centered:before, .timeline-centered:after {
   content: " ";
@@ -606,7 +631,8 @@ body.offcanvas {
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 {
   font-size: 20px;
   font-family: "Quicksand", Arial, sans-serif;
-  font-weight: 500; }
+  font-weight: 500;
+  color: #000; }
 
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {
   color: #000; }
