@@ -308,3 +308,9 @@
 
 
 }());
+
+const authorImg = document.querySelector('.author-img'); // Select the container
+
+authorImg.addEventListener('click', () => {
+  authorImg.classList.toggle('zoomed'); // Toggle the class on the container
+});
