@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <meta name="copyright" content="MACode ID, https://www.macodeid.com/">
+  
+  <title>Kristianto - Portfolio </title>
+
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" type="text/css" href="assets/css/themify-icons.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+
+  <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/vendor/owl-carousel/owl.carousel.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/vendor/perfect-scrollbar/css/perfect-scrollbar.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/vendor/nice-select/css/nice-select.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/vendor/fancybox/css/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/css/virtual.css">
+  
+  <link rel="stylesheet" type="text/css" href="assets/css/topbar.virtual.css">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="theme-red">
+  
+  <!-- Back to top button -->
+  <div class="btn-back_to_top">
+    <span class="ti-arrow-up"></span>
+  </div>
+  
+  <!-- Setting button -->
+  <div class="config">
+    <div class="template-config">
+      <!-- Settings -->
+      <div class="d-block">
+        <button class="btn btn-fab btn-sm" id="sideel" title="Settings">
+          <span class="ti-settings"></span> </button> <!-- Change to ti-settings -->
+      </div>
+      <!-- Puschase -->
+    <!---
+      <div class="d-block">
+        <a href="https://macodeid.com/projects/virtual-folio/" class="btn btn-fab btn-sm" title="Get this template" data-toggle="tooltip" data-placement="left"><span class="ti-download"></span></a>
+      </div>
+    -->
+      <!-- Help -->
+       <!---
+      <div class="d-block">
+        <a href="#" class="btn btn-fab btn-sm" title="Help" data-toggle="tooltip" data-placement="left"><span class="ti-help"></span></a>
+      </div>
+    -->
+  </div>
+  <div class="set-menu">
+    <p class="color-canvas-text"> <span class="ti-filter"></span>Color Canvas</p>
+
+    <div class="color-bar" data-toggle="selected">
+      <span class="color-item bg-theme-red selected" data-class="theme-red"></span>
+      <span class="color-item bg-theme-blue" data-class="theme-blue"></span>
+      <span class="color-item bg-theme-green" data-class="theme-green"></span>
+      <span class="color-item bg-theme-orange" data-class="theme-orange"></span>
+      <span class="color-item bg-theme-purple" data-class="theme-purple"></span>
+    </div>
+      <!---
+      <select class="custom-select d-block my-2" id="change-page">
+        <option value="">Choose Page</option>
+        <option value="index">Topbar</option>
+        <option value="blog-topbar">Blog (Topbar)</option>
+        <option value="index-2">Minibar</option>
+        <option value="blog-minibar">Blog (Minibar)</option>
+        -->
+      </select>
+    </div>
+  </div>
+  
+  <div class="vg-page page-home" id="home">
+    <video autoplay loop muted playsinline class="bg-video">
+        <source src="assets/4K.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <!-- Navbar -->
+    <div class="navbar navbar-expand-lg navbar-dark sticky" data-offset="500">
+      <div class="container">
+        <a href="" class="navbar-brand">My Portfolio</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#main-navbar" aria-expanded="true">
+          <span class="ti-menu"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-navbar">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a href="#home" class="nav-link" data-animate="scrolling">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#about" class="nav-link" data-animate="scrolling">About Me</a>
+            </li>
+            <!----
+            <li class="nav-item">
+              <a href="#portfolio" class="nav-link" data-animate="scrolling">Portfolio</a>
+            </li>
+             -->
+             <li class="nav-item">
+              <a href="#Education" class="nav-link" data-animate="scrolling">Education & Experience</a>
+            </li>
+            <li class="nav-item">
+              <a href="#service" class="nav-link" data-animate="scrolling">Service & Achivement</a>
+            </li>
+            <li class="nav-item">
+              <a href="#blog" class="nav-link" data-animate="scrolling">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contact" class="nav-link" data-animate="scrolling">Contact</a>
+            </li>
+          </ul>
+          <ul class="nav ml-auto">
+            <li class="nav-item">
+              <button class="btn btn-fab btn-theme no-shadow">K</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+    <!-- Caption header -->
+    <div class="caption-header text-center wow zoomInDown">
+      <h5 class="fw-normal">Welcome!</h5>
+      <h1 class="fw-light mb-4">I'm <b class="fg-theme">Kristianto</h1>
+        <div class="badge">
+          <span class="cd-words-wrapper" id="dynamic-text">
+            <b class="is-hidden" style="--index: 1">Let's connect and Explore opportunities together!</b>
+          </span>
+        </div>
+    </div> <!-- End Caption header -->
+    <div class="floating-button" id="scroll-down-button"><span class="ti-mouse"></span></div>
+
+  </div>
+  
+  <div class="vg-page page-about" id="about">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-4 py-3">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/person.jpg" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 offset-lg-1 wow fadeInRight">
+          <h1 class="fw-light">Kristianto</h1>
+          <h5 class="fg-theme mb-3">Data Analyst & Insurance Professional</h5>
+          <p class="text-muted text-justify">Experienced Data Analyst with a strong foundation in Professional Insurance Practice, specifically within the health and life insurance sectors.<br>
+            Proficient in advanced data analysis techniques, including statistical analysis, data mining, and data visualization, to derive actionable insights that enhance decision-making and optimize business processes.</p>
+            <ul class="theme-list">
+              <li><b>Lives In:</b> Bekasi, Indonesia</li>
+              <li id="current-age"><b>Age: 39</b> </li>
+              <li><b>Gender:</b> Male</li>
+            </ul>            
+          <a href="assets/img/testimonials/Kristianto.pdf" class="btn btn-theme-outline" download>Download CV</a>
+        </div>
+      </div>
+    </div>
+    <div class="container py-5">
+      <h1 class="text-center fw-normal wow fadeIn">My Skills</h1>
+      <div class="row py-3">
+        <div class="col-md-6">
+          <div class="px-lg-3">
+            <h4 class="wow fadeInUp">Tools</h4>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Python</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 86%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">86%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">SQL</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 80%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">80%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Ms. Excel</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 90%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">90%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Data Visualization (Tableau, Power BI)</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 90%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">90%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="px-lg-3">
+            <h4 class="wow fadeInUp">Technique & Soft Skills</h4>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Data Storytelling</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 92%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">92%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Business Process</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 94%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">94%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Statistical Analysis</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 79%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">89%</div>
+              </div>
+            </div>
+            <div class="progress-wrapper wow fadeInUp">
+              <span class="caption">Predictive Modeling</span>
+              <div class="progress">
+                <div class="progress-bar shining-text" role="progressbar" style="width: 89%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">90%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="vg-page page-Education" id="Education">
+      <div class="container">
+        <div class="text-center">
+          <div class="badge badge-subhead wow fadeInUp">Education & Experiance</div>
+        </div>
+    <div class="container pt-5">
+      <div class="row">
+        <div class="col-md-6 wow fadeInRight">
+          <h2 class="fw-normal">Education</h2>
+          <ul class="timeline mt-4 pr-md-5">
+            </li>
+            <li>
+              <div class="title">2024 - 2025</div>
+              <div class="details">
+                <h5>Full-stack Data Analytics</h5>
+                <small class="fg-theme">Revou</small>
+                <p class="text-justify">Proficient in Python, SQL, Tableau, and Power BI, I have hands-on experience in real-world datasets to create data stories that inform business decisions and effectively communicate insights.</p>
+              </div>
+            </li>
+            <li>
+              <div class="title">2013 - 2018</div>
+              <div class="details">
+                <h5>Bachelor of Accounting</h5>
+                <small class="fg-theme">Pancasila University</small>
+                <p class="text-justify">Completion comprehensive program covering fundamental accounting principles, financial reporting, auditing, and taxation, with a project on the Implementation of Information System Applications on External Claim Reports.</p>
+              </div>
+            </li>
+            <li>
+              <div class="title">2003 - 2006</div>
+              <div class="details">
+                <h5>Diploma Actuarial</h5>
+                <small class="fg-theme">Ministry of Finance of the Republic of Indonesia</small>
+                <p class="text-justify">Focused on actuarial principles, financial mathematics, and statistical analysis with practical applications in health and life insurance. 
+                  Developing skills in risk assessment, insurance modeling.</p>
+              </div>
+          </ul>
+        </div>
+        <div class="col-md-6 wow fadeInRight" data-wow-delay="200ms">
+          <h2 class="fw-normal">Work Experience</h2>
+          <ul class="timeline mt-4 pr-md-5">
+            <li>
+              <div class="title">2022 - Present</div>
+              <div class="details">
+                <h5>CIPTA INTEGRA DUTA (Full Time) </h5>
+                <small class="fg-theme">Assistant Manager Data Analyst</small>
+                <p class="text-justify">At Cipta Integra Duta, I hold the position of Assistant Manager Data Analyst. 
+                  My responsibilities include leading and executing data analysis projects that align with the company’s strategic objectives.</p>
+              </div>
+            </li>
+            <li>
+              <div class="title">2017 - 2022</div>
+              <div class="details">
+                <h5>ASURANSI JIWA PROLIFE (Full Time) </h5>
+                <small class="fg-theme">Assistant Manager Claim</small>
+                <p class="text-justify">In my role as Assistant Manager Claims at Asuransi Jiwa Prolife, I was responsible for analyzing and optimizing claims processes, enhancing overall operational efficiency within the financial services sector focused on life insurance.</p>
+              </div>
+            </li>
+            <li>
+              <div class="title">2015 - 2017</div>
+              <div class="details">
+                <h5>AAI INDONESIA (Full Time)</h5>
+                <small class="fg-theme">Team Leader Business Analyst</small>
+                <p class="text-justify">As the Team Leader Business Analyst at AAI Indonesia, a healthcare benefits third-party administrator, I led process analysis and optimization, enhancing service delivery for clients.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="vg-page page-service" id="service">
+    <div class="container">
+      <div class="text-center wow fadeInUp">
+        <div class="badge badge-subhead">Service & Achivement</div>
+      </div>
+      <h1 class="fw-normal text-center wow fadeInUp">What can i do?</h1>
+      <div class="row mt-5">
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card card-service wow fadeInUp">
+            <div class="icon">
+              <span class="ti-bar-chart"></span>
+            </div>
+            <div class="caption">
+              <h4 class="fg-theme"h4>
+              <small>Data Analysis & Problem Solving</small>
+              </h4>
+              <p>Statistical analysis identifies patterns, trends, and provides insights.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card card-service wow fadeInUp">
+            <div class="icon">
+              <span class="ti-stats-up"></span>
+            </div>
+            <div class="caption">
+              <h4 class="fg-theme"h4>
+              <small>Communication Data Insights</small>
+            </h4>
+              <p>Construct interactive dashboards and visual for Storytelling.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card card-service wow fadeInUp">
+            <div class="icon">
+              <span class="ti-vector"></span>
+            </div>
+            <div class="caption">
+              <h4 class="fg-theme"h4>
+                <small>Strategic Recommendations</small>
+              </h4>
+              <p>Data-driven recommendations for strategic decision-making.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card card-service wow fadeInUp">
+            <div class="icon">
+              <span class="ti-desktop"></span>
+            </div>
+            <div class="caption">
+              <h4 class="fg-theme"h4>
+                <small>Business Process Modeling</small>
+              </h4>
+              <p>Optimizing existing processes to enhance efficiency and effectively.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="vg-page page-funfact" style="background-image: url(assets/img/bg_banner.jpg);">
+    <div class="container">
+      <div class="row section-counter">
+        <div class="col-md-6 col-lg-3 py-4 wow fadeIn">
+          <h1 class="number" data-number="10">10+</h1>
+          <span>Year Experiance</span>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4 wow fadeIn">
+          <h1 class="number" data-number="2">2</h1>
+          <span>Certificate Proffesional</span>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4 wow fadeIn">
+          <h1 class="number" data-number="3">3</h1>
+          <span>Project Complete</span>
+        </div>
+        <div class="col-md-6 col-lg-3 py-4 wow fadeIn">
+          <h1 class="number" data-number="4">4</h1>
+          <span>Award</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Portfolio page -->
+  <!----
+  <div class="vg-page page-portfolio" id="portfolio">
+    <div class="container">
+      <div class="text-center wow fadeInUp">
+        <div class="badge badge-subhead">Portfolio</div>
+      </div>
+      <h1 class="text-center fw-normal wow fadeInUp">See my work</h1>
+      <div class="filterable-button py-3 wow fadeInUp" data-toggle="selected">
+        <button class="btn btn-theme-outline selected" data-filter="*">All</button>
+        <button class="btn btn-theme-outline" data-filter=".apps">Apps</button>
+        <button class="btn btn-theme-outline" data-filter=".template">Template</button>
+        <button class="btn btn-theme-outline" data-filter=".ios">IOS</button>
+        <button class="btn btn-theme-outline" data-filter=".ui-ux">UI/UX</button>
+        <button class="btn btn-theme-outline" data-filter=".graphic">Graphic</button>
+        <button class="btn btn-theme-outline" data-filter=".wireframes">Wireframes</button>
+      </div>
+
+      <div class="gridder my-3">
+        <div class="grid-item apps wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-1.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Mobile Travel App</h5> <p>Travel, Discovery</p>">
+            <img src="assets/img/work/work-1.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Mobile Travel App</h5>
+              <p>Travel, Discovery</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item template wireframes wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-2.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Music App</h5> <p>Musics</p>">
+            <img src="assets/img/work/work-2.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Music App</h5>
+              <p>Musics</p>
+              <a href="https://github.com/krizz-byte/life_expectancy" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i> View on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item apps ios wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-3.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Gaming Dashboard</h5> <p>Games, Streaming</p>">
+            <img src="assets/img/work/work-3.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Gaming Dashboard</h5>
+              <p>Games, Streaming</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-item graphic ui-ux wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-4.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Drugs Delivery App</h5> <p>Health, Drugs</p>">
+            <img src="assets/img/work/work-4.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Drugs Delivery App</h5>
+              <p>Health, Drugs</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-item apps ios wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-5.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Musics Discover</h5> <p>Musics, Dashboard</p>">
+            <img src="assets/img/work/work-5.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Musics Discover</h5>
+              <p>Musics, Dashboard</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item graphic ui-ux wireframes wow zoomIn">
+          <div class="img-place" data-src="assets/img/work/work-6.jpg" data-fancybox data-caption="<h5 class='fg-theme'>Game Streaming</h5> <p>Games, Streaming</p>">
+            <img src="assets/img/work/work-6.jpg" alt="">
+            <div class="img-caption">
+              <h5 class="fg-theme">Game Streaming</h5>
+              <p>Games, Streaming</p>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="text-center wow fadeInUp">
+        <a href="javascript:void(0)" class="btn btn-theme">Load More</a>
+      </div><!-- End gridder -->
+    </div>
+  </div> 
+  <!-- End Portfolio page -->
+  
+
+  <!-- Testimonial -->
+   <!----
+  <div class="vg-page page-testimonial">
+    <div class="container">
+      <h1 class="text-center fw-normal wow fadeInUp">What Clients are Saying</h1>
+      <div class="row justify-content-center mt-5 wow fadeInUp">
+        <div class="col-md-9">
+          <div class="owl-carousel testi-carousel">
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="img-place">
+                    <img src="assets/img/testimonials/testimonials_1.jpg" alt="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="caption">
+                    <div class="testi-content">There are many variations of passages of Lorem Ipsum available, but the majority have suffered</div>
+                    <div class="testi-info">
+                      <div class="thumb-profile">
+                        <img src="assets/img/testimonials/testimonials_1.jpg" alt="">
+                      </div>
+                      <div class="tagline">
+                        <h5 class="mb-0">Satria Nugraha</h5>
+                        <span class="text-muted">CEO Nutshell</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="img-place">
+                    <img src="assets/img/testimonials/testimonials_2.jpg" alt="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="caption">
+                    <div class="testi-content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe natus expedita ab facilis ut, animi explicabo amet. Voluptatibus possimus iste enim, doloremque, fugiat accusamus nisi optio fugit ratione expedita harum?</div>
+                    <div class="testi-info">
+                      <div class="thumb-profile">
+                        <img src="assets/img/testimonials/testimonials_2.jpg" alt="">
+                      </div>
+                      <div class="tagline">
+                        <h5 class="mb-0">Selena Arrini</h5>
+                        <span class="text-muted">CEO BigTree</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End testimonial -->
+  
+  <!-- Client -->
+   <!----
+  <div class="vg-page page-client">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_1.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_2.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_3.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_4.svg" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_5.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_6.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_7.svg" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3 item">
+          <div class="img-place wow fadeInUp">
+            <img src="assets/img/logo/company_8.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End client -->
+  
+  <!-- Blog -->
+  <div class="vg-page page-blog" id="blog">
+    <div class="container">
+      <div class="text-center">
+        <div class="badge badge-subhead wow fadeInUp">My Portfolio</div>
+      </div>
+      <h1 class="text-center fw-normal wow fadeInUp">Latest Project</h1>
+      <div class="row post-grid">
+        <div class="col-md-6 col-lg-4 wow fadeInUp">
+          <div class="card">
+            <div class="img-place">
+              <img src="assets/img/work/work-9.jpg" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Employee Benefits</a>
+              <a href="https://github.com/Kristianto06/Optimizing-Employee-Benefits-A-Data-Driven-Approach" class="post-title">Employee Benefits : A-Data-Driven-Approach</a>
+              <span class="post-date"><span class="sr-only">Published on</span> Feb, 2025</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 wow fadeInUp">
+          <div class="card">
+            <div class="img-place">
+              <img src="assets/img/work/work-6.jpg" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Healthcare Industries</a>
+              <a href="https://github.com/Kristianto06/life_expectancy" class="post-title">Life Expectancy</a>
+              <span class="post-date"><span class="sr-only">Published on</span> Jan, 2025</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 wow fadeInUp">
+          <div class="card">
+            <div class="img-place">
+              <img src="assets/img/work/work-1.jpg" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Employee Benefits</a>
+              <a href="https://github.com/Kristianto06/Employee_retension" class="post-title">Why Employee should Stay in Your Company </a>
+              <span class="post-date"><span class="sr-only">Published on</span> May, 2024</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 wow fadeInUp">
+          <div class="card">
+            <div class="img-place">
+              <img src="assets/img/work/work-1.jpg" alt="">
+            </div>
+            <div class="caption">
+              <a href="javascript:void(0)" class="post-category">Healthcare Industries</a>
+              <a href="https://github.com/Kristianto06/Diabetes-Mellitus-Analyst" class="post-title">Diabetes-Mellitus-Analyst </a>
+              <span class="post-date"><span class="sr-only">Published on</span> May, 2024</span>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="col-12 text-center py-3 wow fadeInUp">
+          <a href="blog-fullbar.html" class="btn btn-theme">See All Post</a>
+        </div>
+        -->
+      </div>
+    </div>
+  </div> <!-- End blog -->
+  <!-- End gridder -->
+  
+  
+  <div class="vg-page page-contact" id="contact">
+  <div class="container py-5">
+    <div class="text-center">
+      <div class="badge badge-subhead wow fadeInUp">Contact</div>
+    </div>
+    <footer class="footer bg-gray">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="footer-top">
+              <div class="image-container">
+                <img src="assets/img/person.jpg" alt="Kristianto's photo">
+              </div>
+              <div class="content">
+                <blockquote>
+                  "Data is not just numbers; it's the story waiting to be told."<br>
+                  - Kristianto -
+                </blockquote>
+  
+                <ul class="contact-info">
+                  <li><span class="ti-location-pin"></span> Bekasi, Indonesia</li>
+                  <li><span class="ti-email"></span> <a href="mailto:kristianto.mail85@gmail.com">kristianto.mail85@gmail.com</a></li>
+                  <li><span class="ti-mobile"></span> +62 81281557915</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Data Analyst Section -->
+        <div class="data-analyst-container">
+          <div class="text-center">
+            <div class="badge badge-subhead wow fadeInUp">Data Analyst Wokflow</div>
+          </div>
+          <div class="data-analyst">
+                                <div class='progress_inner'>
+                                    <div class='progress_inner__step'>
+                                        <label for='step-1'>STEP 1</label>
+                                    </div>
+                                    <div class='progress_inner__step'>
+                                        <label for='step-2'>STEP 2</label>
+                                    </div>
+                                    <div class='progress_inner__step'>
+                                        <label for='step-3'>STEP 3</label>
+                                    </div>
+                                    <div class='progress_inner__step'>
+                                        <label for='step-4'>STEP 4</label>
+                                    </div>
+                                    <div class='progress_inner__step'>
+                                        <label for='step-5'>STEP 5</label>
+                                    </div>
+                                    <input checked='checked' id='step-1' name='step' type='radio'>
+                                    <input id='step-2' name='step' type='radio'>
+                                    <input id='step-3' name='step' type='radio'>
+                                    <input id='step-4' name='step' type='radio'>
+                                    <input id='step-5' name='step' type='radio'>
+                                    <div class='progress_inner__bar'></div>
+                                    <div class='progress_inner__bar--set'></div>
+                                    <div class='progress_inner__tabs'>
+                                        <div class='tab tab-0'>
+                                            <h1>Understanding Business Questions</h1>
+                                            <p>Prior to initiating analysis, Data Analysts conduct comprehensive stakeholder engagements to define clear business objectives and establish precise analytical goals, ensuring alignment with desired outcomes.</p>
+                                        </div>
+                                        <div class='tab tab-1'>
+                                            <h1>Data Collection & Cleanning</h1>
+                                            <p>Data Ingestion, Exploration and Collects relevant data from various
+                                                sources, ensuring accuracy and completeness. Data cleaning involves
+                                                removing duplicates, filling in missing values, and correcting errors.</p>
+                                        </div>
+                                        <div class='tab tab-2'>
+                                            <h1>Exploratory Data Analysis (EDA)</h1>
+                                            <p>Uses various analytical techniques to find patterns, trends, and valuable
+                                                insights.
+                                                Techniques used can include descriptive statistics, data visualization,
+                                                regression analysis, or machine learning techniques.
+                                                Commonly used tools include SQL, Python (with libraries like Pandas and
+                                                Scikit-learn), and R.</p>
+                                        </div>
+                                        <div class='tab tab-3'>
+                                            <h1>Data Analysis & Visualization</h1>
+                                            <p>Provides the "what" and "why" behind the data, and data visualization
+                                                provides a clear and compelling way to communicate those findings.</p>
+                                        </div>
+                                        <div class='tab tab-4'>
+                                            <h1>Interpretation and Reporting</h1>
+                                            <p>Interprets results, compiles reports, and communicates findings to
+                                                non-numerical audiences.</p>
+                                        </div>
+                                    </div>
+                                    <div class='progress_inner__status'>
+                                        <div class='box_base'></div>
+                                        <div class='box_lid'></div>
+                                        <div class='box_ribbon'></div>
+                                        <div class='box_bow'>
+                                            <div class='box_bow__left'></div>
+                                            <div class='box_bow__right'></div>
+                                        </div>
+                                        <div class='box_item'></div>
+                                        <div class='box_tag'></div>
+                                        <div class='box_string'></div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <!-- end of col -->
+                        </div>
+                        <!-- end of row -->
+                      </div>
+                      <!-- end of container -->
+                    </footer>
+                    <!-- end of footer -->
+                    <!-- Copyright -->
+              
+                    <div class="copyright bg-gray">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <p class="p-small">
+                              Copyright © 2025 All rights reserved. | Designed by
+                              <a class="no-line" href="#">Kristianto</a>
+                            </p>
+                          </div>
+                          <!-- end of col -->
+                        </div>
+                          <!-- end of col -->
+                        </div>
+                        <!-- end of row -->
+                      </div>
+                      <!-- end of container -->
+                    </div>
+                    <!-- end of copyright -->
+                  </div>
+                </div>
+
+  <!-- Copyright -->
+  <!----
+  <div class="copyright bg-gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p class="p-small"><a class="no-line">Kristianto</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p class="p-small" class="no-line">© Copyright 2025 All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  end of copyright -->
+  <!-- Contact -->
+<!--
+  <div class="vg-page page-contact" id="contact">
+    <div class="container-fluid">
+      <div class="text-center wow fadeInUp">
+        <div class="badge badge-subhead">Contact</div>
+      </div>
+      <h1 class="text-center fw-normal wow fadeInUp">Get in touch</h1>
+      <div class="row py-5">
+        <div class="col-lg-7 px-0 pr-lg-3 wow zoomIn">
+       
+          <div class="vg-maps">
+            <div id="google-maps" style="width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <form class="vg-contact-form">
+            <div class="form-row">
+              <div class="col-12 mt-3 wow fadeInUp">
+                <input class="form-control" type="text" name="Name" placeholder="Your Name">
+              </div>
+              <div class="col-6 mt-3 wow fadeInUp">
+                <input class="form-control" type="text" name="Email" placeholder="Email Address">
+              </div>
+              <div class="col-6 mt-3 wow fadeInUp">
+                <input class="form-control" type="text" name="Subject" placeholder="Subject">
+              </div>
+              <div class="col-12 mt-3 wow fadeInUp">
+                <textarea class="form-control" name="Message" rows="6" placeholder="Enter message here.."></textarea>
+              </div>
+              <button type="submit" class="btn btn-theme mt-3 wow fadeInUp ml-1">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <div class="vg-footer">
+    <h1 class="text-center">Kristianto Portfolio</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 py-3">
+          <div class="footer-info">
+            <p>Quotes</p>
+            <hr class="divider">
+            <p class="fs-large fg-white">"I don't write to give joy to readers but to give them a conscience." <span class="ti-book fg-theme-red"></span> - Pramoedya Ananta Toerspan</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 py-3">
+          <div class="float-lg-right">
+            <p>You can Find me on</p>
+            <hr class="divider">
+            <ul class="list-unstyled">
+              <li><a href="https://www.linkedin.com/in/kristianto-77798431/"><span class="ti-linkedin fg-theme-red"></span></a></li>
+              <li><a href="https://github.com/krizz-byte"><span class="ti-github fg-theme-red"></span></a></li>
+              <li><a href="mailto:kristianto.mail85@gmail.com" ><span class="ti-email fg-theme-red"></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 py-3">
+          <div class="float-lg-right">
+            <p>Contact me</p>
+            <hr class="divider">
+            <ul class="list-unstyled">
+              <li>info@virtual.com</li>
+              <li>+8890234</li>
+              <li>+813023</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-3">
+        <div class="col-12 mb-3">
+          <h3 class="fw-normal text-center">Subscribe</h3>
+        </div>
+        <div class="col-lg-6">
+          <form class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Email address">
+              <input type="submit" class="btn btn-theme no-shadow" value="Subscribe">
+            </div>
+          </form>
+        </div>
+        <div class="col-12">
+          <p class="text-center mb-0 mt-4">Copyright &copy;2025. All right reserved | This template is made with <span class="ti-heart fg-theme-red"> <!-- </span> by MAGH(<>)</a></p>-->
+        <!--
+        </div>
+      </div>
+    </div>
+  </div> 
+-->
+  <script src="assets/js/jquery-3.5.1.min.js"></script>
+    
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+    
+  <script src="assets/vendor/owl-carousel/owl.carousel.min.js"></script>
+    
+  <script src="assets/vendor/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    
+  <script src="assets/vendor/isotope/isotope.pkgd.min.js"></script>
+    
+  <script src="assets/vendor/nice-select/js/jquery.nice-select.min.js"></script>
+    
+  <script src="assets/vendor/fancybox/js/jquery.fancybox.min.js"></script>
+
+  <script src="assets/vendor/wow/wow.min.js"></script>
+
+  <script src="assets/vendor/animateNumber/jquery.animateNumber.min.js"></script>
+
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+
+  <script src="assets/js/topbar-virtual.js"></script> <!-- Moved this line -->
+
+  <script src="assets/js/google-maps.js"></script>
+    
+  <script src="assets/js/topbar-virtual.js"></script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
+  
+</body>
+</html>
