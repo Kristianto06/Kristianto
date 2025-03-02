@@ -368,81 +368,102 @@
     PAGE FUNFACT
 ----------------------------------------*/
 .page-funfact {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Vertically center content */
-    align-items: center; /* Horizontally center content */
-    text-align: center;
-    color: #eee; /* Use a softer white for better readability */
-    min-height: 20vh; /* Take at least 50% of viewport height */
-    width: 100%;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: scroll; /* Change it to scroll */
-    padding: 50px 20px; /* Responsive padding */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  text-align: center;
+  min-height: 20vh; /* Take at least 50% of viewport height */
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* Change it to scroll */
+  padding: 50px 20px; /* Responsive padding */
 }
 
 .page-funfact::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(41, 36, 36, 0.8); /* Slightly darker overlay */
-    z-index: -1;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(41, 36, 36, 0.8); /* Slightly darker overlay */
+  z-index: -1;
 }
 
 .page-funfact .funfact-items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
 }
 
 .page-funfact .funfact-item {
-    flex: 1 1 200px;
-    min-width: 200px;
-    max-width: 300px;
-    padding: 20px;
-    background-color: rgba(100, 100, 100, 0.2);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    color: #eee;
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 20px;
+  background-color: rgba(100, 100, 100, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  
 }
 .funfact-item i{
-    font-size: 40px;
-    margin-bottom: 10px;
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
 .funfact-item h3{
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .funfact-item p{
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .page-funfact .section-counter{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-.page-funfact .section-counter .number{
-    color: #eee;
-}
-.page-funfact .section-counter span{
-    color: #eee;
+
+
+/*---------------------------------------
+New style to follow theme colour
+----------------------------------------*/
+
+/* Theme Red */
+.theme-red .page-funfact h1.fw-normal.text-center.wow.fadeInUp {
+  color: #EF3724;
 }
 
-/* Existing CSS... (all of your other styles) */
+/* Theme Blue */
+.theme-blue .page-funfact h1.fw-normal.text-center.wow.fadeInUp {
+  color: #007bff;
+}
+
+/* Theme Green */
+.theme-green .page-funfact h1.fw-normal.text-center.wow.fadeInUp {
+  color: #8cc63f;
+}
+
+/* Theme Orange */
+.theme-orange .page-funfact h1.fw-normal.text-center.wow.fadeInUp {
+  color: #fd7e14;
+}
+
+/* Theme Purple */
+.theme-purple .page-funfact h1.fw-normal.text-center.wow.fadeInUp {
+  color: #6f42c1;
+}
 
 /*---------------------------------------
     RESPONSIVE MEDIA QUERIES
@@ -708,85 +729,95 @@
   padding: 80px 20px; /* Same padding as .page-about */
 }
 
-.page-blog .badge-subhead{
-  color: #eee;
-}
-
-.page-blog .fw-normal{
-  color: #eee;
-}
-
-.page-blog .post-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; /* Spacing between cards */
-}
-
 .page-blog .post-grid .card {
-  margin: 0; /* Remove default card margins */
-  max-width: 350px; /* A bit wider than before */
+  margin: 0;
+  max-width: 350px;
   width: 100%;
   border: 0;
-  background-color: rgba(100, 100, 100, 0.2); /* Dark card background */
+  background-color: rgba(100, 100, 100, 0.2);
   -webkit-transition: box-shadow .3s ease;
   -moz-transition: box-shadow .3s ease;
   transition: box-shadow .3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Softer shadow */
-  border-radius: 10px; /* Rounded corners */
-  overflow: hidden; /* Ensure rounded corners are visible */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;        /* Added: Use flexbox for layout */
+  flex-direction: column; /* Added: Stack items vertically */
 }
-
 .page-blog .post-grid .card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.page-blog .post-grid .card .img-place {
-  width: 100%;
-  height: 200px; /* Fixed height for images */
-  overflow: hidden; /* Ensure the image does not overflow */
+.page-blog .post-grid .card .img-place,
+.page-blog .post-grid .card video { /* Modified: Apply to video too */
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
 }
 
-.page-blog .post-grid .card .img-place img {
+.page-blog .post-grid .card .img-place img,
+.page-blog .post-grid .card video { /* Modified: Apply to video too */
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Maintain aspect ratio and cover container */
+    object-fit: cover; /* Modified: Cover the entire area */
+    object-position: center; /* Added: Center the image/video */
 }
 
 .page-blog .post-grid .card .caption {
-  padding: 20px; /* Consistent padding */
-  color: #eee; /* Light text color */
+  padding: 20px;
+  color: #eee;
+  flex-grow: 1;           /* Added: Allow caption to take available space */
+  display: flex;          /* Added: flex for caption */
+  flex-direction: column; /* Added: stack items in column */
+  justify-content: space-between; /* Added: space between items in the caption */
 }
 
 .page-blog .post-grid .post-category {
   font-weight: 500;
-  color: #EF3724; /* Theme color */
+  color: #EF3724;
   text-decoration: none;
-  display: block; /* Make it take full width */
-  margin-bottom: 10px; /* Add space below category */
+  display: block;
+  margin-bottom: 10px;
   font-size: 14px;
 }
 
 .page-blog .post-grid .post-title {
-  display: block; /* Make it take full width */
-  color: #eee; /* Light text color */
+  display: block;
+  color: #eee;
   font-weight: 700;
-  font-size: 1.2rem; /* Slightly bigger title */
+  font-size: 1.2rem;
   text-decoration: none;
-  margin-bottom: 10px; /* Add space below title */
+  margin-bottom: 10px;
   transition: all 0.3s ease;
 }
 
 .page-blog .post-grid .post-title:hover,
 .page-blog .post-grid .post-title:focus {
-  color: #EF3724; /* Theme color on hover */
+  color: #EF3724;
 }
 
 .page-blog .post-grid .post-date {
   font-size: 14px;
-  color: #747474; /* Lighter gray */
+  color: #747474;
   display: block;
 }
+/* Small screens (mobile) */
+@media (max-width: 576px) {
+    /* current code */
+    .page-blog .post-grid .card {
+        max-width: calc(100% - 20px);
+    }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 576px) and (max-width: 768px) {
+    /* current code */
+    .page-blog .post-grid .card {
+        max-width: calc(100% - 20px);
+    }
+}
+
+
 
 
 /*---------------------------------------
