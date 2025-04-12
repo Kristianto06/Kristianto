@@ -357,106 +357,83 @@
 /*---------------------------------------
   PAGE-SERVICE
 ----------------------------------------*/
-.page-service {
-background-color: #212121; /* Dark background */
-padding: 50px 15px; /* Adjusted padding for smaller screens */
-min-height: 20vh;
-}
-
-.page-service .badge-subhead {
-  margin-bottom: 15px; /* Adjusted margin */
-  text-align: center; /* Center the badge on mobile */
-  display: inline-block;
-}
-
-.page-service h1{
-  color: #eee;
-  text-align: center; /* Center the heading on mobile */
-}
-
-.page-service .row {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap; /* Changed: Allow wrapping on smaller screens */
-  justify-content: center; /* Changed: Center items */
-  gap: 15px; /* Adjusted spacing between cards */
-  margin-top: 30px; /* Adjusted margin-top */
-}
-
-.page-service .row > div{
-  width: 100%; /* Changed: Each card takes full width on mobile */
-  max-width: 400px;
-}
-
 .page-service .card-service {
-margin: 0 auto; /* Center the card */
-width: 100%;
-padding: 20px; /* Adjusted padding for smaller screens */
-max-width: 100%;
-background-color: rgba(100, 100, 100, 0.2); /* Dark background */
-border-radius: 10px; /* Rounded corners */
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-color: #eee;
-transition: box-shadow 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .page-service .card-service:hover {
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .page-service .card-service .icon {
-display: block; /* Make it a block element */
-margin: 0 auto 10px; /* Adjusted margin bottom */
-width: 60px; /* Further reduced size */
-height: 60px; /* Further reduced size */
-line-height: 60px; /* Vertically center the icon */
-text-align: center;
-font-size: 24px; /* Further reduced icon size */
-border-radius: 50%;
-background-color: #747474; /* Dark gray background */
-color: #fff; /* White icon color */
-}
-
-.page-service .card-service .caption {
-margin-top: 0; /* Remove default top margin */
-text-align: center;
-color: #eee; /* Light text color */
-}
-
-.page-service .card-service .caption h4 {
+  font-size: 40px;
+  color: #EF3724;
   margin-bottom: 10px;
-  font-size: 1rem;
 }
-.page-service .card-service .caption p {
+
+.page-service .card-service h4 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.page-service .card-service p {
   font-size: 14px;
+  color: #ccc;
+}
+
+/* Small screens (mobile) */
+@media (max-width: 576px) {
+  .page-service {
+    padding: 40px 10px; /* Adjust padding for smaller screens */
+  }
+  .page-service .row > div {
+    width: 100%; /* Full width for mobile */
+    margin-bottom: 20px; /* Add spacing between cards */
+  }
+  .page-service .card-service .icon {
+    font-size: 30px; /* Smaller icon size */
+  }
+  .page-service .card-service h4 {
+    font-size: 1rem; /* Adjust heading size */
+  }
+  .page-service .card-service p {
+    font-size: 12px; /* Adjust text size */
+  }
 }
 
 /* Medium screens (tablets) */
 @media (min-width: 576px) and (max-width: 768px) {
   .page-service {
-      padding: 80px 15px;
+    padding: 80px 15px;
   }
-  .page-service .row > div{
-      width: calc(50% - 15px); /* 2 columns on tablets */
-      max-width: none;
+  .page-service .row > div {
+    width: calc(50% - 15px);
+    max-width: none;
   }
   .page-service .card-service .icon {
-      width: 70px;
-      height: 70px;
-      line-height: 70px;
-      font-size: 26px;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 26px;
   }
 }
 
 /* Large screens (desktops) */
 @media (min-width: 768px) {
   .page-service .row > div{
-      width: calc(25% - 15px); /* 4 columns on desktops */
+      width: calc(25% - 15px);
       max-width: none;
   }
   .page-service .row{
-      flex-wrap: nowrap; /* Prevent wrapping */
-      justify-content: space-between; /* Space between items */
+      flex-wrap: nowrap;
+      justify-content: space-between;
   }
   .page-service .card-service .icon {
       width: 80px;
