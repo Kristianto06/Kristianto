@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeopleU Analytics Dashboard</title>
+    <!-- Inter Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN for interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2canvas for capturing HTML as image for PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF for creating PDF documents -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Tailwind CSS Configuration: Extending default theme colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',   // Blue
+                        secondary: '#10B981', // Green
+                        accent: '#8B5CF6',    // Purple
+                        dark: '#1F2937;',      // Dark Gray
+                        light: '#F9FAFB'      // Light Gray/Off-white
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS for elements not easily styled by Tailwind (e.g., pseudo-elements, gradients) -->
+    <style>
+        /* CSS Variables for consistent color usage */
+        :root {
+            --primary: #3B82F6;
+            --primary-light: #93C5FD;
+            --secondary: #10B981;
+            --accent: #8B5CF6;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+        }
+
+        /* Base body styling with Inter font and a subtle gradient background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #f8fafc 100%);
+            color: #374151;
+        }
+
+        /* Dashboard header background with a gradient and shadow */
+        .dashboard-header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        /* General card styling for consistency across sections */
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            overflow: hidden; /* Ensures content respects rounded corners */
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Card hover effect for subtle interaction */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section title with an underline pseudo-element for design */
+        .section-title {
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Metric card specific styling with colored left border */
+        .metric-card {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        /* Color variations for metric card borders */
+        .metric-card.blue::before { background: var(--primary); }
+        .metric-card.green::before { background: var(--secondary); }
+        .metric-card.purple::before { background: var(--accent); }
+        .metric-card.yellow::before { background: #F59E0B; } /* Tailwind yellow-500 */
+        .metric-card.red::before { background: #EF4444; }   /* Tailwind red-500 */
+        .metric-card.indigo::before { background: #6366F1; } /* Tailwind indigo-500 */
+
+        /* Styling for the large metric values */
+        .metric-value {
+            font-weight: 700;
+            font-size: 1.75rem; /* 28px */
+            margin: 10px 0;
+        }
+
+        /* Trend indicator colors */
+        .trend-up {
+            color: var(--secondary); /* Green for positive trends */
+        }
+
+        .trend-down {
+            color: #EF4444; /* Red for negative trends */
+        }
+
+        /* Table styling for improved readability and appearance */
+        table {
+            width: 100%;
+            border-collapse: separate; /* Allows for rounded corners and spacing */
+            border-spacing: 0;
+        }
+
+        thead {
+            position: sticky; /* Makes header stick during scroll */
+            top: 0;
+            z-index: 10; /* Ensures header is above other content */
+        }
+
+        th {
+            background-color: var(--light);
+            font-weight: 600;
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Removes bottom border from last row for cleaner look */
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Row hover effect */
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Badge styling for insights and statuses */
+        .insight-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px; /* Pill shape */
+            font-size: 0.8rem; /* 12.8px */
+            font-weight: 500;
+        }
+
+        /* Color variations for insight badges */
+        .insight-positive {
+            background-color: #D1FAE5; /* Green light */
+            color: var(--secondary); /* Green dark */
+        }
+
+        .insight-warning {
+            background-color: #FEF3C7; /* Yellow light */
+            color: #F59E0B; /* Yellow dark */
+        }
+
+        .insight-critical {
+            background-color: #FEE2E2; /* Red light */
+            color: #EF4444; /* Red dark */
+        }
+
+        .insight-info {
+            background-color: #DBEAFE; /* Blue light */
+            color: var(--primary); /* Blue dark */
+        }
+
+        /* Progress bar styling */
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #E5E7EB; /* Light gray background */
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        /* Navigation tab styling */
+        .nav-tab {
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0; /* Rounded top corners */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #EFF6FF; /* Light blue background */
+            color: var(--primary);
+            font-weight: 500;
+            white-space: nowrap; /* Prevent wrapping in tabs */
+        }
+
+        .nav-tab.active {
+            background-color: white;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05); /* Shadow for active tab */
+            color: var(--dark);
+        }
+
+        /* Placeholder for charts */
+        .chart-placeholder {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F9FAFB;
+            border-radius: 12px;
+            border: 1px dashed #D1D5DB; /* Dashed border for placeholder */
+        }
+
+        /* Roadmap item styling with connecting lines */
+        .roadmap-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid #DBEAFE; /* Light blue border */
+        }
+
+        .roadmap-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 25px; /* Position below the circle */
+            bottom: -25px; /* Extend line downwards */
+            width: 2px;
+            background: #DBEAFE;
+        }
+
+        /* Hide line for the last roadmap item */
+        .roadmap-item:last-child::after {
+            display: none;
+        }
+
+        /* KPI indicator styling */
+        .kpi-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem; /* 14.4px */
+            font-weight: 500;
+        }
+
+        /* Color variations for KPI indicators */
+        .kpi-positive {
+            background-color: #D1FAE5;
+            color: var(--secondary);
+        }
+
+        .kpi-negative {
+            background-color: #FEE2E2;
+            color: #EF4444;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 10; /* Ensure dropdown is on top */
+            padding: 8px 0;
+            right: 0; /* Align dropdown to the right */
+        }
+
+        .dropdown-open .dropdown-content { /* Toggles with JS */
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #374151; /* Dark gray for links */
+        }
+
+        /* --- Custom Funnel Styles --- */
+        .funnel-bar {
+            height: 55px; /* Increased height for better text fit */
+            color: white;
+            display: flex;
+            flex-direction: column; /* Stack text vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            padding: 8px 1.5rem; /* Padding for labels */
+            border-radius: 9999px; /* Fully rounded corners */
+            transition: all 0.3s ease; /* Smooth transitions for width changes */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: 500;
+            position: relative; /* For absolute positioning of overlay */
+            flex-grow: 1; /* Allow bar to grow */
+            margin-bottom: 8px; /* Space between bars */
+            text-align: center; /* Center text within the bar */
+        }
+
+        .funnel-bar:last-child {
+            margin-bottom: 0; /* No margin after the last bar */
+        }
+
+        .funnel-bar-text {
+            z-index: 1; /* Ensure text is above background overlay */
+            font-size: 0.95rem; /* Slightly reduced font size for better fit */
+            line-height: 1.3; /* Adjust line height for stacked text */
+        }
+        .funnel-bar-text.label {
+            font-weight: 600; /* Make stage labels bolder */
+        }
+        .funnel-bar-text.stats {
+            font-size: 0.85rem; /* Smaller font for stats */
+            opacity: 0.9;
+        }
+
+
+        .funnel-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.2); /* Slightly dark overlay for text readability */
+            border-radius: inherit;
+            z-index: 0;
+        }
+
+        /* Styles for the loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .loading-overlay .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Adjust positions for responsiveness */
+        @media (min-width: 768px) { /* md breakpoint */
+            .funnel-diagram {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Loading Overlay for PDF Export -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>Generating PDF, please wait...</p>
+        </div>
+
+        <!-- Header Section -->
+        <header class="dashboard-header rounded-2xl p-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">PeopleU Data Analytics Dashboard</h1>
+                    <p class="text-white/90 max-w-2xl">Strategic Insights for Marketing, Sales & Pricing Optimization</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-4 md:mt-0">
+                    <!-- Quarter Select Removed -->
+                    <button id="exportReportBtn" class="bg-white text-primary font-medium py-2 px-4 rounded-lg flex items-center w-full sm:w-auto justify-center">
+                        <i class="fas fa-download mr-2"></i> Export Report (PDF)
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs Section -->
+        <div class="flex mb-6 overflow-x-auto pb-2 -mx-4 sm:-mx-0 px-4 sm:px-0">
+            <div id="tab-executive-summary" class="nav-tab active" data-content="executive-summary-content">Executive Summary</div>
+            <div id="tab-marketing-analytics" class="nav-tab" data-content="marketing-analytics-content">Marketing Analytics</div>
+            <div id="tab-sales-performance" class="nav-tab" data-content="sales-performance-content">Sales Performance</div>
+            <div id="tab-pricing-strategy" class="nav-tab" data-content="pricing-strategy-content">Pricing Strategy</div>
+            <div id="tab-recommendations" class="nav-tab" data-content="recommendations-content">Recommendations</div>
+            <div id="tab-predictive-insights" class="nav-tab" data-content="predictive-insights-content">Predictive Insights</div>
+        </div>
+
+        <!-- Main Content Area - All sections will be here and hidden/shown by JS -->
+        <div id="dashboardContent" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Executive Summary Content -->
+            <div id="executive-summary-content" class="tab-content w-full lg:col-span-3 block">
+                <!-- Key Metrics Summary -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Metric Card 1: Total Leads -->
+                    <div class="metric-card blue card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Total Leads</h3>
+                                <div class="metric-value">3,397</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-up mr-1"><i class="fas fa-arrow-up"></i> 12.4%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <i class="fas fa-users text-primary text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 2: Converted Leads -->
+                    <div class="metric-card green card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Converted Leads</h3>
+                                <div class="metric-value">901</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-up mr-1"><i class="fas fa-arrow-up"></i> 8.7%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <i class="fas fa-check-circle text-secondary text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 3: Conversion Rate -->
+                    <div class="metric-card purple card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Conversion Rate</h3>
+                                <div class="metric-value">26.52%</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-up mr-1"><i class="fas fa-arrow-up"></i> 3.2%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-lg">
+                                <i class="fas fa-chart-line text-accent text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 4: Marketing ROI -->
+                    <div class="metric-card yellow card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Marketing ROI</h3>
+                                <div class="metric-value">83.34x</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-down mr-1"><i class="fas fa-arrow-down"></i> 2.1%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-lg">
+                                <i class="fas fa-coins text-yellow-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New Metric Card 5: Total Revenue -->
+                    <div class="metric-card indigo card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Total Revenue</h3>
+                                <div class="metric-value">$7.82M</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-up mr-1"><i class="fas fa-arrow-up"></i> 15.1%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-indigo-100 p-3 rounded-lg">
+                                <i class="fas fa-dollar-sign text-indigo-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New Metric Card 6: Total Marketing Cost -->
+                    <div class="metric-card red card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-gray-600 font-medium">Total Marketing Cost</h3>
+                                <div class="metric-value">$93.8K</div>
+                                <div class="text-sm text-gray-500 flex items-center">
+                                    <span class="trend-up mr-1"><i class="fas fa-arrow-up"></i> 5.8%</span> vs last quarter
+                                </div>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-lg">
+                                <i class="fas fa-tags text-red-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Root Cause & Problem Statement Content -->
+                <section class="card p-6 mt-6">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">Root Cause & Problem Statement</h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-question-circle text-primary mr-2"></i>
+                                Problem Statement
+                            </h3>
+                            <p class="text-gray-700">
+                                Despite strong lead generation, our conversion rates from "Discussion Success" to "Offer Sent" and ultimately to "Deal Won" are lower than industry benchmarks, leading to significant revenue loss and reduced marketing ROI. This indicates potential bottlenecks in our sales enablement processes and pricing strategy, particularly for certain product tiers.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                Identified Root Causes
+                            </h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-2">
+                                <li>**Lack of Tailored Proposals:** Sales teams may lack specific tools or content to create proposals highly customized to client needs post-discussion.</li>
+                                <li>**Ineffective Pricing Communication:** Sales representatives might not be effectively communicating value propositions tied to pricing, leading to resistance at the offer stage.</li>
+                                <li>**Prolonged Sales Cycle:** Delays in preparing and sending offers, or lengthy internal approval processes, could be causing prospects to lose interest.</li>
+                                <li>**Competitive Pricing Pressures:** Competitors might be offering more aggressive pricing or value bundles, impacting our "Offer Sent" acceptance rates.</li>
+                                <li>**Inconsistent Follow-up Strategy:** Lack of a standardized and timely follow-up strategy post-discussion could lead to opportunities slipping away.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-chart-bar text-green-500 mr-2"></i>
+                                Supporting Data Evidence
+                            </h3>
+                            <p class="text-gray-700">
+                                The "Drop-off Rates Between Funnel Stages" chart clearly illustrates a significant drop-off (22.9%) from the "Discussion Success" stage to the "Offer Sent" stage, confirming a critical bottleneck in this transition point. This is further supported by the overall conversion rate from "Leads Registered" to "Deal Won" being 26.5%, indicating substantial leakage throughout the funnel.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Marketing Analytics Content -->
+            <div id="marketing-analytics-content" class="tab-content hidden col-span-1 lg:col-span-3">
+                <section class="card p-6 mb-6 col-span-1 lg:col-span-2">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                        <h2 class="section-title text-2xl font-bold text-gray-900 mb-4 sm:mb-0">Marketing Performance</h2>
+                        <div class="dropdown">
+                            <button id="filterDropdownBtn" class="text-gray-500 hover:text-gray-700 flex items-center">
+                                <span id="currentFilterText">Year to Date</span>
+                                <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                            </button>
+                            <div id="filterDropdownContent" class="dropdown-content">
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-50" data-filter="Last Week">Last Week</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-50" data-filter="Last Month">Last Month</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-50" data-filter="Year to Date">Year to Date</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-50" data-filter="2022 Quarter">2022 Quarter</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-50" data-filter="2021 Quarter">2021 Quarter</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Channel Effectiveness Chart -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Channel Effectiveness</h3>
+                            <div class="chart-container relative h-64 md:h-80">
+                                <canvas id="channelEffectivenessChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- Tier Comparison Chart -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Tier Comparison</h3>
+                            <div class="chart-container relative h-64 md:h-80">
+                                <canvas id="financialTierChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Top Performing Channels</h3>
+                    <!-- Responsive table container -->
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table id="channelsTable">
+                            <thead>
+                                <tr>
+                                    <th>Channel</th>
+                                    <th>Leads</th>
+                                    <th>Conversion</th>
+                                    <th>Avg. GMV</th>
+                                    <th>CPL</th>
+                                    <th>ROI</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Strategic Insight Box -->
+                    <div class="mt-6 bg-blue-50 p-4 rounded-lg">
+                        <div class="flex">
+                            <div class="mr-3 mt-1 text-blue-500">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-blue-800">Strategic Insight</h4>
+                                <p class="text-blue-700">Referral channel shows highest conversion and ROI. Consider reallocating budget from Organic Social to Referral programs to maximize marketing efficiency.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sales Performance Content -->
+            <div id="sales-performance-content" class="tab-content hidden col-span-1 lg:col-span-3">
+                <section class="card p-6">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">Sales Funnel Analysis</h2>
+
+                    <div class="text-center mb-8">
+                        <h3 class="text-3xl font-extrabold text-gray-900 uppercase tracking-wider">MARKETING & SALES FUNNEL</h3>
+                    </div>
+
+                    <div class="relative flex flex-col items-center justify-center p-4 min-h-[550px] bg-gray-50 rounded-xl overflow-hidden shadow-inner">
+                        <!-- Funnel Bars Container -->
+                        <div id="funnelBarsContainer" class="flex flex-col items-center w-full max-w-2xl mx-auto py-8 z-10">
+                            <!-- Funnel bars will be injected here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Critical Bottleneck Insight Box -->
+                    <div class="bg-yellow-50 p-4 rounded-lg mt-6">
+                        <div class="flex">
+                            <div class="mr-3 mt-1 text-yellow-500">
+                                <i class="fas fa-exclamation-triangle text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-yellow-800">Critical Bottleneck</h4>
+                                <p class="text-yellow-700">High drop-off rates observed between Discussion Success and Offer Sent stages (22.9% loss). Sales enablement resources needed to improve proposal development efficiency.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drop-off Rates Chart -->
+                    <div class="card p-6 mt-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Drop-off Rates Between Funnel Stages</h3>
+                        <div class="chart-container relative h-64 md:h-80">
+                            <canvas id="dropOffChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Pricing Strategy Content -->
+            <div id="pricing-strategy-content" class="tab-content hidden col-span-1 lg:col-span-3">
+                 <section class="card p-6 col-span-1 lg:col-span-3">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">Pricing Strategy & Elasticity</h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Discount Strategy Performance Table -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Discount Strategy Performance</h3>
+                            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Discount Type</th>
+                                            <th>Contracts</th>
+                                            <th>Avg. Price</th>
+                                            <th>Discount</th>
+                                            <th>Revenue</th>
+                                            <th>Growth</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">2021 Quarter</td>
+                                            <td>144</td>
+                                            <td>$19,390</td>
+                                            <td>10.0%</td>
+                                            <td>$706M</td>
+                                            <td class="font-medium text-green-600">Baseline</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">2022 Quarter</td>
+                                            <td>1,610</td>
+                                            <td>$17,948</td>
+                                            <td>15.4%</td>
+                                            <td>$7,776M</td>
+                                            <td class="font-medium text-green-600">+1000.6%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Price Elasticity by Product Table -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Price Elasticity by Product</h3>
+                            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Elasticity</th>
+                                            <th>Demand Type</th>
+                                            <th>Recommendation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">Business</td>
+                                            <td>-8.42</td>
+                                            <td><span class="insight-positive insight-badge">Elastic</span></td>
+                                            <td>Consider 5% price decrease</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Startup</td>
+                                            <td>-82.84</td>
+                                            <td><span class="insight-positive insight-badge">Highly Elastic</span></td>
+                                            <td>Consider 5% price decrease</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Enterprise</td>
+                                            <td>7.16</td>
+                                            <td><span class="insight-critical insight-badge">Anomaly</span></td>
+                                            <td>Maintain current pricing</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Projected Impact of Pricing Changes</h3>
+                    <!-- Projected Impact Table -->
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Current Price</th>
+                                    <th>Suggested Price</th>
+                                    <th>Current Revenue</th>
+                                    <th>Projected Revenue</th>
+                                    <th>Growth</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-medium">Business</td>
+                                    <td>$22,500</td>
+                                    <td>$21,375</td>
+                                    <td>$1.40M</td>
+                                    <td>$1.88M</td>
+                                    <td class="font-medium text-green-600">+34.8%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Startup</td>
+                                    <td>$18,000</td>
+                                    <td>$17,100</td>
+                                    <td>$0.92M</td>
+                                    <td>$4.48M</td>
+                                    <td class="font-medium text-green-600">+388.3%</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-medium">Enterprise</td>
+                                    <td>$17,156</td>
+                                    <td>$17,156</td>
+                                    <td>$6.74M</td>
+                                    <td>$6.74M</td>
+                                    <td class="font-medium">0.0%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Recommendations Content -->
+            <div id="recommendations-content" class="tab-content hidden col-span-1 lg:col-span-3">
+                 <section class="card p-6 col-span-1 lg:col-span-2">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">Strategic Recommendations</h2>
+
+                    <div class="space-y-6">
+                        <!-- Recommendation: Budget Reallocation -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-money-bill-wave text-primary mr-2"></i>
+                                Budget Reallocation
+                            </h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                                <li><span class="font-medium">Increase Investment:</span> Focus more budget on Referral and Direct channels due0 to higher ROI</li>
+                                <li><span class="font-medium">Reduce Investment:</span> Re-evaluate spending on Organic Social which shows lower ROI</li>
+                                <li><span class="font-medium">Test & Learn:</span> Allocate 15% of budget to experimental channels</li>
+                            </ul>
+                        </div>
+
+                        <!-- Recommendation: Conversion Acceleration -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-bolt text-yellow-500 mr-2"></i>
+                                Conversion Acceleration
+                            </h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                                <li><span class="font-medium">Small Tiers:</span> Implement 7-day free trial with automated nurture stream</li>
+                                <li><span class="font-medium">Medium Tiers:</span> Offer 14-day pilot program with dedicated specialist support</li>
+                                <li><span class="font-medium">Large Tiers:</span> Develop 30-day implementation roadmap with executive sponsorship</li>
+                            </ul>
+                        </div>
+
+                        <!-- Recommendation: Retention Optimization -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-lock text-green-500 mr-2"></i>
+                                Retention Optimization
+                            </h3>
+                            <ul class="list-disc list-inside ml-4 text-gray-600 space-y-2">
+                                <li>Implement success milestones at 30, 60, and 90 days post-contract</li>
+                                <li>Develop customer health score combining usage metrics and feedback</li>
+                                <li>Create tiered success packages (Bronze/Silver/Gold support)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Predictive Insights Content -->
+            <div id="predictive-insights-content" class="tab-content hidden col-span-1 lg:col-span-3">
+                <section class="card p-6">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">Predictive Insights</h2>
+
+                    <div class="space-y-6">
+                        <!-- 90-Day Projections Table -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-3">90-Day Projections</h3>
+                            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Current</th>
+                                            <th>Projected</th>
+                                            <th>Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">Conversion Rate</td>
+                                            <td>26.5%</td>
+                                            <td>33.2%</td>
+                                            <td><span class="kpi-positive kpi-indicator">+6.7%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Avg. Deal Size</td>
+                                            <td>$1.99M</td>
+                                            <td>$2.30M</td>
+                                            <td><span class="kpi-positive kpi-indicator">+15.0%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Marketing ROI</td>
+                                            <td>83.3x</td>
+                                            <td>116.7x</td>
+                                            <td><span class="kpi-positive kpi-indicator">+40.1%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">6-mo Retention</td>
+                                            <td>8.0%</td>
+                                            <td>9.0%</td>
+                                            <td><span class="kpi-positive kpi-indicator">+12.5%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Optimization Opportunity Insight Box -->
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <div class="flex">
+                                <div class="mr-3 mt-1 text-purple-500">
+                                    <i class="fas fa-chart-line text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-purple-800">Optimization Opportunity</h4>
+                                    <p class="text-purple-700">Implementing recommended pricing changes could increase Startup product revenue by 388% while maintaining Enterprise stability.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="card p-6 col-span-1 lg:col-span-3 mt-6">
+                    <h2 class="section-title text-2xl font-bold text-gray-900 mb-6">90-Day Implementation Roadmap</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Roadmap: Weeks 1-4 -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-calendar-week text-primary mr-2"></i>
+                                Weeks 1-4
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="roadmap-item">Launch channel budget reallocation</li>
+                                <li class="roadmap-item">Develop financial-tier sales playbooks</li>
+                                <li class="roadmap-item">Initiate ABM pilot for Enterprise segment</li>
+                                <li class="roadmap-item">Begin pricing strategy A/B tests</li>
+                            </ul>
+                        </div>
+
+                        <!-- Roadmap: Weeks 5-8 -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-calendar-week text-blue-500 mr-2"></i>
+                                Weeks 5-8
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="roadmap-item">Roll out conversion acceleration programs</li>
+                                <li class="roadmap-item">Implement revised discount structures</li>
+                                <li class="roadmap-item">Launch customer health dashboard</li>
+                                <li class="roadmap-item">Analyze initial pricing test results</li>
+                            </ul>
+                        </div>
+
+                        <!-- Roadmap: Weeks 9-12 -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-calendar-week text-green-500 mr-2"></i>
+                                Weeks 9-12
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="roadmap-item">Analyze results from new strategies</li>
+                                <li class="roadmap-item">Refine retention success packages</li>
+                                <li class="roadmap-item">Establish continuous testing pipeline</li>
+                                <li class="roadmap-item">Prepare Q3 strategic plan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="text-center mt-12 p-4 text-gray-500 text-sm">
+            <p>&copy; 2025 PeopleU Data Analysis Project. All rights reserved.</p>
+            <p class="mt-1">Data refreshed: Today at 09:42 AM | Next refresh: 04:00 PM</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mock Data for the Dashboard
+        const dashboardData = {
+            'Last Week': {
+                channels: [
+                    { name: 'Referral', leads: 820, conversion: 8.50, gmv: '3.25M', cpl: '890K', roi: 0.02, status: 'High Performer' },
+                    { name: 'CPC', leads: 1080, conversion: 7.80, gmv: '1.45M', cpl: '1.05M', roi: 0.01, status: 'Needs Optimization' },
+                    { name: 'Direct', leads: 610, conversion: 7.90, gmv: '2.10M', cpl: '1.25M', roi: 0.01, status: 'Needs Optimization' },
+                    { name: 'Organic Search', leads: 500, conversion: 7.50, gmv: '2.10M', cpl: '1.05M', roi: 0.00, status: 'Needs Optimization' },
+                    { name: 'Organic Social', leads: 470, conversion: 7.00, gmv: '1.25M', cpl: '870K', roi: 0.00, status: 'Critical' }
+                ],
+                channelChart: {
+                    labels: ['Referral', 'CPC', 'Direct', 'Organic Search', 'Organic Social'],
+                    data: [25, 20, 18, 15, 22] // Example distribution
+                },
+                financialTierChart: {
+                    labels: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'],
+                    data: [300, 450, 200, 150] // Example data for last week
+                }
+            },
+            'Last Month': {
+                channels: [
+                    { name: 'Referral', leads: 3200, conversion: 8.30, gmv: '12.5M', cpl: '3.5M', roi: 0.015, status: 'High Performer' },
+                    { name: 'CPC', leads: 4200, conversion: 7.60, gmv: '5.8M', cpl: '4.2M', roi: 0.005, status: 'Needs Optimization' },
+                    { name: 'Direct', leads: 2400, conversion: 7.70, gmv: '8.1M', cpl: '5.0M', roi: 0.005, status: 'Needs Optimization' },
+                    { name: 'Organic Search', leads: 1900, conversion: 7.10, gmv: '7.9M', cpl: '4.3M', roi: 0.002, status: 'Needs Optimization' },
+                    { name: 'Organic Social', leads: 1800, conversion: 7.20, gmv: '5.1M', cpl: '3.4M', roi: 0.001, status: 'Critical' }
+                ],
+                channelChart: {
+                    labels: ['Referral', 'CPC', 'Direct', 'Organic Search', 'Organic Social'],
+                    data: [28, 22, 19, 14, 17]
+                },
+                financialTierChart: {
+                    labels: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'],
+                    data: [1200, 1800, 800, 600]
+                }
+            },
+            'Year to Date': {
+                channels: [
+                    { name: 'Referral', leads: 6000, conversion: 8.80, gmv: '25.0M', cpl: '2.0M', roi: 0.025, status: 'High Performer' },
+                    { name: 'CPC', leads: 8000, conversion: 7.90, gmv: '12.0M', cpl: '8.0M', roi: 0.01, status: 'Needs Optimization' },
+                    { name: 'Direct', leads: 4500, conversion: 8.00, gmv: '16.0M', cpl: '9.5M', roi: 0.01, status: 'High Performer' },
+                    { name: 'Organic Search', leads: 3800, conversion: 7.40, gmv: '15.5M', cpl: '8.2M', roi: 0.005, status: 'Needs Optimization' },
+                    { name: 'Organic Social', leads: 3500, conversion: 7.10, gmv: '10.0M', cpl: '6.5M', roi: 0.001, status: 'Critical' }
+                ],
+                channelChart: { // Corrected channel chart data for Year to Date
+                    labels: ['Referral', 'CPC', 'Direct', 'Organic Search', 'Organic Social'],
+                    data: [35, 20, 25, 10, 10]
+                },
+                financialTierChart: {
+                    labels: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'],
+                    data: [2000, 3000, 1500, 1000]
+                }
+            },
+            '2022 Quarter': {
+                channels: [
+                    { name: 'Referral', leads: 700, conversion: 7.50, gmv: '2.80M', cpl: '850K', roi: 0.01, status: 'High Performer' },
+                    { name: 'CPC', leads: 950, conversion: 7.00, gmv: '1.30M', cpl: '1.00M', roi: 0.005, status: 'Needs Optimization' },
+                    { name: 'Direct', leads: 550, conversion: 7.20, gmv: '1.90M', cpl: '1.20M', roi: 0.005, status: 'Needs Optimization' },
+                    { name: 'Organic Search', leads: 450, conversion: 6.80, gmv: '1.95M', cpl: '1.05M', roi: 0.00, status: 'Needs Optimization' },
+                    { name: 'Organic Social', leads: 400, conversion: 6.50, gmv: '1.10M', cpl: '800K', roi: 0.00, status: 'Critical' }
+                ],
+                channelChart: { // Ensured consistent labels and new data for 2022 Quarter
+                    labels: ['Referral', 'CPC', 'Direct', 'Organic Search', 'Organic Social'],
+                    data: [28, 22, 19, 16, 15]
+                },
+                financialTierChart: {
+                    labels: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'],
+                    data: [900, 1400, 650, 450]
+                }
+            },
+            '2021 Quarter': {
+                channels: [
+                    { name: 'Referral', leads: 650, conversion: 7.00, gmv: '2.50M', cpl: '800K', roi: 0.005, status: 'High Performer' },
+                    { name: 'CPC', leads: 900, conversion: 6.50, gmv: '1.20M', cpl: '950K', roi: 0.001, status: 'Needs Optimization' },
+                    { name: 'Direct', leads: 500, conversion: 6.80, gmv: '1.70M', cpl: '1.10M', roi: 0.001, status: 'Needs Optimization' },
+                    { name: 'Organic Search', leads: 400, conversion: 6.30, gmv: '1.60M', cpl: '980K', roi: 0.00, status: 'Needs Optimization' },
+                    { name: 'Organic Social', leads: 350, conversion: 6.00, gmv: '900K', cpl: '750K', roi: 0.00, status: 'Critical' }
+                ],
+                channelChart: { // Ensured consistent labels and new data for 2021 Quarter
+                    labels: ['Referral', 'CPC', 'Direct', 'Organic Search', 'Organic Social'],
+                    data: [26, 21, 17, 14, 22]
+                },
+                financialTierChart: {
+                    labels: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'],
+                    data: [800, 1300, 600, 400]
+                }
+            }
+        };
+
+        // Data for the Sales Funnel Visualization (aligned with the image's key stages)
+        // Note: The 'count' values here are used for visual representation and drop-off calculation.
+        // They are static for this funnel visualization example.
+        const salesFunnelStages = [
+            { label: "Leads Registered", count: 3397, color: "bg-blue-900" },
+            { label: "Leads Qualification", count: 2891, color: "bg-blue-600" },
+            { label: "Initial Communication", count: 2606, color: "bg-blue-400" },
+            { label: "Approach Success", count: 2232, color: "bg-blue-200" },
+            { label: "Discussion Success", count: 1805, color: "bg-yellow-400" },
+            { label: "Offer Sent", count: 1391, color: "bg-amber-400" }, // Changed to amber-400 for consistency with image
+            { label: "Quotation Received", count: 1105, color: "bg-red-500" }, // Changed to red-500 for consistency with image
+            { label: "Deal Won", count: 901, color: "bg-green-500" }
+        ];
+
+        // Set default filter to 'Year to Date' after removing 'Last Quarter'
+        let currentFilter = 'Year to Date';
+        let channelEffectivenessChartInstance;
+        let financialTierChartInstance;
+        let dropOffChartInstance; // New instance for the drop-off chart
+
+        // Function to update the channels table
+        function updateChannelsTable(data) {
+            const tbody = document.querySelector('#channelsTable tbody');
+            tbody.innerHTML = ''; // Clear existing rows
+
+            data.forEach(channel => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="font-medium">${channel.name}</td>
+                    <td>${channel.leads}</td>
+                    <td>${channel.conversion}%</td>
+                    <td>$${channel.gmv}</td>
+                    <td>$${channel.cpl}</td>
+                    <td>${channel.roi.toFixed(2)}</td>
+                    <td><span class="insight-badge ${channel.status.includes('High') ? 'insight-positive' : channel.status.includes('Optimization') ? 'insight-warning' : 'insight-critical'}">${channel.status}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Function to render/update Chart.js charts
+        function renderCharts(filterData) {
+            const chartColors = [
+                '#3B82F6', // primary
+                '#10B981', // secondary
+                '#8B5CF6', // accent
+                '#F59E0B', // yellow-500
+                '#EF4444', // red-500
+                '#6366F1'  // indigo-500
+            ];
+
+            // Channel Effectiveness Chart (Pie Chart)
+            const channelCtx = document.getElementById('channelEffectivenessChart').getContext('2d');
+            if (channelEffectivenessChartInstance) {
+                channelEffectivenessChartInstance.destroy(); // Destroy previous instance
+            }
+            channelEffectivenessChartInstance = new Chart(channelCtx, {
+                type: 'doughnut', // Changed to doughnut for a modern look
+                data: {
+                    labels: filterData.channelChart.labels,
+                    datasets: [{
+                        data: filterData.channelChart.data,
+                        backgroundColor: chartColors.slice(0, filterData.channelChart.labels.length),
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 20,
+                                font: {
+                                    family: 'Inter',
+                                    size: 12
+                                }
+                            }
+                        },
+                        title: {
+                            display: false,
+                            text: 'Channel Effectiveness'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '70%', // For doughnut chart
+                }
+            });
+
+            // Financial Tier Chart (Bar Chart)
+            const financialCtx = document.getElementById('financialTierChart').getContext('2d');
+            if (financialTierChartInstance) {
+                financialTierChartInstance.destroy(); // Destroy previous instance
+            }
+            financialTierChartInstance = new Chart(financialCtx, {
+                type: 'bar',
+                data: {
+                    labels: filterData.financialTierChart.labels,
+                    datasets: [{
+                        label: 'Value',
+                        data: filterData.financialTierChart.data,
+                        backgroundColor: chartColors[0], // Use primary color for bars
+                        borderColor: chartColors[0],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false // No legend needed for single dataset
+                        },
+                        title: {
+                            display: false,
+                            text: 'Financial Tier Analysis'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += `$${context.parsed.y.toLocaleString()}`;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return '$' + value.toLocaleString(); // Format Y-axis labels as currency
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to render the Sales Funnel Visualization
+        function renderSalesFunnel() {
+            const funnelBarsContainer = document.getElementById('funnelBarsContainer');
+
+            // Clear existing content
+            funnelBarsContainer.innerHTML = '';
+
+            const initialLeads = salesFunnelStages[0].count; // Leads Registered (Awareness)
+
+            salesFunnelStages.forEach((stage, index) => {
+                const totalConversionPercentage = ((stage.count / initialLeads) * 100).toFixed(1);
+                const barWidth = totalConversionPercentage; // Use percentage for width
+
+                // Create the funnel bar
+                const funnelBar = document.createElement('div');
+                funnelBar.className = `funnel-bar ${stage.color} mx-auto`; // mx-auto for centering
+                funnelBar.style.width = `${barWidth}%`; // Apply dynamic width
+
+                funnelBar.innerHTML = `
+                    <span class="funnel-bar-text label">${stage.label}</span>
+                    <span class="funnel-bar-text stats">${stage.count.toLocaleString()} (${totalConversionPercentage}%)</span>
+                `;
+                funnelBarsContainer.appendChild(funnelBar);
+            });
+            renderDropOffChart(); // Call drop-off chart when funnel is rendered
+        }
+
+        // Function to render the Drop-off Rates Chart
+        function renderDropOffChart() {
+            const dropOffCtx = document.getElementById('dropOffChart');
+            if (!dropOffCtx) {
+                console.error("Canvas element for dropOffChart not found!");
+                return;
+            }
+            const dropOffChartContext = dropOffCtx.getContext('2d');
+
+            // Calculate drop-off data
+            const dropOffData = [];
+            const dropOffLabels = [];
+
+            for (let i = 0; i < salesFunnelStages.length - 1; i++) {
+                const currentStage = salesFunnelStages[i];
+                const nextStage = salesFunnelStages[i + 1];
+                const dropOffCount = currentStage.count - nextStage.count;
+                const dropOffPercentage = ((dropOffCount / currentStage.count) * 100);
+
+                dropOffData.push(parseFloat(dropOffPercentage.toFixed(1)));
+                // Adjusted labels for better readability in the chart
+                dropOffLabels.push(`${currentStage.label.replace(' ', '\n')} to\n${nextStage.label.replace(' ', '\n')}`);
+            }
+
+            if (dropOffChartInstance) {
+                dropOffChartInstance.destroy(); // Destroy previous instance
+            }
+            dropOffChartInstance = new Chart(dropOffChartContext, {
+                type: 'bar',
+                data: {
+                    labels: dropOffLabels,
+                    datasets: [{
+                        label: 'Percentage Drop-off',
+                        data: dropOffData,
+                        backgroundColor: (context) => {
+                            // Highlight the "Discussion Success to Offer Sent" drop-off
+                            if (dropOffLabels[context.dataIndex].includes('Discussion Success') && dropOffLabels[context.dataIndex].includes('Offer Sent')) {
+                                return '#EF4444'; // Red for the specific bottleneck
+                            }
+                            return '#F59E0B'; // Yellow for others
+                        },
+                        borderColor: (context) => {
+                             if (dropOffLabels[context.dataIndex].includes('Discussion Success') && dropOffLabels[context.dataIndex].includes('Offer Sent')) {
+                                return '#DC2626';
+                            }
+                            return '#D97706';
+                        },
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Drop-off Rates Between Funnel Stages',
+                            font: {
+                                size: 16,
+                                family: 'Inter'
+                            },
+                            color: '#1F2937' // dark
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            // Adjust tick font size and auto-skip for better fit
+                            ticks: {
+                                font: {
+                                    size: 10 // Smaller font for x-axis labels
+                                },
+                                color: '#4B5563',
+                                autoSkip: false, // Prevent skipping labels
+                                maxRotation: 45, // Rotate labels for better fit
+                                minRotation: 45
+                            },
+                            grid: {
+                                display: false // Remove vertical grid lines
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100, // Max percentage
+                            title: {
+                                display: true,
+                                text: 'Percentage Loss (%)',
+                                font: {
+                                    family: 'Inter'
+                                },
+                                color: '#4B5563'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                },
+                                color: '#4B5563'
+                            },
+                            grid: {
+                                color: '#E5E7EB' // Lighter horizontal grid lines
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // Function to apply filter and update content
+        function applyFilter(filterName) {
+            currentFilter = filterName;
+            document.getElementById('currentFilterText').textContent = filterName;
+            const data = dashboardData[filterName];
+            updateChannelsTable(data.channels);
+            renderCharts(data);
+            // Sales funnel and drop-off chart are static for this example,
+            // but in a real app, they might also update with filter changes.
+            // renderSalesFunnel(); // Uncomment if sales funnel data needs to be dynamic based on filter
+        }
+
+        // --- Event Listeners ---
+
+        // Export Report Button
+        document.getElementById('exportReportBtn').addEventListener('click', async function() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('hidden'); // Show loading overlay
+
+            // Need to ensure all images/styles are loaded for accurate capture
+            // A small delay can help, or you can use html2canvas's ready function
+            await new Promise(resolve => setTimeout(resolve, 500)); // Give a moment for page to render
+
+            const dashboardContent = document.getElementById('dashboardContent');
+
+            try {
+                const canvas = await html2canvas(dashboardContent, {
+                    scale: 2, // Increase scale for better resolution in PDF
+                    useCORS: true, // Required if you have cross-origin images (e.g., placeholder images)
+                    allowTaint: true, // Allow tainting for images from data URLs (less secure, but often needed)
+                    scrollX: 0, // Ensure capture starts from top-left
+                    scrollY: 0,
+                    windowWidth: document.documentElement.offsetWidth, // Capture full width
+                    windowHeight: document.documentElement.offsetHeight // Capture full height
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
+
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+
+                // Add the first page
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                // Add subsequent pages if content overflows
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save('PeopleU_Dashboard_Report.pdf');
+            } catch (error) {
+                console.error("Error generating PDF:", error);
+                // In a real app, you'd show a user-friendly error message here
+            } finally {
+                loadingOverlay.classList.add('hidden'); // Hide loading overlay
+            }
+        });
+
+        // Marketing Performance Filter Dropdown
+        const filterDropdownBtn = document.getElementById('filterDropdownBtn');
+        const filterDropdownContent = document.getElementById('filterDropdownContent');
+
+        filterDropdownBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent document click from closing immediately
+            filterDropdownContent.classList.toggle('dropdown-open');
+        });
+
+        filterDropdownContent.querySelectorAll('a').forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default link behavior
+                const filter = this.dataset.filter;
+                applyFilter(filter);
+                filterDropdownContent.classList.remove('dropdown-open'); // Close dropdown after selection
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!filterDropdownBtn.contains(event.target) && !filterDropdownContent.contains(event.target)) {
+                filterDropdownContent.classList.remove('dropdown-open');
+            }
+        });
+
+        // Navigation Tabs functionality
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and hide all content
+                navTabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.add('hidden'));
+
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Show corresponding content
+                const contentId = this.dataset.content;
+                document.getElementById(contentId).classList.remove('hidden');
+                document.getElementById(contentId).classList.add('block'); // Ensure it's block for display
+
+                // Re-render charts when Marketing Analytics tab is activated
+                if (contentId === 'marketing-analytics-content') {
+                    // This ensures charts are rendered when the tab is first viewed or switched to.
+                    // Call applyFilter with the current filter to re-render charts.
+                    applyFilter(currentFilter);
+                }
+                // Render sales funnel and drop-off chart when Sales Performance tab is activated
+                if (contentId === 'sales-performance-content') {
+                    renderSalesFunnel();
+                }
+            });
+        });
+
+        // Initial load: Apply default filter and show executive summary
+        window.onload = function() {
+            // Apply default filter to populate table and charts
+            applyFilter(currentFilter);
+
+            // Hide all tab contents initially, then show the default active one
+            tabContents.forEach(content => content.classList.add('hidden'));
+            const activeTabContentId = document.querySelector('.nav-tab.active').dataset.content;
+            document.getElementById(activeTabContentId).classList.remove('hidden');
+            document.getElementById(activeTabContentId).classList.add('block');
+
+            // Render sales funnel if the 'Sales Performance' tab is the initially active one
+            if (activeTabContentId === 'sales-performance-content') {
+                renderSalesFunnel();
+            }
+        };
+
+    </script>
+</body>
+</html>
