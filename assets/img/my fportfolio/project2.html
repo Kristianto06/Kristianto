@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokoBli | Campaign Performance Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --secondary: #0e7490;
+            --accent: #c026d3;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .section-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+        
+        .timeline-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        .dot-green { background-color: var(--success); }
+        .dot-yellow { background-color: var(--warning); }
+        .dot-red { background-color: var(--danger); }
+        .dot-gray { background-color: var(--gray-300); }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .insight-card {
+            border-left: 4px solid var(--primary);
+            background-color: var(--gray-50);
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .stat-up {
+            background-color: rgba(5, 150, 105, 0.15);
+            color: var(--success);
+        }
+        
+        .stat-down {
+            background-color: rgba(220, 38, 38, 0.15);
+            color: var(--danger);
+        }
+        
+        .stat-neutral {
+            background-color: rgba(55, 65, 81, 0.15);
+            color: var(--gray-700);
+        }
+        
+        .significance-badge {
+            background-color: rgba(220, 38, 38, 0.15);
+            color: var(--danger);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .no-significance-badge {
+            background-color: rgba(5, 150, 105, 0.15);
+            color: var(--success);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .stat-table th {
+            background-color: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+        
+        .stat-table tr:nth-child(even) {
+            background-color: var(--gray-50);
+        }
+        
+        .stat-table tr:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .campaign-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1.5rem;
+        }
+        
+        .campaign-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-700);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .campaign-tab.active {
+            color: var(--primary);
+        }
+        
+        .campaign-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .campaign-tab:hover:not(.active) {
+            background-color: var(--gray-50);
+        }
+        
+        .loading-spinner {
+            border: 3px solid rgba(79, 70, 229, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="dashboard-header py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">TokoBli Campaign Analytics</h1>
+                    <p class="text-indigo-200 font-medium">Data-Driven Insights for E-commerce Excellence</p>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl px-6 py-4">
+                    <p class="text-white font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                        </svg>
+                        Last Updated: June 1, 2025
+                    </p>
+                </div>
+            </div>
+            
+            <nav class="mt-8 overflow-x-auto">
+                <ul class="flex flex-wrap justify-center space-x-1 md:space-x-3">
+                    <li><a href="#overview" class="nav-link text-white">Overview</a></li>
+                    <li><a href="#project-details" class="nav-link text-white">Projects</a></li>
+                    <li><a href="#key-accomplishments" class="nav-link text-white">Accomplishments</a></li>
+                    <li><a href="#problem-statement" class="nav-link text-white">Problem</a></li>
+                    <li><a href="#root-cause" class="nav-link text-white">Root Cause</a></li>
+                    <li><a href="#campaign-comparison" class="nav-link text-white">Campaigns</a></li>
+                    <li><a href="#product-analysis" class="nav-link text-white">Products</a></li>
+                    <li><a href="#product-trend-analysis" class="nav-link text-white">Trends</a></li>
+                    <li><a href="#project-timeline" class="nav-link text-white">Timeline</a></li>
+                    <li><a href="#key-risk" class="nav-link text-white">Risks</a></li>
+                    <li><a href="#recommendations" class="nav-link text-white">Recommendations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Overview Section -->
+        <section id="overview" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <div class="flex flex-wrap justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Business Performance Overview</h2>
+                    <div class="flex space-x-2 mt-2 md:mt-0">
+                        <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">Q1 2025</button>
+                        <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">Q2 2025</button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <div class="stat-card bg-gradient-to-br from-indigo-50 to-indigo-100 p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-indigo-800">Total Transactions</h3>
+                                <p class="text-3xl font-bold text-indigo-700 mt-2">10,142</p>
+                            </div>
+                            <div class="stat-badge stat-up">+8.2%</div>
+                        </div>
+                        <p class="text-sm text-indigo-600 mt-2">QoQ Growth</p>
+                    </div>
+                    
+                    <div class="stat-card bg-gradient-to-br from-green-50 to-green-100 p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-green-800">Total Revenue</h3>
+                                <p class="text-3xl font-bold text-green-700 mt-2">IDR 46.3B</p>
+                            </div>
+                            <div class="stat-badge stat-up">+10.5%</div>
+                        </div>
+                        <p class="text-sm text-green-600 mt-2">QoQ Growth</p>
+                    </div>
+                    
+                    <div class="stat-card bg-gradient-to-br from-purple-50 to-purple-100 p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-purple-800">Total Customers</h3>
+                                <p class="text-3xl font-bold text-purple-700 mt-2">4,275</p>
+                            </div>
+                            <div class="stat-badge stat-up">+5.7%</div>
+                        </div>
+                        <p class="text-sm text-purple-600 mt-2">QoQ Growth</p>
+                    </div>
+                    
+                    <div class="stat-card bg-gradient-to-br from-amber-50 to-amber-100 p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-amber-800">Total Price</h3>
+                                <p class="text-3xl font-bold text-amber-700 mt-2">IDR 41.7B</p>
+                            </div>
+                            <div class="stat-badge stat-up">+7.8%</div>
+                        </div>
+                        <p class="text-sm text-amber-600 mt-2">QoQ Growth</p>
+                    </div>
+                    
+                    <div class="stat-card bg-gradient-to-br from-rose-50 to-rose-100 p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold text-rose-800">Total Discount</h3>
+                                <p class="text-3xl font-bold text-rose-700 mt-2">IDR 831M</p>
+                            </div>
+                            <div class="stat-badge stat-down">-3.2%</div>
+                        </div>
+                        <p class="text-sm text-rose-600 mt-2">QoQ Change</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl p-6 text-white">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">Revenue & Discount Efficiency</h3>
+                                    <p class="text-3xl font-bold">54.43</p>
+                                    <p class="mt-1">Revenue/Discount Ratio</p>
+                                </div>
+                                <div class="text-5xl">📈</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-xl p-6 text-white">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">Customer Acquisition</h3>
+                                    <p class="text-3xl font-bold">10.8M</p>
+                                    <p class="mt-1">Cost per Customer (IDR)</p>
+                                </div>
+                                <div class="text-5xl">👥</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Details -->
+        <section id="project-details" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Strategic Projects</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full stat-table">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3 text-left">Project</th>
+                                <th class="px-4 py-3 text-left">Name</th>
+                                <th class="px-4 py-3 text-left">Owner</th>
+                                <th class="px-4 py-3 text-left">Manager</th>
+                                <th class="px-4 py-3 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">P01</td>
+                                <td class="px-4 py-3">Server Replacement Project</td>
+                                <td class="px-4 py-3">Owner One</td>
+                                <td class="px-4 py-3">Manager One</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Completed</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">P02</td>
+                                <td class="px-4 py-3">Creating a Story with Data</td>
+                                <td class="px-4 py-3">Owner Two</td>
+                                <td class="px-4 py-3">Manager Two</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">In Progress</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">P03</td>
+                                <td class="px-4 py-3">About the Importance of Data</td>
+                                <td class="px-4 py-3">Owner Three</td>
+                                <td class="px-4 py-3">Manager Three</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Delayed</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">P04</td>
+                                <td class="px-4 py-3">Data Creation Initiative</td>
+                                <td class="px-4 py-3">Owner Four</td>
+                                <td class="px-4 py-3">Manager Four</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Not Started</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accomplishments -->
+        <section id="key-accomplishments" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Key Accomplishments</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-3 h-8 bg-indigo-600 rounded mr-3"></div>
+                            <h3 class="text-xl font-semibold text-gray-800">Current Period</h3>
+                        </div>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Achieved <span class="font-semibold">10% revenue growth</span> in Q1 through targeted campaign strategies.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Successfully launched <span class="font-semibold">Campaign B</span> with high engagement and conversion rates.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Improved customer satisfaction by <span class="font-semibold">5%</span> based on recent surveys.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Optimized product recommendation engine, increasing conversion by <span class="font-semibold">3%</span>.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-3 h-8 bg-indigo-600 rounded mr-3"></div>
+                            <h3 class="text-xl font-semibold text-gray-800">Next Period Goals</h3>
+                        </div>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Target <span class="font-semibold">15% revenue growth</span> in Q2 through strategic campaigns.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Launch new product line in the <span class="font-semibold">'Home & Living'</span> category.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Expand market reach to <span class="font-semibold">two new provinces</span> in Indonesia.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 mt-1">
+                                    <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-700">Implement <span class="font-semibold">A/B testing framework</span> for all new features.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Statement -->
+        <section id="problem-statement" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-red-700 mb-6">1. Core Business Problem</h2>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-6">
+                    <p class="text-lg font-medium text-red-800">
+                        Despite varying discount budgets and customer acquisition efforts, statistical analysis reveals no significant revenue differences between campaigns.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="insight-card p-6">
+                        <h3 class="font-semibold text-gray-900 mb-3">Statistical Evidence</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <span class="significance-badge mr-3">p=0.12</span>
+                                <span>Campaign A vs B: No significant difference</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="significance-badge mr-3">p=0.08</span>
+                                <span>Campaign A vs C: No significant difference</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="significance-badge mr-3">p=0.06</span>
+                                <span>Campaign B vs C: No significant difference</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="insight-card p-6">
+                        <h3 class="font-semibold text-gray-900 mb-3">Business Implications</h3>
+                        <ul class="space-y-2">
+                            <li class="flex">
+                                <svg class="h-5 w-5 text-red-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Campaign strategies are not driving measurable revenue growth
+                            </li>
+                            <li class="flex">
+                                <svg class="h-5 w-5 text-red-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Questionable ROI on marketing investments
+                            </li>
+                            <li class="flex">
+                                <svg class="h-5 w-5 text-red-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Lack of incremental impact from campaign activities
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Root Cause -->
+        <section id="root-cause" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-orange-600 mb-6">2. Root Cause Analysis</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-orange-800">Ineffective Targeting</h3>
+                        </div>
+                        <p class="text-orange-700">Campaigns may be too generic, failing to resonate with specific customer segments and incentivize purchases.</p>
+                    </div>
+                    
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-orange-800">Discount Cannibalization</h3>
+                        </div>
+                        <p class="text-orange-700">Discounts may primarily attract existing customers who would have purchased anyway, rather than driving incremental sales.</p>
+                    </div>
+                    
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-orange-800">Lack of Differentiation</h3>
+                        </div>
+                        <p class="text-orange-700">Campaign mechanics, offers, and themes may be too similar to appeal to different customer needs or stimulate new behaviors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Campaign Comparison -->
+        <section id="campaign-comparison" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Campaign Performance Comparison</h2>
+                <p class="text-gray-600 mb-6">Statistical analysis of Campaign A (10/10), Campaign B (11/11), and Campaign C (12/12)</p>
+                
+                <div class="campaign-tabs">
+                    <div class="campaign-tab active" data-tab="metrics">Performance Metrics</div>
+                    <div class="campaign-tab" data-tab="t-test">Statistical Significance</div>
+                    <div class="campaign-tab" data-tab="efficiency">Discount Efficiency</div>
+                </div>
+                
+                <div id="metrics-content" class="tab-content">
+                    <div class="overflow-x-auto">
+                        <table class="w-full stat-table">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3 text-left">Metric</th>
+                                    <th class="px-4 py-3 text-center">Campaign A</th>
+                                    <th class="px-4 py-3 text-center">Campaign B</th>
+                                    <th class="px-4 py-3 text-center">Campaign C</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Total Price</td>
+                                    <td class="px-4 py-3 text-center">IDR 13.3B</td>
+                                    <td class="px-4 py-3 text-center">IDR 15.2B</td>
+                                    <td class="px-4 py-3 text-center">IDR 13.2B</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Total Revenue</td>
+                                    <td class="px-4 py-3 text-center">IDR 14.9B</td>
+                                    <td class="px-4 py-3 text-center">IDR 16.6B</td>
+                                    <td class="px-4 py-3 text-center">IDR 14.8B</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Total Discount</td>
+                                    <td class="px-4 py-3 text-center">IDR 275.9M</td>
+                                    <td class="px-4 py-3 text-center">IDR 302.6M</td>
+                                    <td class="px-4 py-3 text-center">IDR 252.8M</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Customers</td>
+                                    <td class="px-4 py-3 text-center">1,498</td>
+                                    <td class="px-4 py-3 text-center">1,567</td>
+                                    <td class="px-4 py-3 text-center">1,447</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Transactions</td>
+                                    <td class="px-4 py-3 text-center">3,329</td>
+                                    <td class="px-4 py-3 text-center">3,399</td>
+                                    <td class="px-4 py-3 text-center">3,414</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium">Revenue/Discount Ratio</td>
+                                    <td class="px-4 py-3 text-center">53.83</td>
+                                    <td class="px-4 py-3 text-center">54.92</td>
+                                    <td class="px-4 py-3 text-center">58.54</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="t-test-content" class="tab-content hidden">
+                    <div class="chart-container">
+                        <canvas id="t-test-chart"></canvas>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p>Note: P-values above 0.05 indicate no statistically significant difference in revenue between campaigns (α = 0.05)</p>
+                    </div>
+                </div>
+                
+                <div id="efficiency-content" class="tab-content hidden">
+                    <div class="chart-container">
+                        <canvas id="efficiency-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-indigo-50 rounded-lg p-6">
+                        <h3 class="font-semibold text-indigo-800 mb-3">Campaign B Insights</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>Highest customer acquisition (1,567 customers)</li>
+                            <li>Strongest revenue performance (IDR 16.6B)</li>
+                            <li>Good transaction volume (3,399)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-indigo-50 rounded-lg p-6">
+                        <h3 class="font-semibold text-indigo-800 mb-3">Campaign C Insights</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>Highest transaction count (3,414)</li>
+                            <li>Best discount efficiency (58.54 ratio)</li>
+                            <li>Lower customer base but higher engagement</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-indigo-50 rounded-lg p-6">
+                        <h3 class="font-semibold text-indigo-800 mb-3">Campaign A Insights</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>Balanced performance across metrics</li>
+                            <li>Steady transaction volume (3,329)</li>
+                            <li>Consistent customer acquisition (1,498)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Analysis -->
+        <section id="product-analysis" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Category Performance</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="chart-container">
+                            <canvas id="product-revenue-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-indigo-50 rounded-xl p-6">
+                            <h3 class="font-semibold text-indigo-800 mb-4">Top Performing Categories</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium text-gray-700">Men's Fashion</span>
+                                        <span class="font-medium">IDR 14.2B</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-indigo-600 h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium text-gray-700">Beauty & Grooming</span>
+                                        <span class="font-medium">IDR 5.0B</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-indigo-600 h-2 rounded-full" style="width: 35%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium text-gray-700">Superstore</span>
+                                        <span class="font-medium">IDR 3.1B</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-indigo-600 h-2 rounded-full" style="width: 22%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium text-gray-700">Women's Fashion</span>
+                                        <span class="font-medium">IDR 4.1B</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-indigo-600 h-2 rounded-full" style="width: 29%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Category Insights</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                            <div class="flex items-center mb-2">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                    <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <h4 class="font-semibold text-green-800">Men's Fashion</h4>
+                            </div>
+                            <p class="text-green-700">Consistently top-performing with high revenue, transactions, and strong revenue-to-discount ratios across all campaigns.</p>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                            <div class="flex items-center mb-2">
+                                <div class="bg-yellow-100 p-2 rounded-lg mr-3">
+                                    <svg class="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <h4 class="font-semibold text-yellow-800">Books & Education</h4>
+                            </div>
+                            <p class="text-yellow-700">Showed exceptional discount efficiency with ratios above 100 in specific campaigns, indicating high ROI on promotions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Trend Analysis -->
+        <section id="product-trend-analysis" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Product Category Trend Analyzer</h2>
+                
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 mb-6">
+                    <p class="text-gray-700 mb-4">Select a product category and describe the type of trend analysis you need:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="product-category-select" class="block text-sm font-medium text-gray-700 mb-2">Select Category</label>
+                            <select id="product-category-select" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="Men's Fashion">Men's Fashion</option>
+                                <option value="Beauty & Grooming">Beauty & Grooming</option>
+                                <option value="Superstore">Superstore</option>
+                                <option value="Women's Fashion">Women's Fashion</option>
+                                <option value="Health & Sports">Health & Sports</option>
+                                <option value="Books">Books</option>
+                                <option value="School & Education">School & Education</option>
+                                <option value="Home & Living">Home & Living</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="trend-analysis-prompt" class="block text-sm font-medium text-gray-700 mb-2">Analysis Type</label>
+                            <textarea id="trend-analysis-prompt" rows="2" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g., Provide market trends and future growth opportunities for this category."></textarea>
+                        </div>
+                    </div>
+                    
+                    <button id="analyze-trend-btn" class="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center">
+                        <span id="trend-loading-spinner" class="loading-spinner hidden"></span>
+                        Analyze Category Trends
+                    </button>
+                </div>
+                
+                <div id="trend-analysis-output" class="mt-6 p-6 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                    <p class="text-gray-700 italic">Analysis will appear here...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Timeline -->
+        <section id="project-timeline" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Project Delivery Timeline</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="timeline-dot dot-green"></span>
+                            <span class="font-medium">P01: Campaign Strategy Development</span>
+                        </div>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Completed</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="timeline-dot dot-yellow"></span>
+                            <span class="font-medium">P02: Product Category Deep Dive</span>
+                        </div>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">In Progress</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="timeline-dot dot-red"></span>
+                            <span class="font-medium">P03: A/B Testing Implementation</span>
+                        </div>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Delayed</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+                        <div class="flex items-center">
+                            <span class="timeline-dot dot-gray"></span>
+                            <span class="font-medium">P04: Customer Loyalty Program Launch</span>
+                        </div>
+                        <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Not Started</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Risks -->
+        <section id="key-risk" class="section-card mb-8">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Key Risk Assessment</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full stat-table">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3 text-left">Risk</th>
+                                <th class="px-4 py-3 text-left">Response</th>
+                                <th class="px-4 py-3 text-left">Status</th>
+                                <th class="px-4 py-3 text-left">Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">Server Downtime</td>
+                                <td class="px-4 py-3">Implement redundant servers and load balancing</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Resolved</span>
+                                </td>
+                                <td class="px-4 py-3">IT Department</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">Data Security Breach</td>
+                                <td class="px-4 py-3">Enhance encryption and conduct security audits</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Ongoing</span>
+                                </td>
+                                <td class="px-4 py-3">Security Team</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">Increased Market Competition</td>
+                                <td class="px-4 py-3">Develop unique selling propositions</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Mitigated</span>
+                                </td>
+                                <td class="px-4 py-3">Marketing Team</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">Low User Adoption for New Features</td>
+                                <td class="px-4 py-3">Conduct user surveys and iterative improvements</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Ongoing</span>
+                                </td>
+                                <td class="px-4 py-3">Product Team</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section id="recommendations" class="section-card">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Strategic Recommendations</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-indigo-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-indigo-800">Optimize Top Categories</h3>
+                        </div>
+                        <p class="text-indigo-700">Increase investment in marketing and product development for "Men's Fashion" and "Beauty & Grooming" to maximize revenue potential.</p>
+                    </div>
+                    
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-indigo-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-indigo-800">Enhance Customer Loyalty</h3>
+                        </div>
+                        <p class="text-indigo-700">Divert potential customers to loyal segments through exclusive discounts and personalized promotions based on transaction history.</p>
+                    </div>
+                    
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-indigo-100 p-2 rounded-lg mr-4">
+                                <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-indigo-800">Implement A/B Testing</h3>
+                        </div>
+                        <p class="text-indigo-700">Establish a framework for systematic A/B testing of all campaign elements to identify high-impact strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">TokoBli E-commerce Analytics</h3>
+                    <p class="text-gray-400">Data-driven decisions for growth and efficiency</p>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-gray-400">&copy; 2025 TokoBli. All rights reserved.</p>
+                    <p class="text-gray-500 text-sm mt-1">Analysis by Kristianto | Data Science & Analytics</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // T-test Chart
+            const tTestCtx = document.getElementById('t-test-chart').getContext('2d');
+            const tTestChart = new Chart(tTestCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['A vs B', 'A vs C', 'B vs C'],
+                    datasets: [{
+                        label: 'P-value',
+                        data: [0.12, 0.08, 0.06],
+                        backgroundColor: [
+                            'rgba(79, 70, 229, 0.7)',
+                            'rgba(79, 70, 229, 0.7)',
+                            'rgba(79, 70, 229, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(79, 70, 229, 1)',
+                            'rgba(79, 70, 229, 1)',
+                            'rgba(79, 70, 229, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `p-value: ${context.raw}`;
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 0.05,
+                                    yMax: 0.05,
+                                    borderColor: 'rgb(239, 68, 68)',
+                                    borderWidth: 2,
+                                    borderDash: [5, 5],
+                                    label: {
+                                        display: true,
+                                        content: 'Significance Level (α = 0.05)',
+                                        position: 'right',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                        font: {
+                                            size: 12
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 0.2,
+                            title: {
+                                display: true,
+                                text: 'P-value'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Efficiency Chart
+            const efficiencyCtx = document.getElementById('efficiency-chart').getContext('2d');
+            const efficiencyChart = new Chart(efficiencyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Campaign A', 'Campaign B', 'Campaign C'],
+                    datasets: [{
+                        label: 'Revenue/Discount Ratio',
+                        data: [53.83, 54.92, 58.54],
+                        backgroundColor: [
+                            'rgba(129, 140, 248, 0.7)',
+                            'rgba(129, 140, 248, 0.7)',
+                            'rgba(79, 70, 229, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(79, 70, 229, 1)',
+                            'rgba(79, 70, 229, 1)',
+                            'rgba(79, 70, 229, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Ratio'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Product Revenue Chart
+            const productCtx = document.getElementById('product-revenue-chart').getContext('2d');
+            const productChart = new Chart(productCtx, {
+                type: 'bar',
+                data: {
+                    labels: ["Men's Fashion", 'Beauty & Grooming', 'Superstore', "Women's Fashion", 'Health & Sports', 'Books', 'School & Education'],
+                    datasets: [
+                        {
+                            label: 'Revenue (IDR)',
+                            data: [14173550000, 4963616000, 3067656000, 4116050000, 3260080000, 167000000, 202690000],
+                            backgroundColor: 'rgba(79, 70, 229, 0.7)',
+                            borderColor: 'rgba(79, 70, 229, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Transactions',
+                            data: [2504, 1297, 1269, 797, 1194, 27, 49],
+                            backgroundColor: 'rgba(129, 140, 248, 0.7)',
+                            borderColor: 'rgba(129, 140, 248, 1)',
+                            borderWidth: 1,
+                            type: 'line',
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.datasetIndex === 0) {
+                                        label += new Intl.NumberFormat('id-ID', {
+                                            style: 'currency',
+                                            currency: 'IDR',
+                                            minimumFractionDigits: 0
+                                        }).format(context.raw);
+                                    } else {
+                                        label += context.raw.toLocaleString();
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Revenue (IDR)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Transactions'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.campaign-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabName = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabName}-content`).classList.remove('hidden');
+                });
+            });
+            
+            // Trend analysis functionality
+            const analyzeBtn = document.getElementById('analyze-trend-btn');
+            const trendOutput = document.getElementById('trend-analysis-output');
+            const spinner = document.getElementById('trend-loading-spinner');
+            
+            analyzeBtn.addEventListener('click', async () => {
+                const category = document.getElementById('product-category-select').value;
+                const prompt = document.getElementById('trend-analysis-prompt').value;
+                
+                if (!prompt) {
+                    trendOutput.classList.remove('hidden');
+                    trendOutput.innerHTML = '<p class="text-red-600 p-4">Please describe the trend analysis you need.</p>';
+                    return;
+                }
+                
+                // Show loading
+                spinner.classList.remove('hidden');
+                analyzeBtn.disabled = true;
+                trendOutput.classList.remove('hidden');
+                trendOutput.innerHTML = '<p class="text-gray-700 italic p-4 flex items-center"><span class="loading-spinner"></span> Analyzing trends for ' + category + '...</p>';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Hide spinner
+                    spinner.classList.add('hidden');
+                    analyzeBtn.disabled = false;
+                    
+                    // Generate fake analysis
+                    const analysis = `
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold text-gray-900">${category} Trend Analysis</h3>
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-medium text-gray-800 mb-2">Market Trends</h4>
+                                <p class="text-gray-700">The ${category} category has shown consistent growth over the past 6 months, with a 12% increase in revenue and a 8% increase in transactions. This growth is primarily driven by seasonal demand and new product introductions.</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-medium text-gray-800 mb-2">Growth Opportunities</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>Expand product assortment in premium segments</li>
+                                    <li>Develop targeted promotions for high-value customers</li>
+                                    <li>Explore partnerships with complementary brands</li>
+                                    <li>Optimize mobile shopping experience for this category</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-medium text-gray-800 mb-2">Projected Performance</h4>
+                                <p class="text-gray-700">Based on current trends, we project a 15-18% revenue growth for ${category} in the next quarter, with potential for 25% growth if recommended initiatives are implemented.</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    trendOutput.innerHTML = analysis;
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
