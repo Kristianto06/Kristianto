@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RevoFin | Loan Portfolio Performance Dashboard</title>
+    <title>RevoFin | Loan Portfolio Performance</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
@@ -329,8 +329,22 @@
                 </div>
                 <div class="flex items-center">
                     <div class="text-center mr-6">
-                        <div class="text-sm text-light-blue">Last Updated</div>
-                        <div class="text-xl font-semibold">Jun 15, 2025</div>
+                        <div class="text-sm text-light-blue">Welcome! Nice to meet you!:</div>
+                        <div id="lastUpdated" class="text-xl font-semibold"></div>
+                        <script>
+                            // Set last updated date to today's date and time in "MMM DD, YYYY, HH:MM AM/PM" format
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                const now = new Date();
+                                let hours = now.getHours();
+                                const minutes = now.getMinutes().toString().padStart(2, '0');
+                                const ampm = hours >= 12 ? 'PM' : 'AM';
+                                hours = hours % 12;
+                                hours = hours ? hours : 12; // the hour '0' should be '12'
+                                const formatted = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}, ${hours}:${minutes} ${ampm}`;
+                                document.getElementById('lastUpdated').textContent = formatted;
+                            });
+                        </script>
                     </div>
                     <div class="bg-white/20 p-3 rounded-full">
                         <i class="fas fa-user text-xl"></i>
