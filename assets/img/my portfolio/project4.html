@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Life Expectancy: Unlocking the Secrets to a Longer Life</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #2C3E50;
+            --accent: #28a745;
+            --highlight: #FF5733;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), #2C3E50);
+            color: white;
+            padding: 3rem 0;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            position: relative;
+            color: var(--secondary);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--highlight);
+            border-radius: 2px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease-in-out;
+            border-left: 4px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .sub-heading {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sub-heading i {
+            color: var(--highlight);
+        }
+
+        .text-content {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: #555;
+        }
+
+        .list-item {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .list-item::before {
+            content: "•";
+            color: var(--highlight);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(to right, var(--accent), #1e7e34);
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .footer {
+            background: linear-gradient(to right, var(--secondary), #1a2530);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            position: relative;
+        }
+
+        /* Horizontal Timeline Styles for Methodology Section */
+        .timeline-section {
+            background: linear-gradient(135deg, #4A90E2, #2C3E50);
+            border-radius: 15px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            text-align: center; /* Center the section title */
+        }
+
+        .timeline-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        /* New wrapper for absolute positioned timeline elements */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 1000px; /* Same as timeline-container max-width */
+            margin: 0 auto;
+            min-height: 450px; /* Increased min-height to ensure bullets are visible */
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 350px; /* Base top for the line */
+            left: 50px;
+            right: 50px;
+            height: 4px;
+            background: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,0.8), rgba(255,255,255,0.3));
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        .timeline-steps {
+            display: flex;
+            justify-content: space-between;
+            position: absolute; /* Position relative to timeline-wrapper */
+            top: 350px; /* Aligns with the line's top */
+            left: 50px;
+            right: 50px;
+            /* Removed transform: translateY(-50%) to align with the top of the line */
+            z-index: 3;
+            width: calc(100% - 100px); /* Adjust width to match line and container padding */
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative; /* For dot and label positioning within step */
+        }
+
+        .timeline-dot {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
+            /* Align the center of the dot with the center of the line */
+            transform: translateY(-50%); /* This centers the dot vertically on its own line within the flex container */
+            margin-bottom: 10px; /* Space between dot and label */
+        }
+
+        .timeline-dot::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: scale(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .timeline-dot.active-dot {
+            transform: scale(1.2) translateY(-50%); /* Keep translateY for centering */
+            box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-dot.active-dot::after {
+            transform: scale(1);
+            background: var(--highlight);
+        }
+
+        .timeline-dot:hover {
+            transform: scale(1.3) translateY(-50%); /* Keep translateY for centering */
+            box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-label {
+            white-space: nowrap;
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-dot:hover + .timeline-label {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
+        /* Central Rectangle Box */
+        .timeline-display-box {
+            position: absolute; /* Position relative to timeline-wrapper */
+            top: 40px; /* Space from top of timeline-wrapper */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for true centering */
+            width: 700px; /* Fixed width for the rectangle */
+            height: 250px; /* Fixed height for the rectangle */
+            background: white;
+            border-radius: 15px; /* Rounded corners */
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 5; /* Ensure it's above the line */
+            border: 2px solid var(--primary); /* Rectangle border */
+            overflow: hidden; /* Hide overflowing content for smooth transitions */
+        }
+
+        .timeline-display-box::after {
+            content: ""; /* No arrow on the main central box */
+            display: none;
+        }
+
+        .timeline-content-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 1.8rem; /* Padding inside the content item */
+            box-sizing: border-box; /* Include padding in width/height */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(20px); /* Initial state for animation */
+            overflow-y: auto; /* Enable scroll for content within the item */
+        }
+
+        .timeline-content-item.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0); /* Final state for animation */
+        }
+
+        .step-number {
+            position: absolute; /* Relative to .timeline-content-item */
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: var(--highlight);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(255, 87, 51, 0.3);
+            z-index: 5;
+        }
+
+        .timeline-content-item .sub-heading {
+            margin-top: 30px; /* Space for step number */
+        }
+
+        @media (max-width: 768px) {
+            .timeline-section {
+                padding-top: 180px; /* Adjusted padding-top for mobile */
+                padding-bottom: 60px;
+            }
+            .timeline-wrapper {
+                min-height: 380px; /* Adjusted min-height for mobile to make bullets visible */
+            }
+            .timeline-line {
+                top: 250px; /* Adjusted top for mobile */
+                left: 20px;
+                right: 20px;
+                width: calc(100% - 40px);
+            }
+            .timeline-steps {
+                top: 250px; /* Align with the line's top for mobile */
+                left: 20px;
+                right: 20px;
+                /* transform: translateY(-50%); REMOVED for mobile too */
+                justify-content: flex-start;
+                padding: 0 20px;
+                width: max-content;
+            }
+            .timeline-step {
+                flex-shrink: 0;
+                margin-right: 40px;
+            }
+            .timeline-dot {
+                width: 20px;
+                height: 20px;
+                border: 2px solid rgba(255, 255, 255, 0.8);
+                transform: translateY(-50%); /* Keep translateY for centering */
+            }
+            .timeline-dot::after {
+                width: 12px;
+                height: 12px;
+            }
+            .timeline-label {
+                font-size: 0.8rem;
+                top: 35px;
+                position: relative;
+                white-space: normal;
+                width: 80px;
+            }
+            .timeline-display-box {
+                width: 90%; /* Wider on mobile */
+                height: 180px; /* Adjusted height for mobile */
+                top: 20px; /* Adjusted top for mobile */
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 1rem;
+            }
+            .step-number {
+                top: 10px;
+                left: 10px;
+            }
+            .timeline-content-item .sub-heading {
+                margin-top: 25px;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    <header class="header">
+        <div class="container text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">DEEP Life Expectancy</h1>
+            <p class="text-xl md:text-2xl italic">"The Longevity Puzzle: Unlocking the Secrets to a Longer Life in East Asia & Pacific"</p>
+            <p class="text-lg mt-4">By Kristianto</p>
+        </div>
+    </header>
+    <main class="container py-12">
+        <section class="mb-16 fade-in">
+            <h2 class="section-title">Executive Summary</h2>
+            <div class="card">
+                <p class="text-content mb-4">This research project aims to understand the factors influencing variations in life expectancy across different countries, specifically focusing on the East Asia & Pacific region.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+                    <div class="stat-card">
+                        <div class="stat-label">Countries Analyzed</div>
+                        <div class="stat-value">28</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Data Features</div>
+                        <div class="stat-value">50+</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Years Covered</div>
+                        <div class="stat-value">20</div>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading"><i class="fas fa-bullseye"></i> Objectives:</h3>
+                <ul class="text-content mb-6">
+                    <li class="list-item">Describe the variation in life expectancy in East Asia & Pacific.</li>
+                    <li class="list-item">Identify key factors influencing life expectancy.</li>
+                </ul>
+
+                <h3 class="sub-heading"><i class="fas fa-tools"></i> Tools Used:</h3>
+                <ul class="text-content mb-6">
+                    <li class="list-item"><strong>Python:</strong> For Data Analysis and Machine Learning</li>
+                    <li class="list-item"><strong>Tableau:</strong> For interpreting insights through visualization</li>
+                </ul>
+
+                <h3 class="sub-heading"><i class="fas fa-chart-line"></i> Metrics:</h3>
+                <p class="text-content mb-4">Linear Regression Models: R-squared, Root Mean Squared Error (RMSE)</p>
+                <p class="text-content">Non-linear Models (Random Forest, GAM): Mean Squared Error (MSE), Mean Absolute Error (MAE), AUC (Area Under the ROC Curve), Feature Importance</p>
+            </div>
+        </section>
+        <section class="mb-16 fade-in">
+            <h2 class="section-title">Background Project</h2>
+            <div class="card">
+                <p class="text-content mb-4">The project investigates life expectancy in the East Asia & Pacific region in the year 2020. There are significant differences, for example, Papua New Guinea (PNG) with 64.91 years compared to Japan (JPN) with 84.09 years.</p>
+
+                <div class="flex flex-col md:flex-row gap-6 my-8">
+                    <div class="stat-card flex-1">
+                        <div class="stat-label">Papua New Guinea</div>
+                        <div class="stat-value">64.91</div>
+                        <div class="text-sm text-gray-600">Life Expectancy (Years)</div>
+                    </div>
+                    <div class="stat-card flex-1">
+                        <div class="stat-label">Japan</div>
+                        <div class="stat-value">84.09</div>
+                        <div class="text-sm text-gray-600">Life Expectancy (Years)</div>
+                    </div>
+                    <div class="stat-card flex-1">
+                        <div class="stat-label">Difference</div>
+                        <div class="stat-value">19.18</div>
+                        <div class="text-sm text-gray-600">Years</div>
+                    </div>
+                </div>
+
+                <div class="insight-highlight">
+                    <p class="text-content"><strong>Key Question:</strong> "What are the primary factors contributing to the significant difference in life expectancy between Papua New Guinea (PNG) and Japan (JPN), and what interventions could be implemented to improve health outcomes and increase life expectancy in Papua New Guinea (PNG)?"</p>
+                </div>
+            </div>
+        </section>
+        <section class="timeline-section fade-in">
+            <h2 class="section-title text-white">Data Methodology</h2>
+            <div class="timeline-wrapper">
+                <!-- Central Rectangle Display Box -->
+                <div class="timeline-display-box" id="central-display-box">
+                    <!-- Content for each step will be dynamically shown here -->
+                    <div class="timeline-content-item" id="card-1-content">
+                        <div class="step-number">1</div>
+                        <h3 class="sub-heading">Phase 1: Problem Understanding</h3>
+                        <p class="text-content">"Defining the Right Questions"</p>
+                        <ul class="text-content mt-3">
+                            <li class="list-item">How does life expectancy vary across different countries in East Asia & Pacific?</li>
+                            <li class="list-item">What are the key factors that contribute to variations in life expectancy across different countries in East Asia & Pacific?</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-content-item" id="card-2-content">
+                        <div class="step-number">2</div>
+                        <h3 class="sub-heading">Phase 2: Data Preparation & Cleaning</h3>
+                        <p class="text-content">"Building the Foundation"</p>
+                        <ul class="text-content mt-3">
+                            <li class="list-item">Identify factors variable influencing life expectancy in the East Asia and Pacific region.</li>
+                            <li class="list-item">Missing value handling and irrelevant data removal</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-content-item" id="card-3-content">
+                        <div class="step-number">3</div>
+                        <h3 class="sub-heading">Phase 3: Exploratory Data Analysis</h3>
+                        <p class="text-content">"Discovering Hidden Patterns"</p>
+                        <ul class="text-content mt-3">
+                            <li class="list-item">Understand data characteristics, distributions, and relationships, analyze correlations and dependencies between variables</li>
+                            <li class="list-item">Identify outliers, trends, and preliminary patterns, & generate descriptive statistics and initial visualizations</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-content-item" id="card-4-content">
+                        <div class="step-number">4</div>
+                        <h3 class="sub-heading">"Phase 4: Data Analysis & Modeling"</h3>
+                        <p class="text-content">"Advanced Analytics & Pattern Recognition"</p>
+                        <ul class="text-content mt-3">
+                            <li class="list-item">Apply advanced statistical and machine learning techniques: Linear Regression: For understanding direct relationships, Generalized Additive Models (GAM): For capturing complex, non-linear patterns, Random Forest: For identifying key drivers and handling complex interactions</li>
+                            <li class="list-item">Validate models and test hypotheses, and generate statistical insights and predictions</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-content-item" id="card-5-content">
+                        <div class="step-number">5</div>
+                        <h3 class="sub-heading">Phase 5: Data Visualization & Insights</h3>
+                        <p class="text-content">"Making Insights Visible and Actionable"</p>
+                        <li class="list-item">Transform complex analytical findings into intuitive visualizations. Create clear, compelling charts and dashboards</li>
+                        
+                    </div>
+                </div>
+
+                <div class="timeline-line"></div>
+
+                <div class="timeline-steps">
+                    <!-- Step 1: Problem Understanding -->
+                    <div class="timeline-step">
+                        <div class="timeline-dot dot-1" data-target-content="card-1-content"></div>
+                        <span class="timeline-label">Phase 1</span>
+                    </div>
+
+                    <!-- Step 2: Data Preparation & Cleaning -->
+                    <div class="timeline-step">
+                        <div class="timeline-dot dot-2" data-target-content="card-2-content"></div>
+                        <span class="timeline-label">Phase 2</span>
+                    </div>
+
+                    <!-- Step 3: Exploratory Data Analysis (EDA) -->
+                    <div class="timeline-step">
+                        <div class="timeline-dot dot-3" data-target-content="card-3-content"></div>
+                        <span class="timeline-label">Phase 3</span>
+                    </div>
+
+                    <!-- Step 4: Data Analysis & Visualization -->
+                    <div class="timeline-step">
+                        <div class="timeline-dot dot-4" data-target-content="card-4-content"></div>
+                        <span class="timeline-label">Phase 4</span>
+                    </div>
+
+                    <!-- Step 5: Insight & Recommendation -->
+                    <div class="timeline-step">
+                        <div class="timeline-dot dot-5" data-target-content="card-5-content"></div>
+                        <span class="timeline-label">Phase 5</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-16 fade-in">
+            <h2 class="section-title">Analysis Results and Insights</h2>
+            <div class="card">
+                <h3 class="sub-heading"><i class="fas fa-exchange-alt"></i> Variation in Life Expectancy:</h3>
+                <p class="text-content mb-4">Life expectancy in the East Asia and Pacific (EAP) region exhibits considerable variation, though inequality between countries is relatively low. Key metrics include a Standard Deviation (SD) of 6.505, Interquartile Range (IQR) of 10.326, and a Gini Coefficient of 0.0512.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-chart-line mr-2"></i> Model Performance</h4>
+                        <ul class="text-content">
+                            <li class="list-item"><strong>Linear Regression:</strong> R² = 1.000 (potential overfitting)</li>
+                            <li class="list-item"><strong>Linear GAM:</strong> Pseudo R² = 0.99999734</li>
+                            <li class="list-item"><strong>Random Forest:</strong> R² = 0.9982, RMSE = 0.2570</li>
+                        </ul>
+                    </div>
+
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-star mr-2"></i> Feature Importance</h4>
+                        <ul class="text-content">
+                            <li class="list-item">life_expectancy_female</li>
+                            <li class="list-item">survival65_female</li>
+                            <li class="list-item">life_expectancy_male</li>
+                            <li class="list-item">GDP per capita</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading"><i class="fas fa-key"></i> Key Findings by Factor Group:</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-money-bill-wave mr-2"></i> Economic Factors</h4>
+                        <p class="text-content">Strong association between GDP per capita and increased longevity, suggesting investment in healthcare and human capital.</p>
+                    </div>
+
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-heartbeat mr-2"></i> Healthcare Access</h4>
+                        <p class="text-content">Per capita health expenditure has increased, while hospital beds and doctors per capita have declined.</p>
+                    </div>
+
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-venus-mars mr-2"></i> Demographic Factors</h4>
+                        <p class="text-content">Clear gender disparity with females consistently outliving males by significant margins.</p>
+                    </div>
+
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-graduation-cap mr-2"></i> Education Factors</h4>
+                        <p class="text-content">Significant positive correlation between education levels and life expectancy across all metrics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-16 text-center fade-in">
+            <h2 class="section-title">Explore the Interactive Dashboard</h2>
+            <p class="text-content mb-8 max-w-2xl mx-auto">Dive deeper into the data and visualizations on our interactive dashboard to explore the factors influencing life expectancy across the East Asia & Pacific region.</p>
+            <a href="https://life-expectancy-project.streamlit.app/" target="_blank" class="button">
+                <i class="fas fa-external-link-alt"></i> Go to Streamlit Dashboard
+            </a>
+            <a href="https://public.tableau.com/app/profile/kristianto.kris1567/viz/DEEPTABLEAU_17367048877570/Dashboard1" target="_blank" class="button">
+                <i class="fas fa-external-link-alt"></i> Go to tableau Dashboard
+            </a>
+        </section>
+        <section class="mb-16 fade-in">
+            <h2 class="section-title">Recommendations for Papua New Guinea (PNG)</h2>
+            <div class="card">
+                <p class="text-content mb-4">Papua New Guinea faces significant challenges in improving life expectancy, including limited access to healthcare, low education levels, malnutrition, and environmental factors. Based on our analysis, we recommend the following interventions:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-hospital mr-2"></i> Healthcare Infrastructure</h4>
+                        <ul class="text-content">
+                            <li class="list-item">Increase healthcare workers in rural areas</li>
+                            <li class="list-item">Enhance primary and referral services</li>
+                            <li class="list-item">Improve essential medicines availability</li>
+                        </ul>
+                    </div>
+
+                    <div class="factor-group">
+                        <h4 class="font-bold text-lg mb-2 text-primary-700"><i class="fas fa-handshake mr-2"></i> Strategic Partnerships</h4>
+                        <ul class="text-content">
+                            <li class="list-item">Collaborate with international organizations</li>
+                            <li class="list-item">Engage local governments and communities</li>
+                            <li class="list-item">Develop public-private partnerships</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-highlight mt-6">
+                    <p class="text-content"><strong>Implementation Roadmap:</strong> Address these areas through a 5-year phased approach focusing first on healthcare infrastructure, followed by education initiatives, and finally economic development programs.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <h3 class="text-2xl font-bold mb-4">Deep Life Expectancy Project</h3>
+            <p class="max-w-2xl mx-auto mb-6">A comprehensive analysis of factors influencing longevity in the East Asia & Pacific region with actionable insights for policymakers and healthcare professionals.</p>
+            <p>&copy; 2025 Deep Life Expectancy Project. All rights reserved.</p>
+            <div class="mt-6">
+                <a href="#" class="inline-block mx-2 text-white hover:text-gray-200"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="inline-block mx-2 text-white hover:text-gray-200"><i class="fab fa-linkedin fa-lg"></i></a>
+                <a href="#" class="inline-block mx-2 text-white hover:text-gray-200"><i class="fab fa-twitter fa-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dots = document.querySelectorAll('.timeline-dot');
+            const contentItems = document.querySelectorAll('.timeline-content-item'); 
+
+            // Fungsi untuk menampilkan item konten tertentu
+            function showContentItem(targetContentId) {
+                // Sembunyikan semua item konten
+                contentItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                // Hapus status aktif dari semua titik
+                dots.forEach(dot => {
+                    dot.classList.remove('active-dot');
+                });
+
+                const activeContent = document.getElementById(targetContentId);
+                // Temukan titik yang sesuai dengan targetContentId
+                const activeDot = document.querySelector(`.timeline-dot[data-target-content="${targetContentId}"]`);
+
+                if (activeContent && activeDot) {
+                    activeContent.classList.add('active');
+                    activeDot.classList.add('active-dot');
+                }
+            }
+
+            // Tambahkan pendengar klik ke titik-titik
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const targetContentId = this.dataset.targetContent;
+                    showContentItem(targetContentId);
+                });
+            });
+
+            // Tampilkan item konten pertama secara default
+            if (contentItems.length > 0) {
+                showContentItem('card-1-content');
+            }
+
+            // Fungsionalitas tombol kembali ke atas
+            const backToTopBtn = document.querySelector('.back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Animasi gulir
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
