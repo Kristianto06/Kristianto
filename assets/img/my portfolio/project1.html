@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
+        // Tailwind CSS configuration for custom colors and fonts
         tailwind.config = {
             theme: {
                 extend: {
@@ -22,7 +23,8 @@
                         'light-purple': '#a78bfa',
                         'charcoal': '#2d3748',
                         'silver': '#e2e8f0',
-                        'light-gray': '#f8fafc'
+                        'light-gray': '#f8fafc',
+                        /* Removed timeline-specific dark colors as they are no longer needed */
                     },
                     fontFamily: {
                         'sans': ['Inter', 'sans-serif'],
@@ -33,24 +35,28 @@
         }
     </script>
     <style>
+        /* CSS variables for consistent spacing */
         :root {
             --header-height: 80px;
         }
         
+        /* Body styling for font, background, and minimum height */
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(to bottom right, #f0f4f8, #e2e8f0);
             color: #1e293b;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevents horizontal scrolling */
         }
         
+        /* Main dashboard container styling */
         .dashboard-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         
+        /* Header gradient and shadow styling */
         .header-gradient {
             background: linear-gradient(135deg, #1e2a4a 0%, #3b82f6 100%);
             border-radius: 18px;
@@ -59,6 +65,7 @@
             position: relative;
         }
         
+        /* Decorative top border for the header */
         .header-gradient::before {
             content: '';
             position: absolute;
@@ -69,6 +76,7 @@
             background: linear-gradient(to right, #14b8a6, #3b82f6);
         }
         
+        /* Card styling for sections */
         .card {
             background: white;
             border-radius: 18px;
@@ -78,11 +86,13 @@
             border: 1px solid rgba(226, 232, 240, 0.6);
         }
         
+        /* Hover effect for cards */
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 30px rgba(59, 130, 246, 0.15);
         }
         
+        /* Section title styling with an underline effect */
         .section-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -104,6 +114,7 @@
             border-radius: 2px;
         }
         
+        /* Insight badge styling */
         .insight-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -114,6 +125,7 @@
             vertical-align: middle;
         }
         
+        /* Specific badge colors */
         .badge-positive {
             background: rgba(20, 184, 166, 0.15);
             color: #0d9488;
@@ -129,6 +141,7 @@
             color: #b91c1c;
         }
         
+        /* Metric card styling */
         .metric-card {
             background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
             border-radius: 16px;
@@ -138,11 +151,13 @@
             border: 1px solid rgba(226, 232, 240, 0.6);
         }
         
+        /* Hover effect for metric cards */
         .metric-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
         
+        /* Metric value styling with gradient text */
         .metric-value {
             font-size: 2rem;
             font-weight: 700;
@@ -153,6 +168,7 @@
             color: transparent;
         }
         
+        /* Chart container styling for consistent dimensions */
         .chart-container {
             position: relative;
             height: 300px;
@@ -160,6 +176,7 @@
             margin: 20px 0;
         }
         
+        /* Risk item styling */
         .risk-item {
             display: flex;
             align-items: flex-start;
@@ -171,11 +188,13 @@
             transition: all 0.3s ease;
         }
         
+        /* Hover effect for risk items */
         .risk-item:hover {
             background: rgba(254, 226, 226, 0.4);
             transform: translateX(5px);
         }
         
+        /* Risk icon styling */
         .risk-icon {
             min-width: 36px;
             height: 36px;
@@ -189,6 +208,7 @@
             font-size: 16px;
         }
         
+        /* Recommendation item styling */
         .recommendation-item {
             display: flex;
             align-items: flex-start;
@@ -199,6 +219,7 @@
             border-left: 4px solid #14b8a6;
         }
         
+        /* Recommendation icon styling */
         .recommendation-icon {
             min-width: 36px;
             height: 36px;
@@ -212,6 +233,7 @@
             font-size: 16px;
         }
         
+        /* AI output section styling */
         .ai-output {
             background: rgba(248, 250, 252, 0.8);
             border-radius: 16px;
@@ -220,9 +242,10 @@
             border: 1px solid rgba(147, 197, 253, 0.4);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px); /* Adds a subtle blur effect */
         }
         
+        /* Decorative left border for AI output */
         .ai-output::before {
             content: '';
             position: absolute;
@@ -233,6 +256,7 @@
             background: linear-gradient(to bottom, #3b82f6, #14b8a6);
         }
         
+        /* Tabs container styling */
         .tabs-container {
             display: flex;
             border-bottom: 1px solid #e2e8f0;
@@ -241,6 +265,7 @@
             -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
         
+        /* Individual tab styling */
         .tab {
             padding: 12px 24px;
             cursor: pointer;
@@ -251,19 +276,23 @@
             white-space: nowrap; /* Prevent tabs from wrapping */
         }
         
+        /* Active tab styling */
         .tab.active {
             color: #1e40af;
             border-bottom: 3px solid #3b82f6;
         }
         
+        /* Hover effect for tabs */
         .tab:hover:not(.active) {
             color: #3b82f6;
         }
         
+        /* Tab content visibility */
         .tab-content {
             display: none;
         }
         
+        /* Active tab content display with fade-in animation */
         .tab-content.active {
             display: block;
             animation: fadeIn 0.4s ease;
@@ -274,6 +303,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Loader animation */
         .loader {
             border: 3px solid rgba(59, 130, 246, 0.2);
             border-top: 3px solid #3b82f6;
@@ -291,6 +321,7 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* Pulse animation for elements */
         .pulse {
             animation: pulse 2s infinite;
         }
@@ -301,10 +332,12 @@
             100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
         
+        /* General fade-in animation */
         .fade-in {
             animation: fadeIn 0.6s ease-out;
         }
         
+        /* Media queries for responsiveness */
         @media (max-width: 768px) {
             .section-title {
                 font-size: 1.5rem;
@@ -314,10 +347,169 @@
                 height: 250px;
             }
         }
+
+        /* Custom styles for the Project Summary timeline */
+        .timeline-section {
+            background-color: white; /* Changed to white to match other tabs */
+            padding: 40px 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            border: 1px solid rgba(226, 232, 240, 0.6); /* Light border */
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #e2e8f0; /* Light gray line */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            padding: 10px 0;
+            position: relative;
+            width: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 40px; /* Space for the circle and line */
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px; /* Space for the circle and line */
+        }
+
+        .timeline-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #3b82f6; /* Accent blue for circles */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); /* Blue shadow */
+        }
+
+        .timeline-item:nth-child(odd) .timeline-circle {
+            right: -25px; /* Half of circle width */
+        }
+
+        .timeline-item:nth-child(even) .timeline-circle {
+            left: -25px; /* Half of circle width */
+        }
+
+        .timeline-content-box {
+            background-color: white; /* White background for content */
+            color: #2d3748; /* Charcoal text */
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
+            border: 1px solid rgba(226, 232, 240, 0.6); /* Light border */
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #1e2a4a; /* Deep blue for titles */
+        }
+
+        .timeline-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #2d3748; /* Charcoal text */
+        }
+
+        /* Arrows connecting timeline items */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            border-left-color: #e2e8f0; /* Light gray arrow pointing to the right content box */
+            right: 15px; /* Position next to content box */
+        }
+
+        .timeline-item:nth-child(even)::before {
+            border-right-color: #e2e8f0; /* Light gray arrow pointing to the left content box */
+            left: 15px; /* Position next to content box */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .timeline-container::after {
+                left: 25px; /* Move central line to the left */
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px; /* Make space for circle and line on the left */
+                padding-right: 10px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-right: 10px; /* Reset padding for mobile */
+            }
+
+            .timeline-circle {
+                left: 0; /* Align circles to the left */
+                transform: translateY(-50%);
+            }
+
+            .timeline-item:nth-child(odd) .timeline-circle,
+            .timeline-item:nth-child(even) .timeline-circle {
+                left: 0; /* Ensure circles are always on the left */
+                right: auto;
+            }
+
+            .timeline-item::before {
+                border-left-color: #e2e8f0; /* Always point right */
+                border-right-color: transparent;
+                left: 55px; /* Position arrow consistently */
+                right: auto;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- Header Section -->
         <header class="header-gradient p-6 mb-8 fade-in">
             <div class="flex flex-col md:flex-row justify-between items-center text-white">
                 <div class="mb-4 md:mb-0">
@@ -329,7 +521,7 @@
                 </div>
                 <div class="flex items-center">
                     <div class="text-center mr-6">
-                        <div class="text-sm text-light-blue">Welcome! Nice to meet you!:</div>
+                        <div class="text-sm text-light-blue">Welcome! Nice to meet you :</div>
                         <div id="lastUpdated" class="text-xl font-semibold"></div>
                         <script>
                             // Set last updated date to today's date and time in "MMM DD, YYYY, HH:MM AM/PM" format
@@ -352,6 +544,7 @@
                 </div>
             </div>
             
+            <!-- Key Metrics Section -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                 <div class="metric-card">
                     <div class="text-charcoal text-sm font-medium">Portfolio Value</div>
@@ -384,15 +577,71 @@
             </div>
         </header>
 
+        <!-- Tab Navigation -->
         <div class="tabs-container mb-6 fade-in">
-            <div class="tab active" data-tab="overview">Portfolio Overview</div>
+            <div class="tab active" data-tab="project-summary">Project Summary</div>
+            <div class="tab" data-tab="overview">Portfolio Overview</div>
             <div class="tab" data-tab="risk">Risk Analysis</div>
             <div class="tab" data-tab="performance">Performance Metrics</div>
             <div class="tab" data-tab="recommendations">Strategic Recommendations</div>
             <div class="tab" data-tab="loan-analyzer">Loan Risk Analyzer</div>
         </div>
 
-        <div class="tab-content active" id="overview-tab">
+        <!-- Tab Content: Project Summary (Timeline Style) -->
+        <div class="tab-content active" id="project-summary-tab">
+            <section class="timeline-section fade-in">
+                <h2 class="section-title text-center mb-10">RevoFin Loan Portfolio Performance Summary</h2>
+                <div class="timeline-container">
+                    <!-- Step 1: Situation -->
+                    <div class="timeline-item">
+                        <div class="timeline-circle">1</div>
+                        <div class="timeline-content-box">
+                            <h3 class="timeline-title">Situation: Problem & Context</h3>
+                            <p class="timeline-description">
+                                Focusing on loan portfolio performance, risk assessment, and strategic recommendations. The financial institution needs a clear, visual, and interactive way to monitor its loan portfolio's health, identify risks, and track performance trends. Key challenges include managing delinquency rates, understanding risk exposure (especially concentration and liquidity risks), and optimizing portfolio composition.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Task -->
+                    <div class="timeline-item">
+                        <div class="timeline-circle">2</div>
+                        <div class="timeline-content-box">
+                            <h3 class="timeline-title">Task: Define Objectives</h3>
+                            <p class="timeline-description">
+                                The primary objective is to provide a real-time platform for financial analysts to monitor portfolio value, analyze composition, track historical trends, assess risks, and access strategic recommendations.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Action (Implementation & Visualization) -->
+                    <div class="timeline-item">
+                        <div class="timeline-circle">3</div>
+                        <div class="timeline-content-box">
+                            <h3 class="timeline-title">Action: Dashboard & Interactive Development Features</h3>
+                            <p class="timeline-description">
+                                Design interactive data visualizations, including various financial charts. Integrated interactive tab navigation and an AI-powered "Loan Risk Analyzer" for individual loan assessments. Included detailed tables and descriptive text for key insights and trend analyses.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- Step 5: Result -->
+                    <div class="timeline-item">
+                        <div class="timeline-circle">5</div>
+                        <div class="timeline-content-box">
+                            <h3 class="timeline-title">Result: Impact & Outcome</h3>
+                            <p class="timeline-description">
+                                The dashboard enables enhanced decision-making, improved risk identification, data-driven strategies, and operational efficiency. It fosters proactive portfolio management and clear communication.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content: Portfolio Overview -->
+        <div class="tab-content" id="overview-tab">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                 <div class="lg:col-span-2">
                     <section class="card p-6 fade-in">
@@ -464,7 +713,7 @@
                     </section>
                 </div>
             </div>
-
+            <!-- Loan Status by Type Table -->
             <section class="card p-6 mt-8 fade-in">
                 <h2 class="section-title">Loan Status by Type</h2>
                 <div class="overflow-x-auto">
@@ -532,6 +781,7 @@
             </section>
         </div>
 
+        <!-- Tab Content: Risk Analysis -->
         <div class="tab-content" id="risk-tab">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <section class="card p-6 fade-in">
@@ -641,6 +891,7 @@
             </div>
         </div>
 
+        <!-- Tab Content: Performance Metrics -->
         <div class="tab-content" id="performance-tab">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <section class="card p-6 fade-in">
@@ -703,6 +954,7 @@
             </div>
         </div>
 
+        <!-- Tab Content: Strategic Recommendations -->
         <div class="tab-content" id="recommendations-tab">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <section class="card p-6 fade-in">
@@ -798,13 +1050,14 @@
                                 dynamic pricing adjustments for high-risk loan purposes, and enhanced geographic risk
                                 management. Key milestones include a 15% reduction in individual loan concentration
                                 by Q4 2025 and integration of real-time liquidity monitoring by Q1 2026.
-                            </p>
+                            </s>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
 
+        <!-- Tab Content: Loan Risk Analyzer -->
         <div class="tab-content" id="loan-analyzer-tab">
             <section class="card p-6 fade-in">
                 <div class="flex justify-between items-center mb-6">
@@ -814,7 +1067,6 @@
                     </span>
                 </div>
                 <p class="text-charcoal mb-6">AI-powered analysis of loan characteristics and risk profiles</p>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div>
                         <label for="loanPurpose" class="block text-sm font-medium text-charcoal mb-2">Loan Purpose</label>
@@ -840,11 +1092,9 @@
                         </select>
                     </div>
                 </div>
-
                 <button id="analyzeRiskBtn" class="w-full md:w-auto bg-gradient-to-r from-accent-blue to-teal text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                     Analyze Risk Profile
                 </button>
-
                 <div id="riskAnalysisOutput" class="ai-output mt-8 hidden">
                     <h3 class="font-semibold text-deep-blue mb-3">AI Risk Assessment:</h3>
                     <p id="analysisResult" class="text-charcoal"></p>
@@ -854,37 +1104,44 @@
                 </div>
             </section>
         </div>
-
     </div>
 
+    <!-- JavaScript for Chart.js and Tab Logic -->
     <script>
-        // Chart.js Global Defaults
+        // Chart.js Global Defaults for consistent styling
         Chart.defaults.font.family = 'Inter, sans-serif';
         Chart.defaults.color = '#4a5568'; // charcoal-like color
         Chart.defaults.borderColor = '#e2e8f0'; // silver-like color
 
         // Function to switch tabs
         function switchTab(tabName) {
+            // Hide all tab content
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
+            // Deactivate all tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-
+            // Activate the selected tab content and tab button
             document.getElementById(`${tabName}-tab`).classList.add('active');
             document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
         }
 
-        // Event listeners for tabs
+        // Event listeners for tab clicks
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 switchTab(tab.dataset.tab);
             });
         });
 
-        // Initialize Charts
+        // Initialize Charts and Loan Analyzer Logic on window load
         window.onload = function() {
+            // Set the 'project-summary' tab as active by default on load
+            switchTab('project-summary');
+
+            // --- Chart Initialization ---
+
             // Portfolio Composition Chart (Doughnut)
             const portfolioCompositionCtx = document.getElementById('portfolioCompositionChart').getContext('2d');
             new Chart(portfolioCompositionCtx, {
@@ -906,20 +1163,6 @@
                             labels: {
                                 usePointStyle: true,
                                 padding: 20
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
                             }
                         }
                     }
@@ -1103,26 +1346,12 @@
                                 usePointStyle: true,
                                 padding: 20
                             }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
-                            }
                         }
                     }
                 }
             });
 
-            // Historical Metrics Chart (Line) - This is the same as Performance Trend Chart, just re-using for example
+            // Historical Metrics Chart (Line) - This is a more detailed version of Performance Trend Chart
             const historicalMetricsCtx = document.getElementById('historicalMetricsChart').getContext('2d');
             new Chart(historicalMetricsCtx, {
                 type: 'line',
@@ -1135,7 +1364,7 @@
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         fill: true,
                         tension: 0.3,
-                        yAxisID: 'y'
+                        yAxisID: 'y' // Assign to primary Y-axis
                     }, {
                         label: 'DPD Rate (%)',
                         data: [2.5, 2.2, 2.8, 2.0, 2.37, 1.8, 1.5, 1.17],
@@ -1143,7 +1372,7 @@
                         backgroundColor: 'rgba(20, 184, 166, 0.1)',
                         fill: false,
                         tension: 0.3,
-                        yAxisID: 'y1'
+                        yAxisID: 'y1' // Assign to secondary Y-axis
                     }, {
                         label: 'TKB30 Ratio',
                         data: [0.97, 0.98, 0.96, 0.985, 0.975, 0.988, 0.99, 0.987],
@@ -1151,7 +1380,7 @@
                         backgroundColor: 'rgba(167, 139, 250, 0.1)',
                         fill: false,
                         tension: 0.3,
-                        yAxisID: 'y2'
+                        yAxisID: 'y2' // Assign to tertiary Y-axis
                     }]
                 },
                 options: {
@@ -1161,7 +1390,7 @@
                         mode: 'index',
                         intersect: false,
                     },
-                    stacked: false,
+                    stacked: false, // Important for multiple Y-axes
                     scales: {
                         y: {
                             type: 'linear',
@@ -1177,7 +1406,7 @@
                             display: true,
                             position: 'right',
                             grid: {
-                                drawOnChartArea: false,
+                                drawOnChartArea: false, // Only draw grid lines for the first Y-axis
                             },
                             title: {
                                 display: true,
@@ -1194,7 +1423,7 @@
                             display: true,
                             position: 'right',
                             grid: {
-                                drawOnChartArea: false,
+                                drawOnChartArea: false, // Only draw grid lines for the first Y-axis
                             },
                             title: {
                                 display: true,
@@ -1202,7 +1431,7 @@
                             },
                             ticks: {
                                 callback: function(value) {
-                                    return value.toFixed(3);
+                                    return value.toFixed(3); // Format to 3 decimal places
                                 }
                             }
                         }
@@ -1274,20 +1503,6 @@
                                 usePointStyle: true,
                                 padding: 20
                             }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
-                            }
                         }
                     }
                 }
@@ -1312,7 +1527,7 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 2.5,
+                            max: 2.5, // Set max for better visualization of small percentages
                             title: {
                                 display: true,
                                 text: 'Delinquency Rate (%)'
@@ -1332,17 +1547,18 @@
                 }
             });
 
-            // Loan Risk Analyzer Button Logic
-            document.getElementById('analyzeRiskBtn').addEventListener('click', () => {
+            // --- Loan Risk Analyzer Logic ---
+            const analyzeRiskBtn = document.getElementById('analyzeRiskBtn');
+            analyzeRiskBtn.addEventListener('click', () => {
                 const loanPurpose = document.getElementById('loanPurpose').value;
                 const loanAmount = document.getElementById('loanAmount').value;
                 const termLength = document.getElementById('termLength').value;
                 const analysisResultDiv = document.getElementById('analysisResult');
                 const riskAnalysisOutputDiv = document.getElementById('riskAnalysisOutput');
 
-                // Basic validation
+                // Basic validation for loan amount
                 if (!loanAmount || isNaN(loanAmount) || parseFloat(loanAmount) <= 0) {
-                    analysisResultDiv.textContent = 'Please enter a valid loan amount.';
+                    analysisResultDiv.innerHTML = '<span class="text-red-600 font-semibold">Error:</span> Please enter a valid loan amount.';
                     riskAnalysisOutputDiv.classList.remove('hidden');
                     return;
                 }
@@ -1353,7 +1569,7 @@
 
                 // Adjust risk based on loan purpose
                 if (loanPurpose === 'Medical' || loanPurpose === 'Vacation') {
-                    riskScore += 2; // Higher risk
+                    riskScore += 2; // Higher risk for these purposes
                 } else if (loanPurpose === 'Debt Consolidation') {
                     riskScore += 1; // Medium risk
                 }
@@ -1373,7 +1589,7 @@
                     riskScore += 1; // Medium term
                 }
 
-                // Determine overall risk level
+                // Determine overall risk level based on calculated riskScore
                 if (riskScore >= 5) {
                     riskDescription = `<span class="text-red-600 font-semibold">High Risk:</span> This loan carries significant risk due to its characteristics. Consider stricter underwriting or higher interest rates.`;
                 } else if (riskScore >= 3) {
@@ -1382,8 +1598,9 @@
                     riskDescription = `<span class="text-teal-600 font-semibold">Low Risk:</span> This loan appears to be within acceptable risk parameters.`;
                 }
 
+                // Display the analysis result
                 analysisResultDiv.innerHTML = riskDescription;
-                riskAnalysisOutputDiv.classList.remove('hidden');
+                riskAnalysisOutputDiv.classList.remove('hidden'); // Show the AI output section
             });
         };
     </script>
