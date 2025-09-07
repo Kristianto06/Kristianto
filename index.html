@@ -54,42 +54,88 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section light-background" role="region" aria-label="Introduction">
-  <div class="hero-background">
-    <img src="assets/img/portfolio/Coffee Latte.jpg" alt="Workspace with coffee and laptop">
-  </div>
-
-  <div class="container" data-aos="zoom-out">
-    <div class="row justify-content-center">
-      <div class="col-lg-9 text-center">
-        <h1>Kristianto</h1>
-        <p class="lead">
-          <span class="typed" data-typed-items="Senior Data Analyst, Insurance & Financial Analytics, Transforming Data into Business Impact" aria-live="polite"></span>
-        </p>
-        
-        <div class="social-links mt-4">
-          <a href="https://github.com/Kristianto06" aria-label="GitHub profile"><i class="bi bi-github"></i></a>
-          <a href="https://www.kaggle.com/kristiantokaggle" aria-label="Kaggle profile"><i class="fa-brands fa-kaggle"></i></a>
-          <a href="https://www.linkedin.com/in/kristianto06/" aria-label="LinkedIn profile"><i class="bi bi-linkedin"></i></a>
-        </div>
-        
-        <div class="mt-4">
-          <a href="#portfolio" class="btn btn-primary me-2">View My Projects</a>
-          <a href="#contact" class="btn btn-outline-primary">Let’s Connect</a>
-        </div>
-        <a href="#about" class="btn-scroll-down mt-4" aria-label="Scroll to About section">
-          <i class="bi bi-chevron-down"></i>
-        </a>
+      <div class="hero-background">
+        <img src="assets/img/portfolio/Coffee Latte.jpg" alt="Workspace with coffee and laptop">
       </div>
-    </div>
-  </div>
-</section><!-- /Hero Section -->
+
+      <div class="container" data-aos="zoom-out">
+        <div class="row justify-content-center">
+          <div class="col-lg-9 text-center">
+            <h1>Kristianto</h1>
+            <p class="lead">
+              <span class="typed" data-typed-items="Senior Data Analyst, Insurance & Financial Analytics, Transforming Data into Business Impact" aria-live="polite"></span>
+            </p>
+            
+            <div class="social-links mt-4">
+              <a href="https://github.com/Kristianto06" aria-label="GitHub profile"><i class="bi bi-github"></i></a>
+              <a href="https://www.kaggle.com/kristiantokaggle" aria-label="Kaggle profile"><i class="fa-brands fa-kaggle"></i></a>
+              <a href="https://www.linkedin.com/in/kristianto06/" aria-label="LinkedIn profile"><i class="bi bi-linkedin"></i></a>
+            </div>
+            
+            <div class="mt-4">
+              <a href="#portfolio" class="btn btn-primary me-2">View My Projects</a>
+              <a href="#contact" class="btn btn-outline-primary">Let's Connect</a>
+            </div>
+
+            <a href="#about" class="text-scroll-hint mt-5 text-decoration-none">
+              Scroll Down <i class="bi bi-arrow-down-short bounce"></i>
+            </a>
+
+            <style>
+              .text-scroll-hint {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: var(--primary-color);
+                font-size: 0.9rem;
+                font-weight: 500;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+                cursor: pointer;
+              }
+              
+              .text-scroll-hint:hover {
+                opacity: 1;
+              }
+
+              .bounce {
+                display: inline-block;
+                font-size: 1.5rem;
+                animation: bounce 2s infinite;
+              }
+
+              @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% {
+                  transform: translateY(0);
+                }
+                40% {
+                  transform: translateY(-10px);
+                }
+                60% {
+                  transform: translateY(-5px);
+                }
+              }
+            </style>
+
+            <script>
+              document.querySelector('.text-scroll-hint').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('#about').scrollIntoView({
+                  behavior: 'smooth'
+                });
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Hero Section -->
 
 <!-- About Section -->
 <section id="about" class="about section" role="region" aria-label="About Me">
   <div class="container">
     <div class="section-title" data-aos="fade-up">
       <h2>About Me</h2>
-      <p>Driving measurable business outcomes through data — with 7+ years of expertise in insurance, financial services, and healthcare analytics.</p>
+      <p>Transforming complex data into actionable business strategies with 7+ years of proven expertise in insurance, financial services, and healthcare analytics.</p>
     </div>
 
     <div class="row gy-4 justify-content-center align-items-center">
@@ -102,8 +148,8 @@
       <div class="col-lg-7 content" data-aos="fade-left" data-aos-delay="100">
         <h2>Business Intelligence Specialist | Data Strategist | Insurance Analytics Expert</h2>
         <p class="py-3">
-          I <strong>engineer data solutions</strong> that reduce risk, accelerate reporting, and boost revenue. With deep expertise in <strong>insurance claims, customer segmentation, and predictive modeling</strong>, I leverage Python, SQL, and Power BI to transform raw data into strategic business impact.
-        </p>
+          I <strong>architect data solutions</strong> that drive measurable business outcomes. Specializing in <strong>insurance analytics, risk assessment, and customer intelligence</strong>, I transform raw data into strategic advantages using Python, SQL, and advanced BI platforms.
+                    </p>
         
         <div class="row">
           <div class="col-md-6">
