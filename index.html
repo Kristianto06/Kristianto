@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kristianto - Data Analyst Portfolio</title>
-  <meta name="description" content="Portfolio of Kristianto, a professional Data Analyst with expertise in Python, SQL, and data visualization">
-  <meta name="keywords" content="data analyst, python, sql, tableau, power bi, portfolio">
+  <title>Kristianto - Senior BI Specialist | Insurance Analytics | Jakarta</title>
+  <meta name="description" content="Business Intelligence Specialist with 10 years in insurance analytics. Expert in fraud detection, predictive modeling, and Power BI automation. Based in Jakarta, Indonesia.">
+  <meta name="keywords" content="business intelligence, data analyst, insurance analytics, fraud detection, power bi, python, sql, jakarta, indonesia, predictive modeling, risk assessment">
 
   <!-- Favicons -->
   <link rel="icon" href="assets/img/favicon.ico">
@@ -15,7 +15,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -23,11 +23,278 @@
   <link rel="stylesheet" href="assets/vendor/aos/aos.css">
   <link rel="stylesheet" href="assets/vendor/glightbox/css/glightbox.min.css">
   <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main CSS File -->
   <link rel="stylesheet" href="assets/css/main.css">
 
+  <style>
+    :root {
+      --primary-color: #0b52eb;
+      --primary-dark: #ffffff;
+      --secondary-color: #64748b;
+      --accent-color: #0a6edf;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --light-color: #f8fafc;
+      --dark-color: #1e293b;
+      --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+    }
+
+    .section-title h2 {
+      position: relative;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+
+    .section-title h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .section-title.text-center h2:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, rgba(6, 75, 226, 0.9) 0%, rgba(255, 255, 255, 0.85) 100%), url('assets/img/portfolio/Coffee Latte.jpg') center/cover no-repeat;
+      color: rgb(19, 19, 34);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .hero .lead {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--light-color);
+      padding: 60px 0;
+    }
+
+    .stats-item {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .stats-item i {
+      font-size: 2.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .stats-item span {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      display: block;
+    }
+
+    .stats-item p {
+      color: var(--primary-color);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    /* Skills Section */
+    .skill-item {
+      margin-bottom: 25px;
+    }
+
+    .skill-name {
+      font-weight: 500;
+    }
+
+    .skill-value {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 5px;
+      background-color: #e2e8f0;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      border-radius: 5px;
+    }
+
+    /* Resume Timeline */
+    .resume-item {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 30px;
+    }
+
+    .resume-item:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary-color);
+    }
+
+    .resume-item:after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 20px;
+      width: 2px;
+      height: calc(100% - 15px);
+      background: #e2e8f0;
+    }
+
+    .resume-item:last-child:after {
+      display: none;
+    }
+
+    .resume-title {
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Portfolio Cards */
+    .portfolio-item .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      overflow: hidden;
+    }
+
+    .portfolio-item .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .portfolio-item .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .portfolio-item .card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    /* Services Section */
+    .service-item {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+      height: 100%;
+      border-top: 4px solid var(--primary-color);
+    }
+
+    .service-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-item.item-cyan {
+      border-top-color: #06b6d4;
+    }
+
+    .service-item.item-orange {
+      border-top-color: #f59e0b;
+    }
+
+    .service-item.item-teal {
+      border-top-color: #14b8a6;
+    }
+
+    .service-item.item-red {
+      border-top-color: #ef4444;
+    }
+
+    .service-item.item-indigo {
+      border-top-color: #6366f1;
+    }
+
+    .service-item.item-pink {
+      border-top-color: #ec4899;
+    }
+
+    .service-item .icon {
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-size: 2.5rem;
+    }
+
+    /* Contact Section */
+    .contact .info-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .contact .info-item i {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-right: 15px;
+      margin-top: 5px;
+    }
+
+    .contact .info-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-color);
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero .lead {
+        font-size: 1.2rem;
+      }
+      
+      .stats-item {
+        margin-bottom: 30px;
+      }
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -135,7 +402,7 @@
   <div class="container">
     <div class="section-title" data-aos="fade-up">
       <h2>About Me</h2>
-      <p>Transforming complex data into actionable business strategies with 7+ years of proven expertise in insurance, financial services, and healthcare analytics.</p>
+      <p>Business Intelligence Specialist with 10 years of experience building scalable analytics solutions for financial services and insurance industries.</p>
     </div>
 
     <div class="row gy-4 justify-content-center align-items-center">
@@ -148,7 +415,7 @@
       <div class="col-lg-7 content" data-aos="fade-left" data-aos-delay="100">
         <h2>Business Intelligence Specialist | Data Strategist | Insurance Analytics Expert</h2>
         <p class="py-3">
-          I <strong>architect data solutions</strong> that drive measurable business outcomes. Specializing in <strong>insurance analytics, risk assessment, and customer intelligence</strong>, I transform raw data into strategic advantages using Python, SQL, and advanced BI platforms.
+          I <strong>specialize in end-to-end data pipeline development, predictive modeling, and automated BI systems</strong> that drive measurable business impact. Specializing in <strong>insurance analytics, risk assessment, and customer intelligence</strong>, I transform raw data into strategic advantages using Python, SQL, and advanced BI platforms.
                     </p>
         
         <div class="row">
@@ -167,8 +434,8 @@
         </div>
         
         <div class="mt-4">
-          <p>I’ve <strong>delivered 25% higher engagement, slashed reporting time by 75%, and identified $164M in financial risk exposure</strong> — all through data-driven transformation.</p>
-          
+          <p>Through data-driven transformation, I have <strong>achieved a 25% increase in engagement, a 75% reduction in reporting time, and the identification of $164 million in </strong> financial risk exposure.</p>
+           
           <div class="mt-4">
             <a href="#portfolio" class="btn btn-primary me-2">Explore My Work</a>
             <a href="assets/img/portfolio/Kristianto.pdf" download class="btn btn-outline-primary">Download CV</a>
@@ -180,51 +447,43 @@
 </section><!-- /About Section -->
 
     <!-- Stats Section -->
-<section id="stats" class="stats section">
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-    <div class="row gy-4">
-
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="bi bi-people"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" data-purecounter-suffix="%" class="purecounter"> </span>
-          <p>↑ Customer Engagement via AI-Driven Segmentation</p>
+    <section id="stats" class="stats section">
+      <div class="container" data-aos="fade-up">
+        <div class="row gy-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item">
+              <i class="bi bi-shield-check"></i>
+              <span>12%</span>
+              <p>Fraud Reduction<br><small>Rp 5B Saved Annually</small></p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item">
+              <i class="bi bi-clock-history"></i>
+              <span>75%</span>
+              <p>Reporting Time Saved<br><small>8hrs to 2hrs</small></p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item">
+              <i class="bi bi-people"></i>
+              <span>25%</span>
+              <p>Customer Engagement<br><small>Increase via Segmentation</small></p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item">
+              <i class="bi bi-graph-up-arrow"></i>
+              <span>$164M</span>
+              <p>Risk Identified<br><small>In Financial Portfolio</small></p>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="bi bi-clock-history"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="75" data-purecounter-duration="1" data-purecounter-suffix="%" class="purecounter"> </span>
-          <p>↓ Reporting Time with Automated Power BI Dashboards</p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="bi bi-arrow-repeat"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="35" data-purecounter-duration="1" data-purecounter-suffix="%" class="purecounter"> </span>
-          <p>↑ Data Processing Efficiency via ETL Pipelines</p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="bi bi-currency-dollar"></i>
-        <div class="stats-item">
-          <span class="d-flex align-items-center justify-content-center">
-            <span style="color: var(--default-color); font-size: 2.1rem; font-weight: 700;">$</span>
-            <span data-purecounter-start="0" data-purecounter-end="164" data-purecounter-duration="1" data-purecounter-suffix="M" class="purecounter ms-1" style="color: var(--default-color);"></span>
-          </span>
-          <p>Risk Exposure Identified in $2.8B Loan Portfolio</p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section><!-- /Stats Section -->
+    </section><!-- /Stats Section -->
 
     <!-- Skills Section -->
     <section id="skills" class="skills section py-5">
@@ -237,79 +496,81 @@
         
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-6">
-            <div class="skill-item mb-4">
+            <div class="skill-item">
               <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">Python</span>
-                <span class="skill-value">89%</span>
-              </div>
-              <div class="progress" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="skill-item mb-4">
-              <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">SQL</span>
+                <span class="skill-name">Python (Pandas, Scikit-learn)</span>
                 <span class="skill-value">90%</span>
               </div>
-              <div class="progress" style="height: 10px;">
+              <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
 
-            <div class="skill-item mb-4">
+            <div class="skill-item">
               <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">Ms. Excel</span>
-                <span class="skill-value">75%</span>
+                <span class="skill-name">SQL (Advanced Queries)</span>
+                <span class="skill-value">95%</span>
               </div>
-              <div class="progress" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="skill-name">Power BI & DAX</span>
+                <span class="skill-value">92%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
 
           <div class="col-lg-6">
-            <div class="skill-item mb-4">
+            <div class="skill-item">
               <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">Data Visualization (Tableau, Power BI)</span>
-                <span class="skill-value">80%</span>
+                <span class="skill-name">Tableau</span>
+                <span class="skill-value">85%</span>
               </div>
-              <div class="progress" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
 
-            <div class="skill-item mb-4">
+            <div class="skill-item">
               <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">Data Storytelling</span>
-                <span class="skill-value">87%</span>
+                <span class="skill-name">Statistical Modeling</span>
+                <span class="skill-value">88%</span>
               </div>
-              <div class="progress" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
 
-            <div class="skill-item mb-4">
+            <div class="skill-item">
               <div class="d-flex justify-content-between mb-2">
-                <span class="skill-name">Business Process</span>
-                <span class="skill-value">80%</span>
+                <span class="skill-name">Insurance Domain</span>
+                <span class="skill-value">95%</span>
               </div>
-              <div class="progress" style="height: 10px;">
-                <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
         </div>
         
         <div class="mt-5" data-aos="fade-up">
-          <h3 class="h4 mb-3">Tools & Technologies</h3>
+          <h3 class="h5 mb-3">Core Competencies</h3>
           <div class="d-flex flex-wrap gap-2">
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">Python (Pandas, NumPy)</span>
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">MySQL</span>
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">Tableau</span>
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">Power BI</span>
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">Excel (Advanced)</span>
-            <span class="badge bg-primary-subtle text-primary-emphasis p-2">Jupyter Notebooks</span>
+            <span class="badge bg-primary p-2">Fraud Detection</span>
+            <span class="badge bg-primary p-2">Predictive Modeling</span>
+            <span class="badge bg-primary p-2">Customer Segmentation</span>
+            <span class="badge bg-primary p-2">Risk Assessment</span>
+            <span class="badge bg-primary p-2">Claims Analytics</span>
+            <span class="badge bg-primary p-2">Process Automation</span>
+            <span class="badge bg-primary p-2">Dashboard Development</span>
+            <span class="badge bg-primary p-2">Statistical Analysis</span>
           </div>
         </div>
       </div>
@@ -317,78 +578,88 @@
 
     <!-- Resume Section -->
 <section id="resume" class="resume section">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Experience & Education</h2>
-    <p>Proven track record of delivering measurable impact across insurance, finance, and healthcare analytics.</p>
-  </div>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <h3 class="resume-title">Education</h3>
-
-        <div class="resume-item">
-          <h4>Full Stack Data Analytics</h4>
-          <h5>Oct 2024 – Jan 2025</h5>
-          <p><em>RevoU – Data Analyst, Jakarta</em></p>
-          <p>Hands-on training in Python, SQL, Power BI, and ML. Built end-to-end analytics solutions for SaaS, FinTech, and Healthcare with measurable business impact.</p>
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Professional Journey</h2>
+          <p>10 years delivering measurable impact in insurance and financial services analytics</p>
         </div>
 
-        <div class="resume-item">
-          <h4>Bachelor of Accounting</h4>
-          <h5>2013 – 2018</h5>
-          <p><em>Pancasila University – Accounting, Jakarta</em></p>
-          <p>Studied financial reporting, auditing, and taxation. Final project: “Implementation of Information System Applications on External Claim Reports.”</p>
-        </div>
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="resume-title">Professional Experience</h3>
 
-        <div class="resume-item">
-          <h4>Diploma in Actuarial Science</h4>
-          <h5>2003 – 2006</h5>
-          <p><em>Ministry of Finance, Indonesia</em></p>
-          <p>Fundamentals in risk assessment, insurance analytics, and statistical modeling — foundational for my career in insurance analytics.</p>
+            <div class="resume-item">
+              <h4>Senior Data Analyst</h4>
+              <h5>Aug 2022 – Present</h5>
+              <p><em>PT Cipta Integra Duta, Jakarta</em></p>
+              <ul>
+                <li>Redesigned Power BI infrastructure using star schema and DAX optimization, reducing monthly report generation from 8 hours to 2 hours</li>
+                <li>Built segmentation model for new business participants using RFM and K-means clustering, increasing active engagement by 25%</li>
+                <li>Implemented incremental refresh and automated data quality checks for executive dashboards</li>
+                <li>Mentored junior analysts on Power BI development and statistical analysis</li>
+              </ul>
+            </div>
+
+            <div class="resume-item">
+              <h4>Healthcare & Life Insurance Analyst</h4>
+              <h5>Aug 2017 – Aug 2022</h5>
+              <p><em>PT Asuransi Jiwa Pro-Life, Jakarta</em></p>
+              <ul>
+                <li>Developed statistical fraud detection models analyzing claim patterns, reducing fraudulent claims by 12% (Rp 5B saved annually)</li>
+                <li>Built real-time SLA dashboards tracking claim categories, reducing average claim resolution from 14 days to 11.5 days</li>
+                <li>Analyzed 5+ years claims data for mortality/morbidity trends, contributing to 15% improvement in underwriting accuracy</li>
+                <li>Presented quarterly fraud findings to senior management and compliance team</li>
+              </ul>
+            </div>
+
+            <div class="resume-item">
+              <h4>Business Analyst</h4>
+              <h5>May 2015 – Jul 2017</h5>
+              <p><em>AAI Indonesia, Jakarta</em></p>
+              <ul>
+                <li>Optimized database structure for 100,000+ member records, reducing system response time by 28%</li>
+                <li>Developed VBA macros and SQL stored procedures, reducing manual processing by 40%</li>
+                <li>Implemented validation rules improving data accuracy from 76% to 91%</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="resume-title">Education & Certifications</h3>
+
+            <div class="resume-item">
+              <h4>Full Stack Data Analytics</h4>
+              <h5>Oct 2024 – May 2025</h5>
+              <p><em>RevoU, Jakarta</em></p>
+              <p>Comprehensive program covering Python, SQL, machine learning, and BI tools through real-world projects.</p>
+            </div>
+
+            <div class="resume-item">
+              <h4>Bachelor of Accounting</h4>
+              <h5>Sep 2013 – Mar 2018</h5>
+              <p><em>Universitas Pancasila, Jakarta</em></p>
+              <p>Comprehensive program in accounting principles, financial reporting, and auditing.</p>
+            </div>
+
+            <div class="resume-item">
+              <h4>Diploma in Actuarial Science</h4>
+              <h5>Aug 2003 – Feb 2006</h5>
+              <p><em>Ministry of Finance, Republic of Indonesia</em></p>
+              <p>Specialized in actuarial mathematics, risk assessment, and insurance analytics fundamentals.</p>
+            </div>
+
+            <div class="resume-item">
+              <h4>Certifications</h4>
+              <ul class="list-unstyled">
+                <li><i class="bi bi-award text-primary"></i> <strong>Full Stack Data Analytics</strong> - RevoU, May 2025</li>
+                <li><i class="bi bi-award text-primary"></i> <strong>Ajun Ahli Asuransi Indonesia Jiwa (AAAJ)</strong> - AAMAI, Apr 2017</li>
+                <li><i class="bi bi-award text-primary"></i> <strong>Pengantar Asuransi Jiwa & Operasional</strong> - AAMAI, Apr 2014</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-        <h3 class="resume-title">Professional Experience</h3>
-
-        <div class="resume-item">
-          <h4>Data Analyst</h4>
-          <h5>Aug 2022 – Present</h5>
-          <p><em>Cipta Integra Duta – Financial Services</em></p>
-          <ul class="mt-2">
-            <li><strong>Engineered segmentation models</strong> in Python & SQL for 50K+ users, boosting engagement by 25%.</li>
-            <li><strong>Automated reporting</strong> with Power BI, reducing delivery time by 75% while maintaining 98% data accuracy.</li>
-            <li><strong>Streamlined claims processing</strong> by building ETL pipelines and a web-based system, improving efficiency by 35%.</li>
-          </ul>
-        </div>
-
-        <div class="resume-item">
-          <h4>Healthcare & Life Insurance Analyst</h4>
-          <h5>Aug 2017 – Aug 2022</h5>
-          <p><em>Asuransi Jiwa Pro-Life – Insurance</em></p>
-          <ul class="mt-2">
-            <li><strong>Elevated customer satisfaction by 22%</strong> by redesigning claims workflows using statistical analysis.</li>
-            <li><strong>Reduced average resolution time by 18%</strong> with real-time KPI dashboards in Life-OPS.</li>
-            <li><strong>Improved policy performance by 15%</strong> via risk modeling and claims pattern analysis.</li>
-            <li><strong>Ensured 100% regulatory compliance</strong> during cross-functional development of a web-based claims system.</li>
-          </ul>
-        </div>
-
-        <div class="resume-item">
-          <h4>Business Analyst</h4>
-          <h5>May 2015 – July 2017</h5>
-          <p><em>AAI Indonesia – Healthcare TPA</em></p>
-          <ul class="mt-2">
-            <li><strong>Boosted processing efficiency by 28%</strong> by redesigning database architecture using ERD.</li>
-            <li><strong>Eliminated 40% of manual work</strong> by automating .txt file uploads with validation logic.</li>
-            <li><strong>Improved data accuracy by 67%</strong> through advanced SQL cleansing and Excel automation.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section><!-- /Resume Section -->
+    </section><!-- /Resume Section -->
 
    <!-- Portfolio Section -->
 <section id="portfolio" class="portfolio section">
@@ -532,109 +803,77 @@
   </div>
 </section><!-- /Portfolio Section -->
 
-    <!-- Services Section -->
-<section id="services" class="services section">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>How I Add Value</h2>
-    <p>I don’t just analyze data — I solve business problems with measurable outcomes.</p>
-  </div>
+   <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>How I Add Value</h2>
+          <p>Specialized solutions for insurance and financial services</p>
+        </div>
 
-  <div class="container">
-    <div class="row gy-4">
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <div class="service-item item-cyan position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,521.0016835830174C376.1290562159157,517.8887921683347..."></path>
-            </svg>
-            <i class="bi bi-graph-up"></i>
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item item-cyan">
+              <div class="icon">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <h3>Fraud Detection & Prevention</h3>
+              <p>Built models that saved Rp 5 billion by catching fraudulent insurance claims early using anomaly detection and pattern analysis.</p>
+            </div>
           </div>
-          <a href="#" class="stretched-link">
-            <h3>Strategic Data Analysis</h3>
-          </a>
-          <p>I uncover hidden patterns and actionable insights using Python, SQL, and statistical modeling — turning data into growth levers.</p>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item item-orange">
+              <div class="icon">
+                <i class="bi bi-bar-chart-line"></i>
+              </div>
+              <h3>Predictive Analytics</h3>
+              <p>Develop customer segmentation models using RFM and K-means clustering that increased engagement by 25% through targeted campaigns.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item item-teal">
+              <div class="icon">
+                <i class="bi bi-lightning"></i>
+              </div>
+              <h3>Dashboard Automation</h3>
+              <p>Cut reporting time by 75% through Power BI automation with incremental refresh and data quality checks.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item item-red">
+              <div class="icon">
+                <i class="bi bi-graph-up"></i>
+              </div>
+              <h3>Risk Assessment</h3>
+              <p>Identify concentration risks and exposure patterns in financial portfolios, with $164M risk identified in recent analysis.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item item-indigo">
+              <div class="icon">
+                <i class="bi bi-clipboard-data"></i>
+              </div>
+              <h3>Insurance Analytics</h3>
+              <p>10 years specializing in claims analytics, actuarial principles, and underwriting support with 15% improvement in accuracy.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item item-pink">
+              <div class="icon">
+                <i class="bi bi-arrow-repeat"></i>
+              </div>
+              <h3>Process Optimization</h3>
+              <p>Reduce manual work by 40-75% through automation, ETL pipelines, and database optimization.</p>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-        <div class="service-item item-orange position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,582.0697525312426C382.5290701553225..."></path>
-            </svg>
-            <i class="bi bi-pie-chart"></i>
-          </div>
-          <a href="#" class="stretched-link">
-            <h3>Interactive Data Visualization</h3>
-          </a>
-          <p>I build intuitive Power BI and Tableau dashboards that empower stakeholders to make faster, data-driven decisions.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-        <div class="service-item item-teal position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,541.5067337569781C382.14930387511276..."></path>
-            </svg>
-            <i class="bi bi-arrow-repeat"></i>
-          </div>
-          <a href="#" class="stretched-link">
-            <h3>Process Automation & Optimization</h3>
-          </a>
-          <p>I automate manual workflows and ETL pipelines, reducing processing time by up to 75% while improving accuracy.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-        <div class="service-item item-red position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,503.46388370962813C374.79870501325706..."></path>
-            </svg>
-            <i class="bi bi-lightbulb"></i>
-          </div>
-          <a href="#" class="stretched-link">
-            <h3>Data-Driven Strategy</h3>
-          </a>
-          <p>I deliver strategic recommendations on pricing, risk, and customer engagement backed by robust analytics.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-        <div class="service-item item-indigo position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,532.3542879108572C369.38199826031484..."></path>
-            </svg>
-            <i class="bi bi-shield-check"></i>
-          </div>
-          <a href="#" class="stretched-link">
-            <h3>Risk Assessment & Mitigation</h3>
-          </a>
-          <p>I build predictive models to identify financial and operational risks, enabling proactive decision-making.</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-        <div class="service-item item-pink position-relative">
-          <div class="icon">
-            <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-              <path stroke="none" d="M300,566.797414625762C385.7384707136149..."></path>
-            </svg>
-            <i class="bi bi-bar-chart-line"></i>
-          </div>
-          <a href="#" class="stretched-link">
-            <h3>Statistical & Predictive Modeling</h3>
-          </a>
-          <p>Leveraging regression, time series, and machine learning to forecast trends and validate business hypotheses.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section><!-- /Services Section -->
+    </section><!-- /Services Section -->
 
  <!-- Contact Section -->
   <section id="contact" class="contact section py-5">
