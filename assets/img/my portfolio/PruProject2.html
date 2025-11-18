@@ -151,8 +151,10 @@
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .card-title {
             font-size: 18px;
@@ -284,6 +286,19 @@
         .priority-low {
             background: rgba(16, 185, 129, 0.1);
             color: var(--accent-emerald);
+        }
+        .priority-critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: white;
+            border: 1px solid var(--accent-red);
+        }
+        .priority-amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+        }
+        .priority-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
         }
         .hypothesis-description {
             font-size: 13px;
@@ -692,6 +707,13 @@
             overflow-y: auto;
             padding: 24px;
             border: 1px solid var(--border);
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal-content.active {
+            transform: scale(1);
+            opacity: 1;
         }
         .modal-header {
             display: flex;
@@ -702,6 +724,10 @@
         .modal-title {
             font-size: 20px;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .close-modal {
             background: none;
@@ -727,6 +753,18 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+        .statistic {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-label {
+            color: var(--text-muted);
+        }
+        .stat-value {
+            font-weight: 700;
         }
         /* Utilities */
         .col-span-6 { grid-column: span 6; }
@@ -804,6 +842,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .chart-title {
             font-size: 14px;
@@ -816,6 +856,7 @@
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
         .toggle-group {
             display: flex;
@@ -850,12 +891,37 @@
             font-size: 12px;
             color: var(--text-primary);
         }
+        .metric-display {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+        .metric-value {
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+        .metric-label {
+            color: var(--text-muted);
+        }
         /* Interactive Bar Chart */
         .interactive-bar-chart {
             height: 220px;
             position: relative;
             display: flex;
             flex-direction: column;
+        }
+        .chart-bars {
+            flex: 1;
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+        .chart-x-axis {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
         }
         .chart-legend {
             display: flex;
@@ -955,6 +1021,9 @@
             justify-content: space-between;
             font-size: 11px;
             color: var(--text-muted);
+        }
+        .axis-label {
+            padding: 0 4px;
         }
         .insight-badge {
             padding: 8px 12px;
@@ -1074,18 +1143,6 @@
             bottom: 0;
             background: linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.1) 100%);
         }
-        .sparkline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to right, 
-                rgba(59, 130, 246, 0.3) 0%, 
-                rgba(59, 130, 246, 0.8) 100%);
-            clip-path: polygon(0% 100%, 10% 80%, 30% 60%, 50% 40%, 70% 30%, 90% 20%, 100% 10%, 100% 100%);
-        }
         .sparkline-labels {
             display: flex;
             justify-content: space-between;
@@ -1128,19 +1185,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-        }
-        .trend-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to right, 
-                rgba(16, 185, 129, 0.3) 0%, 
-                rgba(16, 185, 129, 0.6) 50%, 
-                rgba(16, 185, 129, 0.9) 100%);
-            clip-path: polygon(10% 70%, 50% 60%, 90% 48%, 100% 48%, 100% 100%, 0% 100%);
         }
         .trend-point {
             position: absolute;
@@ -1263,21 +1307,19 @@
             width: 100%;
             height: 100%;
         }
-        .grid-line {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-        }
         .grid-line.vertical {
             top: 0;
             left: 50%;
             width: 1px;
             height: 100%;
+            background: rgba(255,255,255,0.1);
         }
         .grid-line.horizontal {
             left: 0;
             top: 50%;
             width: 100%;
             height: 1px;
+            background: rgba(255,255,255,0.1);
         }
         .quadrant-label {
             position: absolute;
@@ -1329,7 +1371,7 @@
         }
         .point-tooltip {
             position: absolute;
-            bottom: 100%;
+            bottom: calc(100% + 8px);
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.9);
@@ -1415,10 +1457,6 @@
             border-radius: 3px;
             transition: width 0.3s;
         }
-        .metric-value {
-            font-weight: 700;
-            color: var(--accent-red);
-        }
         .confidence-meter {
             position: relative;
             height: 6px;
@@ -1451,19 +1489,73 @@
         .actionability-stars .far {
             color: var(--text-muted);
         }
-        .priority-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
+        /* Methodology Phase Styles (FIXED) */
+        .methodology-phase {
+            background: var(--primary);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .phase-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .phase-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .phase-duration {
+            margin-left: auto;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
         }
-        .priority-badge.high {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--accent-red);
+        .phase-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
-        .priority-badge.medium {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent-amber);
+        .phase-goal {
+            background: var(--primary-light);
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+        .phase-goal-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .phase-goal ul {
+            margin: 8px 0 0 20px;
+            padding: 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .phase-goal li {
+            margin-bottom: 6px;
         }
         /* Target Summary */
         .target-summary {
@@ -1609,10 +1701,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            clip-path: polygon(0% 85%, 10% 83.5%, 30% 82.2%, 50% 81.1%, 70% 87.8%, 90% 94.4%, 100% 94.4%, 100% 100%, 0% 100%);
         }
         .forecast-line.baseline .line-path {
             background: rgba(239, 68, 68, 0.3);
+            clip-path: polygon(0% 85%, 10% 83.5%, 30% 82.2%, 50% 81.1%, 70% 87.8%, 90% 94.4%, 100% 94.4%, 100% 100%, 0% 100%);
         }
         .forecast-line.partial .line-path {
             background: rgba(245, 158, 11, 0.3);
@@ -1916,61 +2008,7 @@
             align-items: center;
             gap: 6px;
         }
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .visualization-container {
-                grid-template-columns: 1fr;
-            }
-            .test-container {
-                grid-template-columns: 1fr;
-            }
-            .strategy-overview {
-                grid-template-columns: 1fr;
-            }
-            .target-metrics {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .intervention-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 768px) {
-            .chart-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .chart-controls {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            .test-content {
-                flex-direction: column;
-            }
-            .cause-prioritization {
-                gap: 8px;
-            }
-            .cause-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .target-metrics {
-                grid-template-columns: 1fr;
-            }
-            .timeline-phase {
-                flex-direction: column;
-            }
-            .phase-marker {
-                flex-direction: row;
-                width: 100%;
-                margin-bottom: 8px;
-            }
-            .roadmap-timeline::before {
-                left: 20px;
-            }
-        }
-        /* COMPLETE DATA REQUIREMENTS Tab Styles */
+        /* Data Requirements */
         .data-requirements-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1978,18 +2016,6 @@
         }
         .data-category-card {
             min-height: 400px;
-        }
-        .priority-badge.priority-high {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--accent-red);
-        }
-        .priority-badge.priority-medium {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--accent-amber);
-        }
-        .priority-badge.priority-low {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-emerald);
         }
         .status-badge {
             padding: 4px 8px;
@@ -2058,10 +2084,10 @@
                 <i class="fas fa-lightbulb"></i> Hypotheses
             </button>
             <button class="nav-item" data-tab="methodology">
-                <i class="fas fa-analytics"></i> Methodology & Analytics
+                <i class="fas fa-chart-bar"></i> Methodology & Analytics
             </button>
             <button class="nav-item" data-tab="data-requirements">
-                <i class="fas fa-analytics"></i> Complete Data Requirements
+                <i class="fas fa-database"></i> Complete Data Requirements
             </button>
             <button class="nav-item" data-tab="timeline">
                 <i class="fas fa-calendar-alt"></i> Timeline
@@ -2811,7 +2837,7 @@
                 </div>
             </div>
         </div>
-        <!-- Methodology & Analytics Framework Tab - REPLACED WITH ENHANCED VERSION -->
+        <!-- Methodology & Analytics Tab -->
         <div class="tab-content" id="methodology">
             <div class="grid">
                 <!-- Methodology Overview -->
@@ -2830,9 +2856,9 @@
                     <!-- PHASE 1: Risk Signal Detection -->
                     <div class="methodology-phase">
                         <div class="phase-header">
-                            <div class="phase-number">1</div>
-                            <div class="phase-title">Risk Signal Detection & Portfolio Assessment</div>
-                            <div class="phase-duration">Weeks 0–2 | Foundation Phase</div>
+                            <span class="phase-number">1</span>
+                            <span class="phase-title">Risk Signal Detection & Portfolio Assessment</span>
+                            <span class="phase-duration">Weeks 0–2 | Foundation Phase</span>
                         </div>
                         <div class="phase-content">
                             <div class="phase-goal">
@@ -2858,7 +2884,15 @@
                                     </div>
                                     <div class="chart-body">
                                         <div class="interactive-bar-chart" id="claimsDistributionChart">
-                                            <!-- Bars will be generated by JavaScript -->
+                                            <div class="chart-bars" style="flex: 1; display: flex; gap: 4px; margin-bottom: 12px;"></div>
+                                            <div class="chart-x-axis">
+                                                <span>Region</span>
+                                                <span>Plan</span>
+                                                <span>Age</span>
+                                                <span>Disease</span>
+                                                <span>Year</span>
+                                                <span>Provider</span>
+                                            </div>
                                             <div class="chart-legend">
                                                 <div class="legend-item">
                                                     <span class="legend-color" style="background-color: #3b82f6;"></span>
@@ -2940,7 +2974,12 @@
                                     <div class="test-content">
                                         <div class="test-visual">
                                             <div class="sparkline-chart">
-                                                <div class="sparkline" id="providerRepricingChart"></div>
+                                                <svg width="100%" height="60" viewBox="0 0 100 60" preserveAspectRatio="none">
+                                                    <path d="M0,55 L10,45 L30,35 L50,25 L70,18 L90,12 L100,10" 
+                                                        fill="none" stroke="#3b82f6" stroke-width="2"/>
+                                                    <path d="M0,60 L0,55 L10,45 L30,35 L50,25 L70,18 L90,12 L100,10 L100,60 Z" 
+                                                        fill="rgba(59, 130, 246, 0.15)"/>
+                                                </svg>
                                                 <div class="sparkline-labels">
                                                     <span>Q3-24</span>
                                                     <span>Q3-25</span>
@@ -2974,10 +3013,11 @@
                                     <div class="test-content">
                                         <div class="test-visual">
                                             <div class="pie-chart-container">
-                                                <div class="pie-chart" id="conversionChart">
-                                                    <div class="pie-segment basic" style="--percentage: 68.5%; --color: #6b7280;"></div>
-                                                    <div class="pie-segment premium" style="--percentage: 31.5%; --color: #f59e0b;"></div>
-                                                </div>
+                                                <svg width="60" height="60" viewBox="0 0 60 60">
+                                                    <circle cx="30" cy="30" r="25" fill="none" stroke="#334155" stroke-width="1"/>
+                                                    <path d="M30,5 A25,25 0 0,1 54.2,30" fill="none" stroke="#6b7280" stroke-width="8" stroke-linecap="round"/>
+                                                    <path d="M54.2,30 A25,25 0 1,1 30,55" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
+                                                </svg>
                                                 <div class="pie-legend">
                                                     <div class="legend-item">
                                                         <span class="legend-color" style="background-color: #6b7280;"></span>
@@ -3018,11 +3058,13 @@
                                     <div class="test-content">
                                         <div class="test-visual">
                                             <div class="trend-chart">
-                                                <div class="trend-line" id="morbidityTrend">
-                                                    <div class="trend-point" style="left: 10%; bottom: 30%;" data-year="2023"></div>
-                                                    <div class="trend-point" style="left: 50%; bottom: 40%;" data-year="2024"></div>
-                                                    <div class="trend-point" style="left: 90%; bottom: 52%;" data-year="2025"></div>
-                                                </div>
+                                                <svg width="100%" height="60" viewBox="0 0 100 60" preserveAspectRatio="none">
+                                                    <polyline points="10,30 50,20 90,8" 
+                                                            fill="none" stroke="#10b981" stroke-width="2"/>
+                                                    <circle cx="10" cy="30" r="3" fill="#10b981"/>
+                                                    <circle cx="50" cy="20" r="3" fill="#10b981"/>
+                                                    <circle cx="90" cy="8" r="3" fill="#10b981"/>
+                                                </svg>
                                                 <div class="trend-labels">
                                                     <span>2023</span>
                                                     <span>2024</span>
@@ -3087,9 +3129,9 @@
                     <!-- PHASE 2: Root Cause Quantification -->
                     <div class="methodology-phase">
                         <div class="phase-header">
-                            <div class="phase-number">2</div>
-                            <div class="phase-title">Root Cause Quantification</div>
-                            <div class="phase-duration">(Weeks 2–8)</div>
+                            <span class="phase-number">2</span>
+                            <span class="phase-title">Root Cause Quantification</span>
+                            <span class="phase-duration">Weeks 2–8 | Analysis Phase</span>
                         </div>
                         <div class="phase-content">
                             <div class="phase-goal">
@@ -3357,9 +3399,9 @@
                     <!-- PHASE 3: Actionability & Forecast -->
                     <div class="methodology-phase">
                         <div class="phase-header">
-                            <div class="phase-number">3</div>
-                            <div class="phase-title">Actionability & Forecast</div>
-                            <div class="phase-duration">(Weeks 8–12)</div>
+                            <span class="phase-number">3</span>
+                            <span class="phase-title">Actionability & Forecast</span>
+                            <span class="phase-duration">Weeks 8–12 | Solution Phase</span>
                         </div>
                         <div class="phase-content">
                             <div class="phase-goal">
@@ -3614,7 +3656,7 @@
                                         <i class="fas fa-road"></i> Implementation Roadmap
                                     </div>
                                     <div class="chart-controls">
-                                        <button class="nav-item" id="toggleMilestones">Toggle Milestones</button>
+                                        <button class="nav-item" id="toggleMilestones">Hide Milestones</button>
                                     </div>
                                 </div>
                                 <div class="chart-body">
@@ -3637,7 +3679,7 @@
                                                     <li>Weekly KPI tracking begins</li>
                                                 </ul>
                                                 <div class="phase-milestone">
-                                                    <i class="fas fa-flag-checkered"></i>
+                                                    <i class="fas fa-flag"></i>
                                                     <strong>Milestone:</strong> Stabilize monthly claims trend
                                                 </div>
                                             </div>
@@ -3661,7 +3703,7 @@
                                                     <li>Early results monitoring</li>
                                                 </ul>
                                                 <div class="phase-milestone">
-                                                    <i class="fas fa-flag-checkered"></i>
+                                                    <i class="fas fa-flag"></i>
                                                     <strong>Milestone:</strong> Major programs operational
                                                 </div>
                                             </div>
@@ -3682,7 +3724,7 @@
                                                     <li>Provider contract renewals with new models</li>
                                                 </ul>
                                                 <div class="phase-milestone">
-                                                    <i class="fas fa-flag-checkered"></i>
+                                                    <i class="fas fa-flag"></i>
                                                     <strong>Milestone:</strong> Achieve &lt;8% growth trajectory
                                                 </div>
                                             </div>
@@ -3703,7 +3745,7 @@
                                                     <li>Continuous improvement culture</li>
                                                 </ul>
                                                 <div class="phase-milestone">
-                                                    <i class="fas fa-flag-checkered"></i>
+                                                    <i class="fas fa-flag"></i>
                                                     <strong>Milestone:</strong> Embed changes in business-as-usual
                                                 </div>
                                             </div>
@@ -4152,7 +4194,7 @@
                     }
                 });
             });
-            // Interactive 5-Why Diagram — IMPROVED
+            // Interactive 5-Why Diagram
             const diagram = document.getElementById('interactiveFiveWhys');
             const nodes = diagram.querySelectorAll('.why-node');
             const connectors = diagram.querySelectorAll('.connector');
@@ -4177,7 +4219,7 @@
                 connectors.forEach(c => c.classList.remove('selected'));
                 diagram.classList.remove('focus-selection');
             });
-            // Hypothesis card handlers (existing)
+            // Hypothesis card handlers
             const hypothesisCards = document.querySelectorAll('.hypothesis-card');
             const modal = document.getElementById('hypothesisModal');
             const closeModal = document.getElementById('closeModal');
@@ -4207,7 +4249,7 @@
                     modal.style.display = 'none';
                 }
             });
-            // Function to show hypothesis details — FULLY REPLACED
+            // Function to show hypothesis details
             function showHypothesisDetails(hypothesisId) {
                 let title = '';
                 let content = '';
@@ -4496,12 +4538,9 @@
                 modalTitle.innerHTML = `<i class="${iconClass}"></i> ${title} ${priorityBadge}`;
                 modalBody.innerHTML = content;
                 modal.style.display = 'flex';
-                // Optional: Add subtle entrance animation
-                setTimeout(() => {
-                    const content = document.querySelector('.modal-content');
-                    content.style.transform = 'scale(1)';
-                    content.style.opacity = '1';
-                }, 10);
+                // Add entrance animation
+                const contentEl = document.querySelector('.modal-content');
+                contentEl.classList.add('active');
             }
             // Animate progress bars on scroll
             const observerOptions = {
@@ -4525,7 +4564,6 @@
             document.querySelectorAll('.progress-bar-container').forEach(container => {
                 progressObserver.observe(container);
             });
-            
             // Interactive functionality for the Methodology tab
             // Toggle between frequency and severity views
             const toggleButtons = document.querySelectorAll('.toggle-btn');
@@ -4535,8 +4573,10 @@
                     // Update active state
                     toggleButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
-                    // In a real implementation, this would update the chart data
-                    console.log(`Switched to ${metric} view`);
+                    // Render bars
+                    if (metric === 'frequency' || metric === 'severity') {
+                        renderBars(metric);
+                    }
                 });
             });
             // Filter root causes in scatter plot
@@ -4582,8 +4622,6 @@
             if (forecastScenario) {
                 forecastScenario.addEventListener('change', function() {
                     const scenario = this.value;
-                    // In a real implementation, this would update the forecast chart
-                    console.log(`Switched to ${scenario} scenario`);
                     // Show/hide forecast lines based on selection
                     const baselineLine = document.querySelector('.forecast-line.baseline');
                     const partialLine = document.querySelector('.forecast-line.partial');
@@ -4607,7 +4645,7 @@
                         if (filterValue === 'high-impact' && impact <= 2) {
                             showCard = false;
                         } else if (filterValue === 'quick-wins') {
-                            // In a real implementation, this would check for quick wins based on timeline and effort
+                            // Check for quick wins based on timeline and effort
                             const timeline = card.getAttribute('data-timeline');
                             showCard = timeline === 'Q1-2026';
                         }
@@ -4643,8 +4681,68 @@
                     console.log(`Hovering over ${testType} test`);
                 });
             });
+            // Claims Distribution Chart rendering
+            function renderBars(metric = 'frequency') {
+                const container = document.getElementById('claimsDistributionChart');
+                if (!container) return;
+                const barsContainer = container.querySelector('.chart-bars');
+                if (!barsContainer) return;
+                
+                const labels = ['Region', 'Plan', 'Age', 'Disease', 'Year', 'Provider'];
+                const frequency = [98, 105, 112, 108, 124, 118];
+                const severity = [2.1, 2.2, 2.3, 2.5, 2.6, 2.4];
+                const colors = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6'];
+                const breakdowns = [
+                    [40, 30, 20, 10], [50, 25, 15, 10], [35, 35, 20, 10],
+                    [45, 20, 25, 10], [60, 15, 15, 10], [55, 20, 15, 10]
+                ];
+
+                barsContainer.innerHTML = '';
+                const data = metric === 'frequency' ? frequency : severity;
+                const max = Math.max(...data);
+                
+                labels.forEach((label, i) => {
+                    const stack = document.createElement('div');
+                    stack.style.cssText = `
+                        position: relative; width: 100%; height: 100%; display: flex; flex-direction: column;
+                        justify-content: flex-end; align-items: center; gap: 1px;
+                    `;
+                    breakdowns[i].forEach((pct, idx) => {
+                        const seg = document.createElement('div');
+                        const h = (data[i] / max) * (pct / 100) * 100;
+                        seg.style.cssText = `
+                            width: 32px; height: ${h}%; background: ${colors[idx]};
+                            border-radius: ${idx === 0 ? '4px 4px 0 0' : idx === 3 ? '0 0 4px 4px' : '0'};
+                            opacity: 0.85;
+                        `;
+                        stack.appendChild(seg);
+                    });
+
+                    const valLabel = document.createElement('div');
+                    valLabel.style.cssText = `
+                        position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+                        font-size: 10px; font-weight: 600; white-space: nowrap;
+                    `;
+                    valLabel.style.color = 
+                        data[i] > max * 0.9 ? 'var(--accent-red)' :
+                        data[i] > max * 0.7 ? 'var(--accent-amber)' : 'var(--text-primary)';
+                    valLabel.textContent = metric === 'frequency' ? data[i] : data[i].toFixed(1) + '×';
+                    stack.appendChild(valLabel);
+
+                    const labelEl = document.createElement('div');
+                    labelEl.style.cssText = `
+                        position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+                        font-size: 10px; color: var(--text-muted);
+                    `;
+                    labelEl.textContent = label;
+                    stack.appendChild(labelEl);
+
+                    barsContainer.appendChild(stack);
+                });
+            }
+            // Initialize chart
+            renderBars('frequency');
         });
     </script>
 </body>
 </html>
-
