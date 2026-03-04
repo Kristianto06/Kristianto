@@ -38,7 +38,6 @@
             cursor: none;
         }
 
-        /* grid background */
         body::before {
             content: "";
             position: fixed;
@@ -50,7 +49,6 @@
             pointer-events: none;
         }
 
-        /* vignette */
         body::after {
             content: "";
             position: fixed;
@@ -59,7 +57,6 @@
             pointer-events: none;
         }
 
-        /* ── CUSTOM CURSOR ── */
         #cursor {
             position: fixed;
             width: 10px;
@@ -77,13 +74,11 @@
             border-color: var(--cool);
         }
 
-        /* ── CANVAS ── */
         #canvas {
             position: fixed;
             inset: 0;
         }
 
-        /* ── CENTER UI ── */
         .scene {
             position: fixed;
             inset: 0;
@@ -96,7 +91,6 @@
             gap: 0;
         }
 
-        /* ── THE CREATURE ── */
         #creature-wrap {
             position: relative;
             width: 120px;
@@ -111,7 +105,6 @@
             transition: transform 0.15s ease-out;
         }
 
-        /* speech bubble */
         #bubble {
             position: absolute;
             top: -60px;
@@ -145,7 +138,6 @@
             opacity: 1;
         }
 
-        /* ── BIG 404 ── */
         .big-404 {
             font-family: 'DM Mono', monospace;
             font-size: clamp(5rem, 15vw, 10rem);
@@ -163,7 +155,6 @@
             user-select: none;
         }
 
-        /* ── TEXT CONTENT ── */
         .content {
             text-align: center;
             pointer-events: none;
@@ -213,7 +204,6 @@
             margin-bottom: 2rem;
         }
 
-        /* ── TERMINAL INPUT ── */
         .terminal {
             pointer-events: all;
             display: flex;
@@ -254,7 +244,6 @@
             color: var(--faint);
         }
 
-        /* ── RESPONSE LOG ── */
         #log {
             pointer-events: none;
             width: min(380px, 90vw);
@@ -291,7 +280,6 @@
             }
         }
 
-        /* ── HOME LINK ── */
         .home-link {
             pointer-events: all;
             margin-top: 1.5rem;
@@ -313,7 +301,6 @@
             border-color: var(--warm);
         }
 
-        /* ── PARTICLES ── */
         .particle {
             position: fixed;
             width: 3px;
@@ -336,7 +323,6 @@
             }
         }
 
-        /* ── DATA STREAM (side) ── */
         .stream {
             position: fixed;
             top: 0;
@@ -371,7 +357,6 @@
             }
         }
 
-        /* interaction count */
         #icount {
             position: fixed;
             bottom: 2rem;
@@ -386,7 +371,6 @@
             pointer-events: none;
         }
 
-        /* easter egg */
         #egg {
             position: fixed;
             inset: 0;
@@ -448,28 +432,24 @@
 
 <body>
 
-    <!-- Custom cursor -->
     <div id="cursor"></div>
 
-    <!-- Big ghost 404 -->
     <div class="big-404">404</div>
 
-    <!-- Falling data streams -->
     <div class="stream stream-left" id="streamL"></div>
     <div class="stream stream-right" id="streamR"></div>
 
-    <!-- Scene -->
     <div class="scene">
-        <!-- The creature -->
+
         <div id="creature-wrap">
             <div id="bubble"></div>
             <svg id="creature" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                <!-- body -->
+
                 <rect id="body" x="30" y="40" width="60" height="55" rx="8" fill="none" stroke="rgba(201,122,76,0.6)"
                     stroke-width="1.5" />
-                <!-- inner glow -->
+
                 <rect x="35" y="45" width="50" height="45" rx="5" fill="rgba(201,122,76,0.04)" />
-                <!-- eyes -->
+
                 <g id="eyes">
                     <circle id="eyeL" cx="45" cy="62" r="6" fill="none" stroke="rgba(201,122,76,0.8)"
                         stroke-width="1.5" />
@@ -478,23 +458,23 @@
                         stroke-width="1.5" />
                     <circle id="pupilR" cx="75" cy="62" r="2.5" fill="rgba(201,122,76,0.9)" />
                 </g>
-                <!-- mouth — neutral -->
+
                 <path id="mouth" d="M50,80 Q60,84 70,80" fill="none" stroke="rgba(201,122,76,0.6)" stroke-width="1.5"
                     stroke-linecap="round" />
-                <!-- antenna -->
+
                 <line x1="60" y1="40" x2="60" y2="24" stroke="rgba(201,122,76,0.4)" stroke-width="1.5" />
                 <circle id="antDot" cx="60" cy="22" r="3" fill="rgba(201,122,76,0.6)" />
-                <!-- legs -->
+
                 <line x1="42" y1="95" x2="38" y2="110" stroke="rgba(201,122,76,0.5)" stroke-width="1.5"
                     stroke-linecap="round" />
                 <line x1="78" y1="95" x2="82" y2="110" stroke="rgba(201,122,76,0.5)" stroke-width="1.5"
                     stroke-linecap="round" />
-                <!-- arms -->
+
                 <line id="armL" x1="30" y1="60" x2="14" y2="70" stroke="rgba(201,122,76,0.5)" stroke-width="1.5"
                     stroke-linecap="round" />
                 <line id="armR" x1="90" y1="60" x2="106" y2="70" stroke="rgba(201,122,76,0.5)" stroke-width="1.5"
                     stroke-linecap="round" />
-                <!-- data chip detail -->
+
                 <rect x="50" y="50" width="20" height="12" rx="2" fill="none" stroke="rgba(201,122,76,0.2)"
                     stroke-width="1" />
                 <line x1="55" y1="50" x2="55" y2="62" stroke="rgba(201,122,76,0.15)" stroke-width="1" />
@@ -503,7 +483,6 @@
             </svg>
         </div>
 
-        <!-- Text -->
         <div class="content">
             <span class="tag">error_code: 404 · status: wandering</span>
             <h1>This page got <em>lost</em> in the dataset.</h1>
@@ -520,13 +499,11 @@
         </div>
     </div>
 
-    <!-- Interaction counter -->
     <div id="icount">
         interactions: <span id="cnt">0</span><br>
         <span id="cntSub" style="opacity:0.5">keep going…</span>
     </div>
 
-    <!-- Easter egg -->
     <div id="egg">
         <div class="egg-text">
             <strong>You stayed.</strong><br><br>
@@ -542,9 +519,7 @@
     </div>
 
     <script>
-        /* ═══════════════════════════════════
-           CURSOR
-        ═══════════════════════════════════ */
+
         const cursor = document.getElementById('cursor');
         let mx = window.innerWidth / 2, my = window.innerHeight / 2;
         document.addEventListener('mousemove', e => {
@@ -555,9 +530,6 @@
         document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
         document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
 
-        /* ═══════════════════════════════════
-           DATA STREAMS
-        ═══════════════════════════════════ */
         const chars = '01アイウエオカキクケコ∑∂∇∫≈≠∞◦△✦≡░▒▓'.split('');
         function makeStream(el) {
             for (let i = 0; i < 18; i++) {
@@ -574,9 +546,6 @@
         makeStream(document.getElementById('streamL'));
         makeStream(document.getElementById('streamR'));
 
-        /* ═══════════════════════════════════
-           CREATURE
-        ═══════════════════════════════════ */
         const creature = document.getElementById('creature');
         const creatureWrap = document.getElementById('creature-wrap');
         const pupilL = document.getElementById('pupilL');
@@ -587,7 +556,7 @@
         const armR = document.getElementById('armR');
         const bubble = document.getElementById('bubble');
 
-        let creatureMood = 'neutral'; // neutral, happy, scared, excited, sleepy
+        let creatureMood = 'neutral';
         let idleTimer;
         let bobDir = 1, bobPos = 0;
 
@@ -628,7 +597,7 @@
             setMouth(mood);
             if (mood === 'happy' || mood === 'excited') {
                 antDot.setAttribute('fill', 'rgba(76,168,119,0.8)');
-                armL.setAttribute('d', ''); // reset
+                armL.setAttribute('d', '');
                 armR.setAttribute('d', '');
                 armL.setAttribute('x2', '10'); armL.setAttribute('y2', '50');
                 armR.setAttribute('x2', '110'); armR.setAttribute('y2', '50');
@@ -645,7 +614,6 @@
             }
         }
 
-        // Idle bob animation
         function bob() {
             bobPos += 0.04 * bobDir;
             if (bobPos > 1) bobDir = -1;
@@ -655,16 +623,13 @@
         }
         bob();
 
-        // Idle antennae pulse
         setInterval(() => {
             antDot.style.opacity = antDot.style.opacity === '0.3' ? '1' : '0.3';
             antDot.style.transition = 'opacity 0.4s';
         }, 1200);
 
-        // Eye tracking
         setInterval(updateEyes, 50);
 
-        // Distance reaction
         setInterval(() => {
             const c = getCreatureCenter();
             const dist = Math.hypot(mx - c.x, my - c.y);
@@ -672,9 +637,6 @@
             else if (dist >= 80 && creatureMood === 'scared') setMood('neutral');
         }, 100);
 
-        /* ═══════════════════════════════════
-           BUBBLE SPEECH
-        ═══════════════════════════════════ */
         let bubbleTimer;
         function say(text, duration = 2800) {
             clearTimeout(bubbleTimer);
@@ -683,7 +645,6 @@
             bubbleTimer = setTimeout(() => bubble.classList.remove('show'), duration);
         }
 
-        // Random idle speech
         const idleLines = [
             'is anyone there?', '...searching...', 'error: loneliness.exe',
             'null pointer exception :(', 'where am i?', 'ping?',
@@ -698,9 +659,6 @@
         }
         setTimeout(idleSay, 3000);
 
-        /* ═══════════════════════════════════
-           CLICK ON CREATURE → REACTION
-        ═══════════════════════════════════ */
         creatureWrap.style.pointerEvents = 'all';
         creatureWrap.style.cursor = 'none';
         const clickLines = [
@@ -715,9 +673,6 @@
             setTimeout(() => setMood('neutral'), 1500);
         });
 
-        /* ═══════════════════════════════════
-           PARTICLES
-        ═══════════════════════════════════ */
         function spawnParticles({ x, y }, count = 5) {
             for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
@@ -730,20 +685,16 @@
             }
         }
 
-        /* click anywhere → particles */
         document.addEventListener('click', e => {
             if (e.target === document.getElementById('termInput')) return;
             spawnParticles({ x: e.clientX, y: e.clientY }, 5);
         });
 
-        /* ═══════════════════════════════════
-           TERMINAL RESPONSES
-        ═══════════════════════════════════ */
         const log = document.getElementById('log');
         const input = document.getElementById('termInput');
 
         const responses = [
-            // keyword → [mood, bubble, log]
+
             { k: ['hello', 'hi', 'hey', 'hai'], m: 'happy', b: 'hello human! ✦', l: 'sys: warm signal received — handshake complete', t: 'sys' },
             { k: ['home', 'back', 'return'], m: 'sad', b: 'i want to go home too', l: 'warn: destination / not found in routing table', t: 'warn' },
             { k: ['why', 'what', 'how', 'who'], m: 'neutral', b: 'good question...', l: 'sys: querying the void... no results returned', t: 'sys' },
@@ -775,7 +726,7 @@
         ];
 
         function addLog(text, type = 'sys') {
-            // Keep max 3 lines
+
             while (log.children.length >= 3) log.removeChild(log.firstChild);
             const span = document.createElement('span');
             span.className = `log-line ${type}`;
@@ -807,9 +758,6 @@
             addInteraction();
         });
 
-        /* ═══════════════════════════════════
-           INTERACTION COUNTER
-        ═══════════════════════════════════ */
         const cntEl = document.getElementById('cnt');
         const cntSub = document.getElementById('cntSub');
         let interactions = 0;
@@ -840,16 +788,12 @@
             }
         }
 
-        /* Mouse move counts as tiny interaction (slow) */
         let mouseMoveCount = 0;
         document.addEventListener('mousemove', () => {
             mouseMoveCount++;
             if (mouseMoveCount % 80 === 0) addInteraction();
         });
 
-        /* ═══════════════════════════════════
-           EASTER EGG
-        ═══════════════════════════════════ */
         const egg = document.getElementById('egg');
         const eggBack = document.getElementById('eggBack');
 
@@ -865,9 +809,6 @@
             say('you came back ✦', 3000);
         });
 
-        /* ═══════════════════════════════════
-           OPENING
-        ═══════════════════════════════════ */
         setTimeout(() => say('oh. a visitor.', 3000), 1200);
         setTimeout(() => setMood('neutral'), 4500);
     </script>
